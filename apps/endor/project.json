@@ -1,0 +1,57 @@
+{
+  "name": "endor",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/endor/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/endor",
+        "main": "apps/endor/src/main.ts",
+        "tsConfig": "apps/endor/tsconfig.app.json",
+        "assets": ["apps/endor/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/endor/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "endor:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "endor:build:development"
+        },
+        "production": {
+          "buildTarget": "endor:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/endor/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/endor/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
