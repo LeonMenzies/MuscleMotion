@@ -52,7 +52,9 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "coruscant:build",
-        "hmr": true
+        "hmr": true,
+        "proxyConfig": "apps/coruscant/proxy.conf.json",
+        "port": 5000
       },
       "configurations": {
         "development": {

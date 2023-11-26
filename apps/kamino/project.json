@@ -50,7 +50,8 @@
       "options": {
         "buildTarget": "kamino:build",
         "hmr": true,
-        "proxyConfig": "apps/kamino/proxy.conf.json"
+        "proxyConfig": "apps/kamino/proxy.conf.json",
+        "port": 4000
       },
       "configurations": {
         "development": {
