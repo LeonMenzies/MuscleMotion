@@ -16,9 +16,7 @@ type ErrorResponseDataType = {
 };
 
 export const sendSuccessResponse = ({ res, data }: ResponseDataType) => {
-  console.log(res);
-
-  let responseData: {
+  const responseData: {
     success: boolean;
     errorMessage: string;
     data?: any;

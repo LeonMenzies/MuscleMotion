@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Text from '../../components/input/Text';
+import { Text } from '@musclemotion/components';
 import { useApi } from '../../api/Api';
 import { useRecoilState } from 'recoil';
 import { userAtom } from '../../recoil/User';

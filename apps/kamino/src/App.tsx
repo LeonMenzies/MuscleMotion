@@ -1,10 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './utils/ProtectedRoute';
-import TopNav from './components/nav/TopNav';
 import GlobalStyles from './utils/GlobalStyles';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { navAtom } from './recoil/Nav';
+import { useRecoilState } from 'recoil';
 import { userAtom } from './recoil/User';
+import { TopNav } from '@musclemotion/components';
 
 import Accessories from './pages/accessories/Accessories';
 import Cart from './pages/cart/Cart';
@@ -16,21 +15,18 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import Logout from './pages/auth/Logout';
 
 import Auth from './pages/auth/Auth';
-import Admin from './pages/admin/Product';
 import Profile from './pages/profile/Profile';
 import PageNotFound from './utils/PageNotFound';
-import NavMenu from './components/nav/NavMenu';
+
+import MuscleMotionAltLogo from './assets/images/muscle-motion.jpg';
 
 function App() {
-  const showNav = useRecoilValue(navAtom);
   const [user, setUser] = useRecoilState(userAtom);
 
   return (
     <div>
       <GlobalStyles />
-
-      <TopNav />
-      <NavMenu open={showNav} />
+      <TopNav logo={MuscleMotionAltLogo} />
 
       <Routes>
         <Route
@@ -40,10 +36,6 @@ function App() {
         >
           <Route path="profile" element={<Profile />} />
           <Route path="logout" element={<Logout />} />
-        </Route>
-
-        <Route element={<ProtectedRoute isAllowed={true} redirectPath={'/'} />}>
-          <Route path="admin" element={<Admin />} />
         </Route>
 
         <Route

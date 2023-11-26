@@ -1,12 +1,25 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
-import { navAtom } from '../../recoil/Nav';
 
-interface TNavMenuItem {
+/* eslint-disable-next-line */
+export interface NavMenuItemProps {
   icon: React.ReactNode;
   title: string;
   route: string;
+  setNav: (b: boolean) => void;
+}
+
+export function NavMenuItem(props: NavMenuItemProps) {
+  const { icon, route, title, setNav } = props;
+
+  return (
+    <NavLink to={route} onClick={() => setNav(false)}>
+      <StyledNavItem>
+        {icon}
+        <div>{title}</div>
+      </StyledNavItem>
+    </NavLink>
+  );
 }
 
 const StyledNavItem = styled.div`
@@ -36,18 +49,3 @@ const StyledNavItem = styled.div`
     transform-origin: bottom left;
   }
 `;
-
-const NavMenuItem = ({ icon, route, title }: TNavMenuItem) => {
-  const setNav = useSetRecoilState(navAtom);
-
-  return (
-    <NavLink to={route} onClick={() => setNav(false)}>
-      <StyledNavItem>
-        {icon}
-        <div>{title}</div>
-      </StyledNavItem>
-    </NavLink>
-  );
-};
-
-export default NavMenuItem;

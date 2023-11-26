@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Text from '../../components/input/Text';
+import { Text } from '@musclemotion/components';
 
 const Signup = () => {
   const [error, setError] = useState('');

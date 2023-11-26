@@ -1,14 +1,25 @@
-import { FC } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
-type TopNavMenuT = {};
+/* eslint-disable-next-line */
+export interface TopNavItemProps {
+  to: string;
+  title: string;
+}
 
-export const TopNavMenu: FC<TopNavMenuT> = ({}) => {
-  return <StyledNavItem>{/* <span>{title}</span> */}</StyledNavItem>;
-};
+export function TopNavItem(props: TopNavItemProps) {
+  const { to, title } = props;
 
-const StyledNavItem = styled.div`
+  return (
+    <StyledTopNavItem to={to}>
+      <span>{title}</span>
+    </StyledTopNavItem>
+  );
+}
+
+export default TopNavItem;
+
+const StyledTopNavItem = styled(NavLink)`
   text-decoration: none;
   padding 0.5rem 0.5rem;
   margin: 0 1rem;
