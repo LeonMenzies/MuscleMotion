@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 import { NavMenuItem } from '../NavMenuItem/NavMenuItem';
-
-import { BsBag } from 'react-icons/bs';
-// import { CiUser } from 'react-icons/ci';
-// import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
-// import { RiAdminLine } from 'react-icons/ri';
+import { Squash as Hamburger } from 'hamburger-react';
+import { NavItem } from '@musclemotion/types';
+import { useEffect } from 'react';
 
 /* eslint-disable-next-line */
 export interface NavMenuProps {
   nav: boolean;
-  setNav: (b: boolean) => void;
+  setNav: React.Dispatch<React.SetStateAction<boolean>>;
+  navItems: NavItem[];
 }
 
 interface NavMenuStylesProps {
@@ -17,50 +16,32 @@ interface NavMenuStylesProps {
 }
 
 export function NavMenu(props: NavMenuProps) {
-  const { nav, setNav } = props;
+  const { nav, setNav, navItems } = props;
+
+  useEffect(() => {
+    const handleClickAway = (event: MouseEvent) => {
+      if (!(event.target as HTMLElement).closest('.nav-menu')) {
+        setNav(false);
+      }
+    };
+    document.addEventListener('click', handleClickAway);
+    return () => {
+      document.removeEventListener('click', handleClickAway);
+    };
+  }, [setNav]);
 
   return (
-    <StyledNavMenu open={nav}>
-      <div className={'nav-menu-header'}>{`Test User`}</div>
-      <NavMenuItem
-        icon={<BsBag />}
-        title={'Cart'}
-        route={'/cart'}
-        setNav={setNav}
-      />
-
-      {/* {user.loggedIn ? (
-        <>
-          <NavMenuItem
-            icon={<CiUser />}
-            title={'Profile'}
-            route={'/profile'}
-            setNav={setNav}
-          />
-          <NavMenuItem
-            icon={<AiOutlineLogout />}
-            title={'Logout'}
-            route={'/logout'}
-            setNav={setNav}
-          />
-        </>
-      ) : (
+    <StyledNavMenu open={nav} className={'nav-menu'}>
+      <Hamburger toggled={nav} toggle={setNav} size={20} />
+      {navItems.map((item: NavItem) => (
         <NavMenuItem
-          icon={<AiOutlineLogin />}
-          title={'Login'}
-          route={'/login'}
+          open={nav}
+          icon={item.icon}
+          title={item.title}
+          route={item.route}
           setNav={setNav}
         />
-      )} */}
-
-      {/* {user.user.Roles && (
-        <NavMenuItem
-          icon={<RiAdminLine />}
-          title={'Admin'}
-          route={'/admin'}
-          setNav={setNav}
-        />
-      )} */}
+      ))}
     </StyledNavMenu>
   );
 }
@@ -69,8 +50,8 @@ const StyledNavMenu = styled.div<NavMenuStylesProps>`
   position: fixed;
   height: 100%;
   background: grey;
-  right: 0;
-  width: ${({ open }) => (open ? '200px' : '0')};
+
+  width: ${({ open }) => (open ? '200px' : '50')};
   transition: 0.3s;
 
   .nav-menu-header {

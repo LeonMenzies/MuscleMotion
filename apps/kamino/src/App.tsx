@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from '@musclemotion/components';
 import { PageNotFound } from '@musclemotion/components';
-import { GlobalStyles } from '@musclemotion/styles';
 import { useRecoilState } from 'recoil';
 import { userAtom } from './recoil/User';
 import { TopNav } from '@musclemotion/components';
@@ -25,7 +24,6 @@ function App() {
 
   return (
     <div>
-      <GlobalStyles />
       <TopNav logo={MuscleMotionAltLogo} />
 
       <Routes>
