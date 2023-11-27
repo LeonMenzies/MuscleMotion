@@ -7,6 +7,7 @@ import {
 } from '../helpers/ResponseHandler';
 import { RequestHelper } from '../helpers/RequestHelper';
 import { errorHandler } from '../helpers/ErrorHandler';
+import { APIException } from '../helpers/Exceptions';
 
 export const router = express.Router();
 
@@ -34,10 +35,11 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req: Request, res: Response) => {
   try {
     const helper = new RequestHelper(req);
-    const name = helper.getParam('name');
-    const description = helper.getParam('description');
-    const price = helper.getParam('price');
+    const name = helper.getRequiredParam('name');
+    const description = helper.getRequiredParam('description');
+    const price = helper.getRequiredParam('price');
 
+    throw new APIException('Testing');
     const result = await Products.create({
       name: name,
       description: description,
@@ -50,11 +52,7 @@ router.post('/', async (req: Request, res: Response) => {
         data: result,
       });
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Product not found',
-        status: 404,
-      });
+      throw new APIException('Failed to add Product');
     }
   } catch (error) {
     errorHandler(error, req, res);

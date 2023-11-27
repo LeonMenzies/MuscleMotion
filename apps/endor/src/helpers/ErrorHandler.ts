@@ -1,21 +1,25 @@
 import { Request, Response } from 'express';
 import { sendErrorResponse } from './ResponseHandler';
-import { APIException } from './APIException';
 
 export const errorHandler = (error: Error, req: Request, res: Response) => {
-  if (error.name === 'ValidationError') {
-    return sendErrorResponse({
-      res: res,
-      status: 400,
-      errorMessage: error.message,
-    });
-  }
+  switch (error.name) {
+    case 'APIException':
+      return sendErrorResponse({
+        res: res,
+        status: 400,
+        errorMessage: error.message,
+      });
 
-  if (error instanceof APIException) {
-    // Handle APIException and send a JSON response
-    return sendErrorResponse({ res: res, errorMessage: error.message });
+    case 'ValidationException':
+      return sendErrorResponse({
+        res: res,
+        status: 400,
+        errorMessage: error.message,
+      });
+    default:
+      return sendErrorResponse({
+        res: res,
+        errorMessage: 'Internal server error',
+      });
   }
-
-  // Default error response
-  return sendErrorResponse({ res: res, errorMessage: 'Internal server error' });
 };

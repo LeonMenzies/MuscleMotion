@@ -4,7 +4,7 @@ import {
   sendErrorResponse,
   sendSuccessResponse,
 } from '../helpers/ResponseHandler';
-import { APIException } from '../helpers/APIException';
+import { APIException } from '../helpers/Exceptions';
 
 export const router = express.Router();
 

@@ -1,6 +1,8 @@
 import { DecodedToken } from '@musclemotion/types';
 import { authenticateRequest } from './AuthMiddleware';
 import { Request } from 'express';
+import { APIException } from './Exceptions';
+import { validateString } from './Validators';
 
 export class RequestHelper {
   private request: Request;
@@ -16,26 +18,41 @@ export class RequestHelper {
   }
 
   getParam(paramName: string): string | undefined {
-    return this.request.body[paramName];
+    return this.validateParam(paramName, this.request.body[paramName]);
   }
 
-  validateParams(params: string[]): void {
-    for (const param of params) {
-      switch (param) {
-        case 'name':
-          break;
-
-        default:
-          break;
-      }
+  getRequiredParam(paramName: string): string | undefined {
+    const param = this.validateParam(paramName, this.request.body[paramName]);
+    if (param) {
+      return param;
+    } else {
+      throw new APIException(`Missing require param: ${paramName}`);
     }
   }
 
-  validateRequiredParams(requiredParams: string[]): void {
-    for (const param of requiredParams) {
-      if (!this.getParam(param)) {
-        throw new Error(`Missing required parameter: ${param}`);
-      }
+  validateParams(paramsObject: Record<string, any>): void {
+    for (const [param, value] of Object.entries(paramsObject)) {
+      this.validateParam(param, value);
     }
+  }
+
+  validateParam(param: string, value: string): string {
+    if (!value) {
+      return undefined;
+    }
+
+    switch (param) {
+      case 'name':
+        validateString(param, value, 10, 10);
+        break;
+      case 'description':
+        break;
+      case 'price':
+        break;
+
+      default:
+        break;
+    }
+    return param;
   }
 }
