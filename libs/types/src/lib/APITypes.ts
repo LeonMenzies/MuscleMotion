@@ -16,3 +16,9 @@ export interface LoginResponse extends APIResponse {
     jwt: string;
   };
 }
+
+export interface DecodedToken {
+  // Define the properties you expect in the decoded token
+  userId: string;
+  // ... other properties
+}

@@ -1,16 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { sendErrorResponse } from './ResponseHandler';
 import { APIException } from './APIException';
 
-export const errorHandler = (
-  error: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  console.log('EROROROROR');
-  console.log(error);
-
+export const errorHandler = (error: Error, req: Request, res: Response) => {
   if (error.name === 'ValidationError') {
     return sendErrorResponse({
       res: res,

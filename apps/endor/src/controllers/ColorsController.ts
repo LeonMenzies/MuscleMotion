@@ -1,6 +1,5 @@
 import express from 'express';
 import { Colors } from '../models/Colors';
-import { ControllerFunction } from '../types/Types';
 import {
   sendErrorResponse,
   sendSuccessResponse,

@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { sequelize } from './services/sequelize';
-import { errorHandler } from './helpers/ErrorHandler';
 import { apiRouter } from './routes/routes';
 
 const app = express();
@@ -10,7 +9,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: 'http://localhost:4000' }));
-app.use(errorHandler);
 
 app.use('/api', apiRouter);
 
