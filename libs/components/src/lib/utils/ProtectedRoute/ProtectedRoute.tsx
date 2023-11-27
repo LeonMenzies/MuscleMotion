@@ -1,17 +1,20 @@
+import { ReactNode } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-interface Types {
+/* eslint-disable-next-line */
+export interface ProtectedRouteProps {
   isAllowed: boolean;
   redirectPath: string;
-  children?: any;
+  children?: ReactNode;
 }
 
-const ProtectedRoute = ({ isAllowed, redirectPath, children }: Types) => {
+export function ProtectedRoute(props: ProtectedRouteProps) {
+  const { isAllowed, redirectPath, children } = props;
   if (!isAllowed) {
     return <Navigate to={redirectPath} replace />;
   }
 
   return children ? children : <Outlet />;
-};
+}
 
 export default ProtectedRoute;

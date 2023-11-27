@@ -3,7 +3,7 @@ import { Text } from '@musclemotion/components';
 import { useApi } from '../../api/Api';
 import { useRecoilState } from 'recoil';
 import { userAtom } from '../../recoil/User';
-import { LoginRequest, LoginResponse } from '../../types/ApiTypes';
+import { LoginRequest, LoginResponse } from '@musclemotion/types';
 
 const Login = () => {
   const [user, serUser] = useRecoilState(userAtom);

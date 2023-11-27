@@ -1,4 +1,4 @@
-import { User } from "./ObjectTypes";
+import { User } from './ObjectTypes';
 
 export interface APIResponse {
   success: boolean;

@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './utils/ProtectedRoute';
-import GlobalStyles from './utils/GlobalStyles';
+import { ProtectedRoute } from '@musclemotion/components';
+import { PageNotFound } from '@musclemotion/components';
+import { GlobalStyles } from '@musclemotion/styles';
 import { useRecoilState } from 'recoil';
 import { userAtom } from './recoil/User';
 import { TopNav } from '@musclemotion/components';
@@ -16,7 +17,6 @@ import Logout from './pages/auth/Logout';
 
 import Auth from './pages/auth/Auth';
 import Profile from './pages/profile/Profile';
-import PageNotFound from './utils/PageNotFound';
 
 import MuscleMotionAltLogo from './assets/images/muscle-motion.jpg';
 
