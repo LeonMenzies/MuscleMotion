@@ -1,21 +1,17 @@
 import { Routes, Route } from 'react-router-dom';
-// import { ProtectedRoute } from '@musclemotion/components';
 import { NavMenu, PageNotFound } from '@musclemotion/components';
 import { useRecoilState } from 'recoil';
-// import { userAtom } from './recoil/User';
-
-import { MdDashboard, MdInventory } from 'react-icons/md';
-import { FaUser } from 'react-icons/fa';
-
 import Dashboard from './pages/dashboard/Dashboard';
-
-// import MuscleMotionAltLogo from './assets/images/muscle-motion.jpg';
 import { navAtom } from './recoil/Nav';
 import { NavItem } from '@musclemotion/types';
 import styled from 'styled-components';
+import Inventory from './pages/Inventory/Inventory';
+import ProductList from './pages/productList/ProductList';
+
+import { MdDashboard, MdInventory } from 'react-icons/md';
+import { FaUser, FaListUl } from 'react-icons/fa';
 
 function App() {
-  // const [user, setUser] = useRecoilState(userAtom);
   const [nav, setNav] = useRecoilState(navAtom);
 
   const navItems: NavItem[] = [
@@ -27,12 +23,17 @@ function App() {
     {
       icon: <MdDashboard />,
       title: 'Dashboard',
-      route: '/dashboard',
+      route: '/',
     },
     {
       icon: <MdInventory />,
       title: 'Inventory',
       route: '/inventory',
+    },
+    {
+      icon: <FaListUl />,
+      title: 'Product List',
+      route: '/product-list',
     },
   ];
 
@@ -59,7 +60,8 @@ function App() {
         </Route> */}
 
           <Route index element={<Dashboard />} />
-          <Route path="inventory" element={<Dashboard />} />
+          <Route path="inventory" element={<Inventory />} />
+          <Route path="product-list" element={<ProductList />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>

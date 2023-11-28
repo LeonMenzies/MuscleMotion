@@ -22,3 +22,9 @@ export interface DecodedToken {
   userId: string;
   // ... other properties
 }
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+}

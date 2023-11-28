@@ -43,7 +43,7 @@ export class RequestHelper {
 
     switch (param) {
       case 'name':
-        validateString(param, value, 10, 10);
+        validateString(param, value, 3, 10);
         break;
       case 'description':
         break;
@@ -53,6 +53,6 @@ export class RequestHelper {
       default:
         break;
     }
-    return param;
+    return value;
   }
 }

@@ -33,8 +33,9 @@ export function NavMenu(props: NavMenuProps) {
   return (
     <StyledNavMenu open={nav} className={'nav-menu'}>
       <Hamburger toggled={nav} toggle={setNav} size={20} />
-      {navItems.map((item: NavItem) => (
+      {navItems.map((item: NavItem, index: number) => (
         <NavMenuItem
+          key={index}
           open={nav}
           icon={item.icon}
           title={item.title}

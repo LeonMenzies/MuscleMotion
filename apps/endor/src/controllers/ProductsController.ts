@@ -21,11 +21,7 @@ router.get('/', async (req, res, next) => {
         data: products,
       });
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Product not found',
-        status: 404,
-      });
+      throw new APIException('Failed to add Product');
     }
   } catch (error) {
     next(error);
@@ -39,20 +35,18 @@ router.post('/', async (req: Request, res: Response) => {
     const description = helper.getRequiredParam('description');
     const price = helper.getRequiredParam('price');
 
-    throw new APIException('Testing');
     const result = await Products.create({
       name: name,
       description: description,
       price: price,
     });
 
-    if (result) {
+    if (!result) {
+      throw new APIException('Failed to add Product');
+    } else {
       sendSuccessResponse({
         res,
-        data: result,
       });
-    } else {
-      throw new APIException('Failed to add Product');
     }
   } catch (error) {
     errorHandler(error, req, res);

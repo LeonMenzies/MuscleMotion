@@ -1,7 +1,8 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
+import { Products } from './Products';
 
-export const Products = sequelize.define('Products', {
+export const ProductInformation = sequelize.define('productInformation', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -15,7 +16,6 @@ export const Products = sequelize.define('Products', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  productInformationID: {
-    type: DataTypes.INTEGER,
-  },
 });
+
+ProductInformation.belongsToMany(Products, { through: 'productInformationID' });

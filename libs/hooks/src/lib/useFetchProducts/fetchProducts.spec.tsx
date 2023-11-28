@@ -1,7 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import * as React from 'react';
 
-import useFetchProducts from './fetch-products';
+import useFetchProducts from './useFetchProducts';
 
 describe('useFetchProducts', () => {
   it('should render successfully', () => {

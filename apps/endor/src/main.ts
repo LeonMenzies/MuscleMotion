@@ -4,11 +4,12 @@ import cors from 'cors';
 import { sequelize } from './services/sequelize';
 import { apiRouter } from './routes/routes';
 
+const allowedOrigins = ['http://localhost:4000', 'http://localhost:5000'];
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({ origin: 'http://localhost:4000' }));
+app.use(cors({ origin: allowedOrigins }));
 
 app.use('/api', apiRouter);
 
