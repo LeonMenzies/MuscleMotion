@@ -31,6 +31,7 @@ const StyledNavItem = styled(NavLink)`
   display: flex;
   text-decoration: none;
   align-items: center;
+  width: 150px;
 
   .title-container {
     color: white;

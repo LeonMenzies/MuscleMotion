@@ -53,9 +53,10 @@ const StyledNavMenu = styled.div<NavMenuStylesProps>`
   background: #343434;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
-  width: ${({ open }) => (open ? '200px' : '50')};
-  transition: 0.3s;
+  width: ${({ open }) => (open ? '200px' : '50px')};
+  transition: 0.4s;
 
   .nav-menu-header {
     padding: 1rem;
