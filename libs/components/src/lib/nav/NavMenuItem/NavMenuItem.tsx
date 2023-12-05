@@ -39,8 +39,8 @@ const StyledNavItem = styled(NavLink)`
   }
 
   .icon-container {
-    width: 40px;
-    margin-right: 10px;
+    width: 42px;
+    margin-right: 8px;
     display: flex;
     justify-content: center;
     svg {
