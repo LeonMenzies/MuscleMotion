@@ -32,12 +32,10 @@ router.post('/', async (req: Request, res: Response) => {
   try {
     const helper = new RequestHelper(req);
     const name = helper.getRequiredParam('name');
-    const description = helper.getRequiredParam('description');
     const price = helper.getRequiredParam('price');
 
     const result = await Products.create({
       name: name,
-      description: description,
       price: price,
     });
 

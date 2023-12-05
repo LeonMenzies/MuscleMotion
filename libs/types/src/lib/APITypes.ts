@@ -1,8 +1,9 @@
 import { User } from './ObjectTypes';
 
-export interface APIResponse {
+export interface ApiResponse<T> {
   success: boolean;
   errorMessage: string;
+  data?: T;
 }
 
 export interface LoginRequest {
@@ -10,7 +11,11 @@ export interface LoginRequest {
   Password: string;
 }
 
-export interface LoginResponse extends APIResponse {
+export interface LoginResponse
+  extends ApiResponse<{
+    user: User;
+    jwt: string;
+  }> {
   data: {
     user: User;
     jwt: string;
@@ -24,7 +29,6 @@ export interface DecodedToken {
 }
 
 export interface Product {
-  id: string;
   name: string;
   price: number;
 }

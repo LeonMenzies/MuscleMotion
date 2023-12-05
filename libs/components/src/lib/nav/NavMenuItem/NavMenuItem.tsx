@@ -14,21 +14,51 @@ export function NavMenuItem(props: NavMenuItemProps) {
   const { open, icon, route, title, setNav } = props;
 
   return (
-    <NavLink to={route} onClick={() => setNav(false)}>
-      <StyledNavItem>
-        {icon}
-        {open && <div>{title}</div>}
-      </StyledNavItem>
-    </NavLink>
+    <StyledNavItem
+      to={route}
+      onClick={() => setNav(false)}
+      className={(isActive) => (isActive ? 'active' : '')}
+    >
+      <div className={'icon-container'}>{icon}</div>
+      {open && <div className={'title-container'}>{title}</div>}
+    </StyledNavItem>
   );
 }
 
-const StyledNavItem = styled.div`
-  text-decoration: none;
-  padding 0.5rem 0.5rem;
-  margin:  1rem 0;
-  color: black;
-  position: relative;
+const StyledNavItem = styled(NavLink)`
+  height: 30px;
+  padding: 10px 0;
   display: flex;
-  padding: 0.3rem;
+  text-decoration: none;
+  align-items: center;
+
+  .title-container {
+    color: white;
+    font-weight: 100;
+  }
+
+  .icon-container {
+    width: 40px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    svg {
+      font-size: 18px;
+      color: white;
+    }
+  }
+
+  &.active {
+    .icon-container {
+      background-color: white;
+      padding: 5px 0;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+
+      svg {
+        font-size: 18px;
+        color: black;
+      }
+    }
+  }
 `;

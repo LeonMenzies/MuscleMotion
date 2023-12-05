@@ -6,7 +6,7 @@ export interface TextProps {
   title: string;
   type: string;
   placeholder?: string;
-  value: string;
+  value: string | number;
   required?: boolean;
   id: string;
   onChange: ChangeEventHandler<HTMLInputElement>;

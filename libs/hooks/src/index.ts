@@ -1,1 +1,2 @@
-export * from './lib/useFetchProducts/useFetchProducts';
+export * from './lib/useFetchApi/useFetchApi';
+export * from './lib/usePostApi/usePostApi';

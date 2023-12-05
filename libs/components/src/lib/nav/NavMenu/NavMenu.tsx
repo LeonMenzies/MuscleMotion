@@ -32,7 +32,7 @@ export function NavMenu(props: NavMenuProps) {
 
   return (
     <StyledNavMenu open={nav} className={'nav-menu'}>
-      <Hamburger toggled={nav} toggle={setNav} size={20} />
+      <Hamburger toggled={nav} toggle={setNav} size={20} color={'white'} />
       {navItems.map((item: NavItem, index: number) => (
         <NavMenuItem
           key={index}
@@ -50,7 +50,9 @@ export function NavMenu(props: NavMenuProps) {
 const StyledNavMenu = styled.div<NavMenuStylesProps>`
   position: fixed;
   height: 100%;
-  background: grey;
+  background: #343434;
+  display: flex;
+  flex-direction: column;
 
   width: ${({ open }) => (open ? '200px' : '50')};
   transition: 0.3s;

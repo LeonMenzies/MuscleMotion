@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@musclemotion/components": ["libs/components/src/index.ts"],
+      "@musclemotion/constants": ["libs/constants/src/index.ts"],
       "@musclemotion/hooks": ["libs/hooks/src/index.ts"],
       "@musclemotion/styles": ["libs/styles/src/index.ts"],
       "@musclemotion/types": ["libs/types/src/index.ts"]

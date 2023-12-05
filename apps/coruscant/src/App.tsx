@@ -5,11 +5,12 @@ import Dashboard from './pages/dashboard/Dashboard';
 import { navAtom } from './recoil/Nav';
 import { NavItem } from '@musclemotion/types';
 import styled from 'styled-components';
-import Inventory from './pages/Inventory/Inventory';
-import ProductList from './pages/productList/ProductList';
-
 import { MdDashboard, MdInventory } from 'react-icons/md';
-import { FaUser, FaListUl } from 'react-icons/fa';
+import { FaUser, FaListUl, FaRegPlusSquare } from 'react-icons/fa';
+
+import ProductListContainer from './pages/productList/ProductListContainer';
+import ProductAddContainer from './pages/productAdd/ProductAddContainer';
+import Inventory from './pages/Inventory/Inventory';
 
 function App() {
   const [nav, setNav] = useRecoilState(navAtom);
@@ -34,6 +35,11 @@ function App() {
       icon: <FaListUl />,
       title: 'Product List',
       route: '/product-list',
+    },
+    {
+      icon: <FaRegPlusSquare />,
+      title: 'Product Add',
+      route: '/product-add',
     },
   ];
 
@@ -61,7 +67,8 @@ function App() {
 
           <Route index element={<Dashboard />} />
           <Route path="inventory" element={<Inventory />} />
-          <Route path="product-list" element={<ProductList />} />
+          <Route path="product-list" element={<ProductListContainer />} />
+          <Route path="product-add" element={<ProductAddContainer />} />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>
@@ -77,5 +84,6 @@ const StyledApp = styled.div`
 
   .container {
     margin-left: 50px;
+    width: 100%;
   }
 `;
