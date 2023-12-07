@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Text, Button, Image } from '@musclemotion/components';
-import { ChangeEvent, useState } from 'react';
+import { Text, Button, Image, ProductDisplay } from '@musclemotion/components';
+import { useState } from 'react';
 import { usePostApi } from '@musclemotion/hooks';
 import { Product } from '@musclemotion/types';
 import ProductAddImageCarousel from './ProductAddImageCarousel';
@@ -11,20 +11,18 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
   const [postProductsResponse, postProductsLoading, postProducts] =
     usePostApi<Product>('/api/product');
 
-  const images = [
-    'https://via.placeholder.com/600x400/ff0000',
-    'https://via.placeholder.com/600x400/00ff00',
-    'https://via.placeholder.com/600x400/0000ff',
-  ];
-
   const [product, setProduct] = useState<Product>({
     name: '',
     price: 0,
+    displayImage1: new Blob(),
+    displayImage2: new Blob(),
   });
+
+  const [productImages, setProductImages] = useState<any>([]);
 
   const handleFieldChange = (
     fieldName: keyof typeof product,
-    value: string
+    value: string | Blob
   ) => {
     setProduct({
       ...product,
@@ -36,19 +34,35 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
     postProducts(product);
   };
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0];
-
-    if (selectedFile) {
-      // Perform actions with the selected file, like uploading to server or displaying preview
-      console.log('Selected file:', selectedFile);
-    }
+  const handleImageChange = (file: Blob) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imageObject = {
+        file: file,
+        url: reader.result as string,
+      };
+      setProductImages([...productImages, imageObject]);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
     <StyledProductList>
-      <ProductAddImageCarousel images={images} />
-      {/* <Image onChange={handleImageChange} width="200px" height="150px" /> */}
+      <ProductAddImageCarousel images={productImages} />
+      <Image
+        onImageChange={handleImageChange}
+        buttonText="Choose Image carousel"
+      />
+
+      <Image
+        onImageChange={(file) => handleFieldChange('displayImage1', file)}
+        buttonText="Choose Image 1"
+      />
+      <Image
+        onImageChange={(file) => handleFieldChange('displayImage2', file)}
+        buttonText="Choose Image 2"
+      />
+
       <div>
         <Button text={'Add'} onClick={() => handleAdd()} />
 
@@ -67,8 +81,9 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
           onChange={(event) => handleFieldChange('price', event.target.value)}
         />
       </div>
+      <ProductDisplay onClick={() => {}} product={product} />
 
-      {/* <div>{error}</div> */}
+      <div>{postProductsResponse.errorMessage}</div>
     </StyledProductList>
   );
 }

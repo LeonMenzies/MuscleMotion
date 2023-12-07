@@ -15,7 +15,10 @@ export class S3 {
   async upload(Bucket: string, Key: string, Body: never) {
     const filePath = path.join(Bucket, Key);
 
-    fs.writeFileSync(filePath, Body);
+    // Convert base64 string to a buffer
+    const imageBuffer = Buffer.from(Body, 'base64');
+
+    fs.writeFileSync(filePath, imageBuffer);
     return new Promise((resolve) => setTimeout(resolve, 10));
   }
 

@@ -2,8 +2,12 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
 
+interface ProductImage {
+  url: string;
+  index: number;
+}
 interface ProductAddImageCarouselProps {
-  images: string[];
+  images: ProductImage[];
 }
 
 export function ProductAddImageCarousel(props: ProductAddImageCarouselProps) {
@@ -28,7 +32,7 @@ export function ProductAddImageCarousel(props: ProductAddImageCarouselProps) {
         {images.map((image, index) => (
           <MainImage
             key={index}
-            src={image}
+            src={image.url}
             alt={`Image ${index + 1}`}
             isActive={index === activeIndex}
           />
@@ -38,7 +42,7 @@ export function ProductAddImageCarousel(props: ProductAddImageCarouselProps) {
         {images.map((image, index) => (
           <Thumbnail
             key={index}
-            src={image}
+            src={image.url}
             alt={`Thumbnail ${index + 1}`}
             onClick={() => setActiveIndex(index)}
             isActive={index === activeIndex}

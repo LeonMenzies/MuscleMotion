@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { sequelize } from './services/sequelize';
 import { apiRouter } from './routes/routes';
+import './cron/cron_runner';
 
 const allowedOrigins = ['http://localhost:4000', 'http://localhost:5000'];
 const app = express();

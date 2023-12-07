@@ -31,4 +31,6 @@ export interface DecodedToken {
 export interface Product {
   name: string;
   price: number;
+  displayImage1: Blob;
+  displayImage2: Blob;
 }

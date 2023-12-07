@@ -15,7 +15,23 @@ export const Products = sequelize.define('Products', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
+  thumbnail1: {
+    type: DataTypes.STRING,
+  },
+  thumbnail2: {
+    type: DataTypes.STRING,
+  },
+  carouselImages: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: [],
+  },
   productInformationID: {
+    type: DataTypes.INTEGER,
+  },
+  categoryID: {
+    type: DataTypes.INTEGER,
+  },
+  subCategoryID: {
     type: DataTypes.INTEGER,
   },
 });

@@ -54,6 +54,7 @@ const StyledNavMenu = styled.div<NavMenuStylesProps>`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  z-index: 5;
 
   width: ${({ open }) => (open ? '200px' : '50px')};
   transition: 0.4s;

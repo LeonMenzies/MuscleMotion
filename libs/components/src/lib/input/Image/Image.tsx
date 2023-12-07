@@ -1,35 +1,82 @@
-import React, { ChangeEventHandler } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 export interface ImageProps {
-  onChange: ChangeEventHandler<HTMLInputElement> | undefined;
-  width?: string;
-  height?: string;
+  onImageChange: (file: Blob) => void;
+  buttonText?: string;
+  buttonStyles?: React.CSSProperties;
 }
 
 export function Image(props: ImageProps) {
-  const { onChange, width, height } = props;
+  const { onImageChange, buttonText = 'Upload Image', buttonStyles } = props;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files && event.target.files[0];
+
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        console.log(selectedFile.type);
+
+        const imageBlob = new File([selectedFile], selectedFile.name, { type: selectedFile.type });
+
+        onImageChange(imageBlob);
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
 
   return (
-    <StyledImage
-      type="file"
-      accept="image/*"
-      onChange={onChange}
-      width={width}
-      height={height}
-    />
+    <StyledContainer>
+      <StyledButton onClick={handleButtonClick} style={buttonStyles}>
+        {buttonText}
+      </StyledButton>
+      <StyledHiddenInput
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        ref={fileInputRef}
+      />
+      {imagePreview && (
+        <StyledImagePreview src={imagePreview} alt="Selected Image" />
+      )}
+    </StyledContainer>
   );
 }
+export default Image;
 
-const StyledImage = styled.input<ImageProps>`
-  /* Common styles for the image input */
-  /* Set width and height if provided */
-  width: ${({ width }) => (width ? width : 'auto')};
-  height: ${({ height }) => (height ? height : 'auto')};
-  /* Other styles as needed */
+const StyledContainer = styled.div`
+  display: inline-block;
+`;
 
-  /* Hide the default file input appearance */
-  appearance: none;
+const StyledButton = styled.button`
+  /* Custom button styles */
+  /* Add your desired button styles */
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
   border: none;
-  /* Add any additional styling you need for the image input */
+  border-radius: 5px;
+  cursor: pointer;
+  /* Other styles as needed */
+`;
+
+const StyledHiddenInput = styled.input`
+  display: none;
+`;
+
+const StyledImagePreview = styled.img`
+  /* Adjust the image preview styles */
+  width: 200px;
+  height: auto;
+  margin-top: 10px;
 `;

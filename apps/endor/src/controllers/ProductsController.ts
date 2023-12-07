@@ -8,6 +8,7 @@ import {
 import { RequestHelper } from '../helpers/RequestHelper';
 import { errorHandler } from '../helpers/ErrorHandler';
 import { APIException } from '../helpers/Exceptions';
+import { ProductService } from '../services/product_service';
 
 export const router = express.Router();
 
@@ -28,27 +29,35 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
-  try {
-    const helper = new RequestHelper(req);
-    const name = helper.getRequiredParam('name');
-    const price = helper.getRequiredParam('price');
+router.post('/create', async (req: Request, res: Response) => {
+  const helper = new RequestHelper(req);
+  const name = helper.getRequiredParam('name');
+  const price = helper.getRequiredParam('price');
+  const category = helper.getRequiredParam('category');
+  const subCategory = helper.getRequiredParam('subCategory');
+  const thumbnail1 = helper.getRequiredParam('thumbnail1');
+  const thumbnail2 = helper.getRequiredParam('thumbnail2');
+  const carouselImages = helper.getRequiredParam('carouselImages');
 
-    const result = await Products.create({
-      name: name,
-      price: price,
-    });
-
-    if (!result) {
-      throw new APIException('Failed to add Product');
-    } else {
+  const productService = new ProductService();
+  productService
+    .createProduct(
+      name,
+      price,
+      category,
+      subCategory,
+      thumbnail1,
+      thumbnail2,
+      carouselImages
+    )
+    .then(() => {
       sendSuccessResponse({
         res,
       });
-    }
-  } catch (error) {
-    errorHandler(error, req, res);
-  }
+    })
+    .catch((error) => {
+      errorHandler(error, req, res);
+    });
 });
 
 router.get('/:id', async (req, res) => {
