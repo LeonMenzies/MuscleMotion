@@ -3,29 +3,21 @@ import { ProductCategories } from '../models/ProductCategories';
 export async function addProductCategory() {
   try {
     // Fetch existing records from the database
-    const existingDBRecords = await ProductCategories.findAll({ raw: true });
+    const existingDBRecords: any = await ProductCategories.findAll({
+      raw: true,
+    });
 
-    console.log(existingDBRecords);
+    const filteredItems = data.filter((item1) => {
+      return !existingDBRecords.some((item2) => item1.id === item2.id);
+    });
 
-    // // Identify new records to sync
-    // const newRecordsToSync:  = data.filter(
-    //   (localRecord) => {
-    //     return !existingDBRecords.some(
-    //       (dbRecord) =>
-    //         dbRecord.id === localRecord.id &&
-    //         dbRecord.name === localRecord.name &&
-    //         dbRecord.displayName === localRecord.displayName
-    //     );
-    //   }
-    // );
-
-    // // Insert new records into the database
-    // if (newRecordsToSync.length > 0) {
-    //   await ProductCategories.bulkCreate(newRecordsToSync);
-    //   console.log('New records synced with the database:', newRecordsToSync);
-    // } else {
-    //   console.log('No new records to sync.');
-    // }
+    // Insert new records into the database
+    if (filteredItems.length > 0) {
+      await ProductCategories.bulkCreate(filteredItems);
+      console.log('New records synced with the database:', filteredItems);
+    } else {
+      console.log('No new records to sync.');
+    }
   } catch (error) {
     console.error('Error syncing records with the database:', error);
   }

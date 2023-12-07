@@ -7,12 +7,16 @@ export const ProductSubCategories = sequelize.define('ProductSubCategories', {
     primaryKey: true,
     autoIncrement: true,
   },
+  categoryID: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  categoryID: {
-    type: DataTypes.INTEGER,
+  displayName: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });

@@ -30,34 +30,38 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/create', async (req: Request, res: Response) => {
-  const helper = new RequestHelper(req);
-  const name = helper.getRequiredParam('name');
-  const price = helper.getRequiredParam('price');
-  const category = helper.getRequiredParam('category');
-  const subCategory = helper.getRequiredParam('subCategory');
-  const thumbnail1 = helper.getRequiredParam('thumbnail1');
-  const thumbnail2 = helper.getRequiredParam('thumbnail2');
-  const carouselImages = helper.getRequiredParam('carouselImages');
+  try {
+    const helper = new RequestHelper(req);
+    const name = helper.getRequiredParam('name');
+    const price = helper.getRequiredParam('price');
+    const category = helper.getRequiredParam('category');
+    const subCategory = helper.getRequiredParam('subCategory');
+    const thumbnail1 = helper.getRequiredParam('thumbnail1');
+    const thumbnail2 = helper.getRequiredParam('thumbnail2');
+    const carouselImages = helper.getRequiredParam('carouselImages');
 
-  const productService = new ProductService();
-  productService
-    .createProduct(
-      name,
-      price,
-      category,
-      subCategory,
-      thumbnail1,
-      thumbnail2,
-      carouselImages
-    )
-    .then(() => {
-      sendSuccessResponse({
-        res,
+    const productService = new ProductService();
+    productService
+      .createProduct(
+        name,
+        price,
+        category,
+        subCategory,
+        thumbnail1,
+        thumbnail2,
+        carouselImages
+      )
+      .then(() => {
+        sendSuccessResponse({
+          res,
+        });
+      })
+      .catch((error) => {
+        errorHandler(error, req, res);
       });
-    })
-    .catch((error) => {
-      errorHandler(error, req, res);
-    });
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
 });
 
 router.get('/:id', async (req, res) => {
