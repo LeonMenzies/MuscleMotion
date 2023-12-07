@@ -11,4 +11,8 @@ export const ProductCategories = sequelize.define('ProductCategories', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  displayName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });

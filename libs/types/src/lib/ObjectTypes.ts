@@ -5,3 +5,9 @@ export type User = {
   Email: string;
   Roles: string;
 };
+
+export type ProductCategoriesT = {
+  id: number;
+  name: string;
+  displayName: string;
+};

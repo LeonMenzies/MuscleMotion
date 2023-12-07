@@ -20,7 +20,7 @@ export class ProductService {
   ) {
     const key = this.createKey(category, subCategory, name);
 
-    this.s3.upload(this.bucket, key, thumbnail1);
+    // this.s3.upload(this.bucket, key, thumbnail1);
 
     return await Products.create({
       name: name,

@@ -22,7 +22,7 @@ export const Products = sequelize.define('Products', {
     type: DataTypes.STRING,
   },
   carouselImages: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
     defaultValue: [],
   },
   productInformationID: {
