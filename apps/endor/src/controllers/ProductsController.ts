@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-
 import { Products } from '../models/Products';
 import {
   sendErrorResponse,
@@ -12,20 +11,17 @@ import { ProductService } from '../services/product_service';
 
 export const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const products = await Products.findAll();
 
     if (products) {
-      sendSuccessResponse({
-        res,
-        data: products,
-      });
+      sendSuccessResponse(res, products);
     } else {
       throw new APIException('Failed to add Product');
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
@@ -36,25 +32,12 @@ router.post('/create', async (req: Request, res: Response) => {
     const price = helper.getRequiredParam('price');
     const category = helper.getRequiredParam('category');
     const subCategory = helper.getRequiredParam('subCategory');
-    const thumbnail1 = helper.getRequiredParam('thumbnail1');
-    const thumbnail2 = helper.getRequiredParam('thumbnail2');
-    const carouselImages = helper.getRequiredParam('carouselImages');
 
     const productService = new ProductService();
     productService
-      .createProduct(
-        name,
-        price,
-        category,
-        subCategory,
-        thumbnail1,
-        thumbnail2,
-        carouselImages
-      )
+      .createProduct(name, price, category, subCategory)
       .then(() => {
-        sendSuccessResponse({
-          res,
-        });
+        sendSuccessResponse(res);
       })
       .catch((error) => {
         errorHandler(error, req, res);
@@ -64,28 +47,21 @@ router.post('/create', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
   try {
     const product = await Products.findByPk(req.params.id);
 
     if (product) {
-      sendSuccessResponse({
-        res,
-        data: product,
-      });
+      sendSuccessResponse(res, product);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Product not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Product not found', 404);
     }
   } catch (error) {
     errorHandler(error, req, res);
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', async (req: Request, res: Response) => {
   try {
     const { productName } = req.body;
     const product = await Products.findByPk(req.params.id);
@@ -93,38 +69,25 @@ router.put('/:id', async (req, res, next) => {
     if (product) {
       await product.update({ productName });
 
-      sendSuccessResponse({
-        res,
-        data: product,
-      });
+      sendSuccessResponse(res, product);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Product not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Product not found', 404);
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const product = await Products.findByPk(req.params.id);
 
     if (product) {
       await product.destroy();
 
-      sendSuccessResponse({
-        res,
-      });
+      sendSuccessResponse(res);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Product not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Product not found', 404);
     }
   } catch (error) {
     errorHandler(error, req, res);

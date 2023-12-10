@@ -7,21 +7,10 @@ export const errorHandler = (error: Error, req: Request, res: Response) => {
 
   switch (error.name) {
     case 'APIException':
-      return sendErrorResponse({
-        res: res,
-        status: 400,
-        errorMessage: error.message,
-      });
+      return sendErrorResponse(res, error.message, 400);
     case 'ValidationException':
-      return sendErrorResponse({
-        res: res,
-        status: 400,
-        errorMessage: error.message,
-      });
+      return sendErrorResponse(res, error.message, 400);
     default:
-      return sendErrorResponse({
-        res: res,
-        errorMessage: 'Internal server error',
-      });
+      return sendErrorResponse(res, 'Internal server error');
   }
 };

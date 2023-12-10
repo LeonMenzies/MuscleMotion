@@ -1,56 +1,50 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { Sizes } from '../models/Sizes'; // Replace with the actual path
 import {
   sendErrorResponse,
   sendSuccessResponse,
 } from '../helpers/ResponseHandler';
+import { errorHandler } from '../helpers/ErrorHandler';
 
 export const router = express.Router();
 
 // Route: GET / - Get all sizes
-router.get('/', async (req, res, next) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const sizes = await Sizes.findAll();
     res.json({ data: sizes });
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
 // Route: POST / - Create a new size
-router.post('/', async (req, res, next) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
     const { sizeName } = req.body;
     const size = await Sizes.create({ sizeName });
     res.json({ entity: size });
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
 // Route: GET /:id - Get a size by ID
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req: Request, res: Response) => {
   try {
     const size = await Sizes.findByPk(req.params.id);
     if (size) {
-      sendSuccessResponse({
-        res,
-        data: size,
-      });
+      sendSuccessResponse(res, size);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Size not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Size not found', 404);
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
 // Route: PUT /:id - Update a size by ID
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', async (req: Request, res: Response) => {
   try {
     const { sizeName } = req.body;
     const size = await Sizes.findByPk(req.params.id);
@@ -62,12 +56,12 @@ router.put('/:id', async (req, res, next) => {
       res.status(404).json({ error: 'Size not found' });
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
 // Route: DELETE /:id - Delete a size by ID
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const size = await Sizes.findByPk(req.params.id);
 
@@ -78,6 +72,6 @@ router.delete('/:id', async (req, res, next) => {
       res.status(404).json({ error: 'Size not found' });
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });

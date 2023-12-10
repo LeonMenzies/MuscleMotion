@@ -9,15 +9,7 @@ export class ProductService {
     this.s3 = new S3('accessKeyId', 'secretAccessKey', 'region');
   }
 
-  async createProduct(
-    name,
-    price,
-    category,
-    subCategory,
-    thumbnail1,
-    thumbnail2,
-    carouselImages
-  ) {
+  async createProduct(name, price, category, subCategory) {
     const key = this.createKey(category, subCategory, name);
 
     console.log(key);
@@ -28,6 +20,14 @@ export class ProductService {
     //   name: name,
     //   price: price,
     // });
+  }
+
+  async addImage(productID, image) {
+    const product = await Products.findByPk(productID);
+
+    console.log(product);
+
+    // const key = this.createKey(category, subCategory, name);
   }
 
   private createKey(category, subCategory, name) {

@@ -1,21 +1,7 @@
 import { Response } from 'express';
 import { logger } from '../helpers/Logger';
 
-type ResponseDataType = {
-  res: Response;
-  success?: boolean;
-  errorMessage?: string;
-  data?: any;
-};
-
-type ErrorResponseDataType = {
-  res: Response;
-  success?: boolean;
-  errorMessage?: string;
-  status?: number;
-};
-
-export const sendSuccessResponse = ({ res, data }: ResponseDataType) => {
+export const sendSuccessResponse = (res: Response, data?: any) => {
   const responseData: {
     success: boolean;
     errorMessage: string;
@@ -32,12 +18,12 @@ export const sendSuccessResponse = ({ res, data }: ResponseDataType) => {
   return res.status(200).json(responseData);
 };
 
-export const sendErrorResponse = ({
-  res,
-  errorMessage,
-  status = 500,
-}: ErrorResponseDataType) => {
-  let responseData = {
+export const sendErrorResponse = (
+  res: Response,
+  errorMessage?: string,
+  status: number = 500
+) => {
+  const responseData = {
     success: false,
     errorMessage: errorMessage,
   };

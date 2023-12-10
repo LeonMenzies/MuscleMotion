@@ -7,6 +7,6 @@ cron.schedule('* * * * * *', () => {});
 
 // Execute task 10 every two minutes
 cron.schedule('* 10 * * * *', () => {
-  addProductSubCategory();
-  addProductCategory();
+  // addProductSubCategory();
+  // addProductCategory();
 });

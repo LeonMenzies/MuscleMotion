@@ -1,81 +1,60 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { Colors } from '../models/Colors';
 import {
   sendErrorResponse,
   sendSuccessResponse,
 } from '../helpers/ResponseHandler';
-import { APIException } from '../helpers/Exceptions';
+import { errorHandler } from '../helpers/ErrorHandler';
 
 export const router = express.Router();
 
 // Route: GET / - Get all colors
-router.get('/', async (req, res, next) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const colors = await Colors.findAll();
 
     if (colors) {
-      sendSuccessResponse({
-        res,
-        data: colors,
-      });
+      sendSuccessResponse(res, colors);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Color not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Color not found', 404);
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
 // Route: POST / - Create a new color
-router.post('/', async (req, res, next) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
     const { colorName } = req.body;
     const color = await Colors.create({ colorName });
 
     if (color) {
-      sendSuccessResponse({
-        res,
-        data: color,
-      });
+      sendSuccessResponse(res, color);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Color not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Color not found', 404);
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req: Request, res: Response) => {
   try {
     const color = await Colors.findByPk(req.params.id);
 
     if (color) {
-      sendSuccessResponse({
-        res,
-        data: color,
-      });
+      sendSuccessResponse(res, color);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Color not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Color not found', 404);
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
 // Route: PUT /:id - Update a color by ID
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', async (req: Request, res: Response) => {
   try {
     const { colorName } = req.body;
     const color = await Colors.findByPk(req.params.id);
@@ -83,41 +62,28 @@ router.put('/:id', async (req, res, next) => {
     if (color) {
       await color.update({ colorName });
 
-      sendSuccessResponse({
-        res,
-        data: color,
-      });
+      sendSuccessResponse(res, color);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Color not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Color not found', 404);
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
 
 // Route: DELETE /:id - Delete a color by ID
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const color = await Colors.findByPk(req.params.id);
 
     if (color) {
       await color.destroy();
 
-      sendSuccessResponse({
-        res,
-      });
+      sendSuccessResponse(res);
     } else {
-      sendErrorResponse({
-        res,
-        errorMessage: 'Color not found',
-        status: 404,
-      });
+      sendErrorResponse(res, 'Color not found', 404);
     }
   } catch (error) {
-    next(error);
+    errorHandler(error, req, res);
   }
 });
