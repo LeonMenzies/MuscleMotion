@@ -12,13 +12,20 @@ export class S3 {
     this.region = region;
   }
 
-  async upload(Bucket: string, Key: string, Body: never) {
-    const filePath = path.join(Bucket, Key);
+  async upload(Bucket: string, Key: string, Body: string, imageName: string) {
+    const folderPath = path.join('aws/buckets', Bucket);
+    const filePath = path.join(folderPath, Key);
+
+    // Create the directory if it doesn't exist
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
 
     // Convert base64 string to a buffer
     const imageBuffer = Buffer.from(Body, 'base64');
 
-    fs.writeFileSync(filePath, imageBuffer);
+    fs.writeFileSync(path.join(filePath, imageName + '.jpg'), imageBuffer);
+
     return new Promise((resolve) => setTimeout(resolve, 10));
   }
 

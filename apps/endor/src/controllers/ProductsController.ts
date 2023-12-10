@@ -30,14 +30,15 @@ router.post('/create', async (req: Request, res: Response) => {
     const helper = new RequestHelper(req);
     const name = helper.getRequiredParam('name');
     const price = helper.getRequiredParam('price');
-    const category = helper.getRequiredParam('category');
-    const subCategory = helper.getRequiredParam('subCategory');
+    const categoryID = helper.getRequiredParam('categoryID');
+    const subCategoryID = helper.getRequiredParam('subCategoryID');
+    const description = helper.getParam('description');
 
     const productService = new ProductService();
     productService
-      .createProduct(name, price, category, subCategory)
-      .then(() => {
-        sendSuccessResponse(res);
+      .createProduct(name, price, categoryID, subCategoryID, description)
+      .then((productID) => {
+        sendSuccessResponse(res, productID);
       })
       .catch((error) => {
         errorHandler(error, req, res);
