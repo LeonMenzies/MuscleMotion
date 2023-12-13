@@ -3,10 +3,13 @@ import { NavMenuItem } from '../NavMenuItem/NavMenuItem';
 import { Squash as Hamburger } from 'hamburger-react';
 import { NavItem } from '@musclemotion/types';
 import { useEffect } from 'react';
+import { RiLogoutBoxFill } from 'react-icons/ri';
 
 /* eslint-disable-next-line */
 export interface NavMenuProps {
   nav: boolean;
+  hide?: boolean;
+  logOut?: () => void;
   setNav: React.Dispatch<React.SetStateAction<boolean>>;
   navItems: NavItem[];
 }
@@ -16,7 +19,7 @@ interface NavMenuStylesProps {
 }
 
 export function NavMenu(props: NavMenuProps) {
-  const { nav, setNav, navItems } = props;
+  const { nav, setNav, navItems, hide, logOut } = props;
 
   useEffect(() => {
     const handleClickAway = (event: MouseEvent) => {
@@ -30,7 +33,7 @@ export function NavMenu(props: NavMenuProps) {
     };
   }, [setNav]);
 
-  return (
+  return hide ? null : (
     <StyledNavMenu open={nav} className={'nav-menu'}>
       <Hamburger toggled={nav} toggle={setNav} size={20} color={'white'} />
       {navItems.map((item: NavItem, index: number) => (
@@ -43,9 +46,41 @@ export function NavMenu(props: NavMenuProps) {
           setNav={setNav}
         />
       ))}
+
+      <StyledNavItem onClick={logOut}>
+        <div className={'icon-container'}>
+          <RiLogoutBoxFill onClick={logOut} />
+        </div>
+        {nav && <div className={'title-container'}>{'Log Out'}</div>}
+      </StyledNavItem>
     </StyledNavMenu>
   );
 }
+
+const StyledNavItem = styled.div`
+  height: 30px;
+  padding: 10px 0;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  width: 150px;
+
+  .title-container {
+    color: white;
+    font-weight: 100;
+  }
+
+  .icon-container {
+    width: 42px;
+    margin-right: 8px;
+    display: flex;
+    justify-content: center;
+    svg {
+      font-size: 18px;
+      color: white;
+    }
+  }
+`;
 
 const StyledNavMenu = styled.div<NavMenuStylesProps>`
   position: fixed;

@@ -1,7 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 
-/* eslint-disable-next-line */
 export interface TextProps {
   title: string;
   type: string;
@@ -20,7 +19,7 @@ export function Text(props: TextProps) {
       <label className={'text-input-label'} htmlFor={id}>
         {title}
       </label>
-      <input
+      <StyledInput
         className={'text-input'}
         type={type}
         id={id}
@@ -37,25 +36,20 @@ export default Text;
 
 const StyledText = styled.div`
   display: flex;
+  gap: 2px;
   flex-direction: column;
-  padding: 0.2rem;
-  margin: 0.2rem 0;
-  background: #dbdbdb;
+  margin: 5px;
+`;
 
-  .text-input-label {
-    font-size: 1rem;
-    padding: 0.1rem;
-  }
+const StyledInput = styled.input`
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #d0d0d0;
+  color: #343434;
 
-  .text-input {
-    padding: 0.1rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    background: none;
-  }
-
-  input:focus {
+  &:focus {
     outline: none;
+    border: none;
   }
 `;

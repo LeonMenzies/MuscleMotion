@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import { Text, Button, Image, ProductDisplay } from '@musclemotion/components';
 import { useState } from 'react';
 import { usePostApi } from '@musclemotion/hooks';
-import { Product } from '@musclemotion/types';
 import ProductAddImageCarousel from './ProductAddImageCarousel';
 
 export interface ProductAddContainerProps {}
 
 export function ProductAddContainer(props: ProductAddContainerProps) {
-  const [postProductsResponse, postProductsLoading, postProducts] =
-    usePostApi<Product>('/api/product');
+  const [postProductsResponse, postProductsLoading, postProducts] = usePostApi<
+    any,
+    any
+  >('/api/product');
 
-  const [product, setProduct] = useState<Product>({
+  const [product, setProduct] = useState<any>({
     name: '',
     price: 0,
     displayImage1: new Blob(),

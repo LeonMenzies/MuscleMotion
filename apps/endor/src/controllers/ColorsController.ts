@@ -53,7 +53,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// Route: PUT /:id - Update a color by ID
+// Route: PUT /:id - Update a color by Id
 router.put('/:id', async (req: Request, res: Response) => {
   try {
     const { colorName } = req.body;

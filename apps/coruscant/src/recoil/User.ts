@@ -7,17 +7,19 @@ type TUserAtom = {
   jwt: string;
 };
 
+export const defaultUser = {
+  loggedIn: false,
+  user: {
+    id: 0,
+    firstName: '',
+    lastName: '',
+    email: '',
+    roles: '',
+  },
+  jwt: '',
+};
+
 export const userAtom = atom<TUserAtom>({
   key: 'user',
-  default: {
-    loggedIn: false,
-    user: {
-      ID: 0,
-      FirstName: '',
-      LastName: '',
-      Email: '',
-      Roles: '',
-    },
-    jwt: '',
-  },
+  default: defaultUser,
 });

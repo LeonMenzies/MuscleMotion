@@ -21,15 +21,19 @@ export const authenticateRequest = (req: Request) => {
 };
 
 export const authenticateLogin = (user: any, password: string) => {
-  if (!user || !bcrypt.compareSync(password, user.PasswordHash)) {
+  if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
     throw new APIException('Invalid Login Details');
   }
 
-  return jwt.sign(
-    { FirstName: user.FirstName, LastName: user.LastName, Roles: user.Roles },
+  const token = jwt.sign(
+    { FirstName: user.firstName, lastName: user.lastName, roles: user.roles },
     SECRET_KEY,
     { expiresIn: '1h' }
   );
+  if (!token) {
+    throw new APIException('Invalid Login Details');
+  }
+  return token;
 };
 
 export const hashPassword = (password: string) => {

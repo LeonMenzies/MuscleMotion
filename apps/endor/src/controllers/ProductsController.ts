@@ -35,14 +35,15 @@ router.post('/create', async (req: Request, res: Response) => {
     const description = helper.getParam('description');
 
     const productService = new ProductService();
-    productService
-      .createProduct(name, price, categoryID, subCategoryID, description)
-      .then((productID) => {
-        sendSuccessResponse(res, productID);
-      })
-      .catch((error) => {
-        errorHandler(error, req, res);
-      });
+    const productID = await productService.createProduct(
+      name,
+      price,
+      categoryID,
+      subCategoryID,
+      description
+    );
+
+    sendSuccessResponse(res, productID);
   } catch (error) {
     errorHandler(error, req, res);
   }

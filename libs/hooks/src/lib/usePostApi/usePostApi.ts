@@ -3,17 +3,17 @@ import axios from 'axios';
 import { ApiResponse } from '@musclemotion/types';
 import { URL_BASE } from '@musclemotion/constants';
 
-export const usePostApi = <T>(
+export const usePostApi = <D, T>(
   endpoint: string
-): [ApiResponse<T>, boolean, (data: T) => Promise<void>] => {
+): [ApiResponse<T>, boolean, (data: D) => Promise<void>] => {
   const [results, setResults] = useState<ApiResponse<T>>({
     success: false,
     errorMessage: '',
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const postProducts = useCallback(
-    async (data: T) => {
+    async (data: D) => {
       try {
         setLoading(true);
         const response = await axios.request<ApiResponse<T>>({

@@ -4,4 +4,5 @@ export type NavItem = {
   icon: ReactNode;
   title: string;
   route: string;
+  show: boolean;
 };
