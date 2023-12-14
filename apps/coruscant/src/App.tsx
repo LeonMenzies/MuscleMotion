@@ -13,6 +13,7 @@ import ProductAddContainer from './pages/productAdd/ProductAddContainer';
 import Inventory from './pages/Inventory/Inventory';
 import LoginContainer from './pages/login/LoginContainer';
 import { defaultUser, userAtom } from './recoil/User';
+import UserContainer from './pages/user/UserContainer';
 
 function App() {
   const [nav, setNav] = useRecoilState(navAtom);
@@ -72,6 +73,10 @@ function App() {
         <Routes>
           <Route path="login" index element={<LoginContainer />} />
 
+          <Route
+            path="user"
+            element={renderElement(user.loggedIn, UserContainer, '/login')}
+          />
           <Route
             path="dashboard"
             element={renderElement(user.loggedIn, Dashboard, '/login')}

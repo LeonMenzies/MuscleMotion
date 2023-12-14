@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
+import { ProductSubCategories } from './ProductSubCategories';
 
 export const ProductCategories = sequelize.define('ProductCategories', {
   id: {
@@ -16,3 +17,5 @@ export const ProductCategories = sequelize.define('ProductCategories', {
     allowNull: false,
   },
 });
+
+ProductCategories.hasMany(ProductSubCategories, { foreignKey: 'categoryID' });

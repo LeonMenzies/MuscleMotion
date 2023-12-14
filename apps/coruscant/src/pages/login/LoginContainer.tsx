@@ -15,7 +15,7 @@ export function LoginContainer(props: LoginContainerProps) {
   const [postLoginResponse, postLoginLoading, postLogin] = usePostApi<
     LoginRequestT,
     LoginResponseT
-  >('/api/login');
+  >('/login');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [user, setUser] = useState<LoginRequestT>({
     email: 'leon.menzies@mm.com',

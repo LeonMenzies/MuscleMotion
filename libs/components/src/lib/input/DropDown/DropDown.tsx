@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ChangeEventHandler } from 'react';
+import { log } from 'console';
 
-/* eslint-disable-next-line */
 export interface DropDownProps {
   options: {
     label: string;
@@ -13,6 +13,7 @@ export interface DropDownProps {
 
 export function DropDown(props: DropDownProps) {
   const { options, onChange, value } = props;
+
   return (
     <StyledDropDown value={value} onChange={onChange}>
       <option value="">Select an option</option>
@@ -28,5 +29,14 @@ export function DropDown(props: DropDownProps) {
 export default DropDown;
 
 const StyledDropDown = styled.select`
-  color: pink;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #d0d0d0;
+  color: #343434;
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
 `;

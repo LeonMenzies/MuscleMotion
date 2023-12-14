@@ -5,6 +5,7 @@ export * from './lib/input/Text/Text';
 export * from './lib/input/TextArea/TextArea';
 export * from './lib/input/Image/Image';
 export * from './lib/input/Error/Error';
+export * from './lib/input/DropDown/DropDown';
 
 export * from './lib/nav/NavMenu/NavMenu';
 export * from './lib/nav/NavMenuItem/NavMenuItem';

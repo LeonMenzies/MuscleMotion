@@ -11,7 +11,7 @@ export interface ProductListContainerProps {}
 
 export function ProductListContainer(props: ProductListContainerProps) {
   const [fetchProductsResponse, fetchProductsLoading, fetchProducts] =
-    useFetchApi<Product[]>('/api/product');
+    useFetchApi<Product[]>('/product');
   const navigate = useNavigate();
 
   useEffect(() => {
