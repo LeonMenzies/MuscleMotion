@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { ProductDisplay } from '@musclemotion/components';
-import { Product } from '@musclemotion/types';
+import { ProductT } from '@musclemotion/types';
 import { useNavigate } from 'react-router-dom';
 
 export interface ProductListDisplayProps {
-  productList: Product[] | undefined;
+  productList: ProductT[] | undefined;
 }
 
 export function ProductListDisplay(props: ProductListDisplayProps) {
@@ -14,7 +14,7 @@ export function ProductListDisplay(props: ProductListDisplayProps) {
   return (
     <StyledProductList>
       {productList &&
-        productList.map((product: Product, index: number) => (
+        productList.map((product: ProductT, index: number) => (
           <ProductDisplay
             product={product}
             onClick={() => navigate('/product-add')}

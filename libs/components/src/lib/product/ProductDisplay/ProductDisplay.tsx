@@ -1,9 +1,9 @@
-import { Product } from '@musclemotion/types';
+import { ProductT } from '@musclemotion/types';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 export interface ProductDisplayProps {
-  product: Product;
+  product: ProductT;
   onClick: () => void;
 }
 
@@ -17,19 +17,19 @@ export function ProductDisplay(props: ProductDisplayProps) {
   const [displayImage2Url, setDisplayImage2Url] = useState<string | null>(null);
   const [hovered, setHovered] = useState(false);
 
-  useEffect(() => {
-    const reader1 = new FileReader();
-    reader1.onload = () => {
-      setDisplayImage1Url(reader1.result as string);
-    };
-    reader1.readAsDataURL(product.displayImage1 ?? new Blob());
+  // useEffect(() => {
+  //   const reader1 = new FileReader();
+  //   reader1.onload = () => {
+  //     setDisplayImage1Url(reader1.result as string);
+  //   };
+  //   reader1.readAsDataURL(product.displayImage1 ?? new Blob());
 
-    const reader2 = new FileReader();
-    reader2.onload = () => {
-      setDisplayImage2Url(reader2.result as string);
-    };
-    reader2.readAsDataURL(product.displayImage2 ?? new Blob());
-  }, [product.displayImage1, product.displayImage2]);
+  //   const reader2 = new FileReader();
+  //   reader2.onload = () => {
+  //     setDisplayImage2Url(reader2.result as string);
+  //   };
+  //   reader2.readAsDataURL(product.displayImage2 ?? new Blob());
+  // }, [product.displayImage1, product.displayImage2]);
 
   return (
     <StyledProductDisplay

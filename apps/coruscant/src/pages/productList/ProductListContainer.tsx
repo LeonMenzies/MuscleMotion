@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useFetchApi } from '@musclemotion/hooks';
-import { Product } from '@musclemotion/types';
+import { ProductT } from '@musclemotion/types';
 import { ProductListDisplay } from './ProductListDisplay';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ export interface ProductListContainerProps {}
 
 export function ProductListContainer(props: ProductListContainerProps) {
   const [fetchProductsResponse, fetchProductsLoading, fetchProducts] =
-    useFetchApi<Product[]>('/product');
+    useFetchApi<ProductT[]>('/product');
   const navigate = useNavigate();
 
   useEffect(() => {

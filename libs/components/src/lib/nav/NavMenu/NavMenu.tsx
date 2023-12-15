@@ -35,18 +35,19 @@ export function NavMenu(props: NavMenuProps) {
 
   return hide ? null : (
     <StyledNavMenu open={nav} className={'nav-menu'}>
-      <Hamburger toggled={nav} toggle={setNav} size={20} color={'white'} />
-      {navItems.map((item: NavItem, index: number) => (
-        <NavMenuItem
-          key={index}
-          open={nav}
-          icon={item.icon}
-          title={item.title}
-          route={item.route}
-          setNav={setNav}
-        />
-      ))}
-
+      <div>
+        <Hamburger toggled={nav} toggle={setNav} size={20} color={'white'} />
+        {navItems.map((item: NavItem, index: number) => (
+          <NavMenuItem
+            key={index}
+            open={nav}
+            icon={item.icon}
+            title={item.title}
+            route={item.route}
+            setNav={setNav}
+          />
+        ))}
+      </div>
       <StyledNavItem onClick={logOut}>
         <div className={'icon-container'}>
           <RiLogoutBoxFill onClick={logOut} />
@@ -64,13 +65,15 @@ const StyledNavItem = styled.div`
   text-decoration: none;
   align-items: center;
   width: 150px;
-
+  margin-bottom: 10px;
   .title-container {
     color: white;
     font-weight: 100;
   }
 
   .icon-container {
+    padding-left: 4px;
+
     width: 42px;
     margin-right: 8px;
     display: flex;
@@ -90,6 +93,7 @@ const StyledNavMenu = styled.div<NavMenuStylesProps>`
   flex-direction: column;
   overflow: hidden;
   z-index: 5;
+  justify-content: space-between;
 
   width: ${({ open }) => (open ? '200px' : '50px')};
   transition: 0.4s;

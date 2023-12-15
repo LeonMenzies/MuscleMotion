@@ -1,4 +1,3 @@
-import { DecodedToken } from '@musclemotion/types';
 import { authenticateRequest } from './AuthMiddleware';
 import { Request } from 'express';
 import { APIException } from './Exceptions';
@@ -6,7 +5,6 @@ import { validateString } from './Validators';
 
 export class RequestHelper {
   private request: Request;
-  private decodedToken: DecodedToken | null = null;
 
   constructor(request: Request) {
     this.request = request;
