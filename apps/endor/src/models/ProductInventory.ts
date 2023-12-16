@@ -7,15 +7,15 @@ export const ProductInventory = sequelize.define('ProductInventory', {
     primaryKey: true,
     autoIncrement: true,
   },
-  productID: {
+  productId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  categoryID: {
+  categoryId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  subCategoryID: {
+  subCategoryId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },

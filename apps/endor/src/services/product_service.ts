@@ -14,19 +14,19 @@ export class ProductService {
     this.s3 = new S3('accessKeyId', 'secretAccessKey', 'region');
   }
 
-  async createProduct(name, price, categoryID, subCategoryID, description) {
+  async createProduct(name, price, categoryId, subCategoryId, description) {
     let product;
 
     // Start a transaction
     await sequelize.transaction(async (t) => {
       // Create ProductInformation record
 
-      // Check if categoryID exists in ProductCategories table
-      const categoryExists = await ProductCategories.findByPk(categoryID, {
+      // Check if categoryId exists in ProductCategories table
+      const categoryExists = await ProductCategories.findByPk(categoryId, {
         transaction: t,
       });
       const subCategoryExists = await ProductSubCategories.findByPk(
-        subCategoryID,
+        subCategoryId,
         { transaction: t }
       );
 
@@ -43,12 +43,12 @@ export class ProductService {
         { transaction: t }
       );
 
-      // Create Product record using the obtained productInformationID
+      // Create Product record using the obtained productInformationId
       product = await Products.create(
         {
-          productInformationID: productInformation.dataValues.id,
-          categoryID,
-          subCategoryID,
+          productInformationId: productInformation.dataValues.id,
+          categoryId,
+          subCategoryId,
           name,
           price,
         },
@@ -56,21 +56,21 @@ export class ProductService {
       );
     });
 
-    return { productID: product.dataValues.id };
+    return { productId: product.dataValues.id };
   }
 
-  async addImage(productID: string, image: string, imageName: string) {
-    const product = await Products.findByPk(productID);
+  async addImage(productId: string, image: string, imageName: string) {
+    const product = await Products.findByPk(productId);
 
     if (!product) {
       throw new APIException('Product not found');
     }
 
     const category = await ProductCategories.findByPk(
-      product.dataValues.categoryID
+      product.dataValues.categoryId
     );
     const subCategory = await ProductSubCategories.findByPk(
-      product.dataValues.subCategoryID
+      product.dataValues.subCategoryId
     );
 
     if (!category || !subCategory) {
@@ -86,7 +86,7 @@ export class ProductService {
     this.s3.upload('product-images', key, image, imageName);
   }
 
-  private createKey(category: string, subCategory: string, productID: string) {
-    return `/${category}/${subCategory}/${productID}`;
+  private createKey(category: string, subCategory: string, productId: string) {
+    return `/${category}/${subCategory}/${productId}`;
   }
 }

@@ -26,14 +26,11 @@ export function LoginContainer(props: LoginContainerProps) {
     if (postLoginResponse.success && postLoginResponse.data) {
       setUserAtom({
         loggedIn: true,
-        user: {
-          id: postLoginResponse.data.user.id,
-          firstName: postLoginResponse.data.user.firstName,
-          lastName: postLoginResponse.data.user.lastName,
-          email: postLoginResponse.data.user.email,
-          roles: postLoginResponse.data.user.roles,
-        },
-        jwt: postLoginResponse.data.jwt,
+        id: postLoginResponse.data.id,
+        firstName: postLoginResponse.data.firstName,
+        lastName: postLoginResponse.data.lastName,
+        email: postLoginResponse.data.email,
+        roles: postLoginResponse.data.roles,
       });
       navigate('/dashboard');
     } else {

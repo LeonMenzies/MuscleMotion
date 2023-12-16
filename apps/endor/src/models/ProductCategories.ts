@@ -18,4 +18,4 @@ export const ProductCategories = sequelize.define('ProductCategories', {
   },
 });
 
-ProductCategories.hasMany(ProductSubCategories, { foreignKey: 'categoryID' });
+ProductCategories.hasMany(ProductSubCategories, { foreignKey: 'categoryId' });

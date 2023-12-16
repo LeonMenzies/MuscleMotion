@@ -1,4 +1,5 @@
-export type User = {
+export type UserT = {
+  loggedIn: boolean;
   id: number;
   firstName: string;
   lastName: string;
@@ -14,9 +15,9 @@ export type ProductCategoriesT = {
 
 export type ProductT = {
   id: number;
-  productInformationID: number;
-  categoryID: number;
-  subCategoryID: number;
+  productInformationId: number;
+  categoryId: number;
+  subCategoryId: number;
   name: string;
   price: number;
   thumbnail1: string;

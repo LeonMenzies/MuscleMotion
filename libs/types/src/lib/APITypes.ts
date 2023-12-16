@@ -10,13 +10,10 @@ export type LoginRequestT = {
 };
 
 export type LoginResponseT = {
-  user: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    roles: string;
-    passwordHash: string;
-  };
-  jwt: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  roles: string;
+  passwordHash: string;
 };

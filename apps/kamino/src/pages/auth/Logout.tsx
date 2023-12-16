@@ -11,7 +11,7 @@ const Logout = () => {
     serUser({
       loggedIn: false,
       user: {
-        ID: 0,
+        id: 0,
         FirstName: '',
         LastName: '',
         Email: '',
@@ -19,7 +19,7 @@ const Logout = () => {
       },
       jwt: '',
     });
-  }, [navigate]);
+  }, [serUser]);
 
   return <></>;
 };

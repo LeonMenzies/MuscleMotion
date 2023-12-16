@@ -18,6 +18,7 @@ export const useFetchApi = <T>(
       const response = await axios.request<ApiResponse<T>>({
         method: 'GET',
         url: URL_BASE + endpoint,
+        withCredentials: true,
       });
 
       if (!response.data.success) {

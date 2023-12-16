@@ -44,7 +44,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 // Route: POST /users/login - Login user
 router.post('/login', async (req: Request, res: Response) => {
   try {
-    const helper = new RequestHelper(req);
+    const helper = new RequestHelper(req, true);
     const email = helper.getRequiredParam('email');
     const password = helper.getRequiredParam('password');
 
@@ -65,8 +65,36 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 
     const jwt = authenticateLogin(user, password);
+    res.cookie('token', jwt, { httpOnly: true });
 
-    sendSuccessResponse(res, { user, jwt });
+    sendSuccessResponse(res, user);
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
+});
+
+router.get('/auth', async (req: Request, res: Response) => {
+  try {
+    const helper = new RequestHelper(req);
+    const email = helper.getUserEmail();
+
+    const user = await Users.findOne({
+      where: { email },
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'roles',
+        'passwordHash',
+      ],
+    });
+
+    if (!user) {
+      throw new APIException('Invalid Login Details');
+    }
+
+    sendSuccessResponse(res, user);
   } catch (error) {
     errorHandler(error, req, res);
   }

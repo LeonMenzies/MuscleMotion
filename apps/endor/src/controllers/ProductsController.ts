@@ -12,8 +12,11 @@ export const router = express.Router();
 
 router.get('/products', async (req: Request, res: Response) => {
   try {
-    const products = await Products.findAll();
+    const helper = new RequestHelper(req);
+    const categoryId = helper.getParam('categoryId');
+    const subCategoryId = helper.getParam('subCategoryId');
 
+    const products = await Products.findAll();
     if (products) {
       sendSuccessResponse(res, products);
     } else {
@@ -29,20 +32,20 @@ router.post('/create', async (req: Request, res: Response) => {
     const helper = new RequestHelper(req);
     const name = helper.getRequiredParam('name');
     const price = helper.getRequiredParam('price');
-    const categoryID = helper.getRequiredParam('categoryID');
-    const subCategoryID = helper.getRequiredParam('subCategoryID');
+    const categoryId = helper.getRequiredParam('categoryId');
+    const subCategoryId = helper.getRequiredParam('subCategoryId');
     const description = helper.getParam('description');
 
     const productService = new ProductService();
-    const productID = await productService.createProduct(
+    const productId = await productService.createProduct(
       name,
       price,
-      categoryID,
-      subCategoryID,
+      categoryId,
+      subCategoryId,
       description
     );
 
-    sendSuccessResponse(res, productID);
+    sendSuccessResponse(res, productId);
   } catch (error) {
     errorHandler(error, req, res);
   }
@@ -55,7 +58,7 @@ router.get('/categories', async (req: Request, res: Response) => {
       include: [
         {
           model: ProductSubCategories,
-          attributes: ['id', 'categoryID', 'name', 'displayName'],
+          attributes: ['id', 'categoryId', 'name', 'displayName'],
         },
       ],
     });

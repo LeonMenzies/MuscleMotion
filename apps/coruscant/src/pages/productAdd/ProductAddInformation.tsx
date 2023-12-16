@@ -11,8 +11,8 @@ export function ProductInformation(props: ProductAddInformationProps) {
   const [product, setProduct] = useState<any>({
     name: '',
     price: 0,
-    categoryID: 0,
-    subCategoryID: 0,
+    categoryId: 0,
+    subCategoryId: 0,
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function ProductInformation(props: ProductAddInformationProps) {
       ProductSubCategories: [
         {
           id: 0,
-          categoryID: 0,
+          categoryId: 0,
           name: '',
           displayName: 'Select a sub category',
         },
@@ -72,7 +72,7 @@ export function ProductInformation(props: ProductAddInformationProps) {
       return [
         {
           id: 0,
-          categoryID: 0,
+          categoryId: 0,
           name: '',
           displayName: 'Select a sub category',
         },
@@ -100,17 +100,17 @@ export function ProductInformation(props: ProductAddInformationProps) {
       />
       <DropDown
         onChange={(event) =>
-          handleFieldChange('categoryID', event.target.value)
+          handleFieldChange('categoryId', event.target.value)
         }
-        value={product.categoryID}
+        value={product.categoryId}
         options={mappedCategories}
       />
       <DropDown
         onChange={(event) =>
-          handleFieldChange('subCategoryID', event.target.value)
+          handleFieldChange('subCategoryId', event.target.value)
         }
-        value={product.subCategoryID}
-        options={findParentCategory(product.categoryID)}
+        value={product.subCategoryId}
+        options={findParentCategory(product.categoryId)}
       />
 
       <ProductDisplay onClick={() => {}} product={product} />

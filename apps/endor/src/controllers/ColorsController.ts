@@ -71,7 +71,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// Route: DELETE /:id - Delete a color by ID
+// Route: DELETE /:id - Delete a color by Id
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const color = await Colors.findByPk(req.params.id);

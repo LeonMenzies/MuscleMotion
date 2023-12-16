@@ -5,14 +5,24 @@ import { validateString } from './Validators';
 
 export class RequestHelper {
   private request: Request;
+  private userEmail: string;
+  private userId: number;
 
-  constructor(request: Request) {
+  constructor(request: Request, skipAuth = false) {
     this.request = request;
-    this.validateJwt();
+    if (!skipAuth) {
+      this.validateJwt();
+    }
   }
 
   private validateJwt() {
-    authenticateRequest(this.request);
+    const decodedToken = authenticateRequest(this.request);
+    this.userEmail = decodedToken.email;
+    this.userId = decodedToken.id;
+  }
+
+  getUserEmail(): string {
+    return this.userEmail;
   }
 
   getParam(paramName: string): string | undefined {

@@ -20,6 +20,7 @@ export const usePostApi = <D, T>(
           data: data,
           method: 'POST',
           url: URL_BASE + endpoint,
+          withCredentials: true,
         });
 
         if (!response.data.success) {

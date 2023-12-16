@@ -29,7 +29,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// Route: GET /:id - Get a size by ID
+// Route: GET /:id - Get a size by id
 router.get('/:id', async (req: Request, res: Response) => {
   try {
     const size = await Sizes.findByPk(req.params.id);
@@ -43,7 +43,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// Route: PUT /:id - Update a size by ID
+// Route: PUT /:id - Update a size by d
 router.put('/:id', async (req: Request, res: Response) => {
   try {
     const { sizeName } = req.body;
@@ -60,7 +60,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// Route: DELETE /:id - Delete a size by ID
+// Route: DELETE /:id - Delete a size by id
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const size = await Sizes.findByPk(req.params.id);

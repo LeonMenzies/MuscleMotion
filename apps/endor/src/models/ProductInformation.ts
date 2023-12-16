@@ -13,4 +13,4 @@ export const ProductInformation = sequelize.define('ProductInformation', {
   },
 });
 
-// ProductInformation.belongsToMany(Products, { through: 'productInformationID' });
+// ProductInformation.belongsToMany(Products, { through: 'productInformationId' });

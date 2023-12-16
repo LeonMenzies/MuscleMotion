@@ -12,11 +12,11 @@ export const userAtom = atom<TUserAtom>({
   default: {
     loggedIn: false,
     user: {
-      ID: 0,
-      FirstName: '',
-      LastName: '',
-      Email: '',
-      Roles: '',
+      id: 0,
+      firstName: '',
+      lastName: '',
+      email: '',
+      roles: '',
     },
     jwt: '',
   },

@@ -1,22 +1,26 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
 
-export const ProductSubCategories = sequelize.define('ProductSubCategories', {
+export const ProductImages = sequelize.define('ProductImages', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  categoryId: {
+  productId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: 'Products',
+      key: 'id',
+    },
   },
-  name: {
-    type: DataTypes.STRING,
+  imageUrl: {
+    type: DataTypes.INTEGER,
     allowNull: false,
-  },
-  displayName: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    references: {
+      model: 'Colors',
+      key: 'id',
+    },
   },
 });

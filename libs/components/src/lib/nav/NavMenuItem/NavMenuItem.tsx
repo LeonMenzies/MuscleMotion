@@ -52,6 +52,9 @@ const StyledNavItem = styled(NavLink)`
   }
 
   &.active {
+    .title-container {
+      padding-left: 4px;
+    }
     .icon-container {
       background-color: white;
       padding: 5px 0;

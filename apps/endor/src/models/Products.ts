@@ -7,13 +7,13 @@ export const Products = sequelize.define('Products', {
     primaryKey: true,
     autoIncrement: true,
   },
-  productInformationID: {
+  productInformationId: {
     type: DataTypes.INTEGER,
   },
-  categoryID: {
+  categoryId: {
     type: DataTypes.INTEGER,
   },
-  subCategoryID: {
+  subCategoryId: {
     type: DataTypes.INTEGER,
   },
   name: {
@@ -23,15 +23,5 @@ export const Products = sequelize.define('Products', {
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
-  },
-  thumbnail1: {
-    type: DataTypes.STRING,
-  },
-  thumbnail2: {
-    type: DataTypes.STRING,
-  },
-  carouselImages: {
-    type: DataTypes.JSON,
-    defaultValue: [],
   },
 });

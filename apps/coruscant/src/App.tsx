@@ -3,7 +3,7 @@ import { NavMenu, PageNotFound } from '@musclemotion/components';
 import { useRecoilState } from 'recoil';
 import Dashboard from './pages/dashboard/Dashboard';
 import { navAtom } from './recoil/Nav';
-import { NavItem } from '@musclemotion/types';
+import { NavItem, UserT } from '@musclemotion/types';
 import styled from 'styled-components';
 import { MdDashboard, MdInventory } from 'react-icons/md';
 import { FaUser, FaListUl, FaRegPlusSquare } from 'react-icons/fa';
@@ -14,10 +14,16 @@ import Inventory from './pages/Inventory/Inventory';
 import LoginContainer from './pages/login/LoginContainer';
 import { defaultUser, userAtom } from './recoil/User';
 import UserContainer from './pages/user/UserContainer';
+import { useFetchApi } from '@musclemotion/hooks';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [nav, setNav] = useRecoilState(navAtom);
   const [user, setUser] = useRecoilState(userAtom);
+  const [loading, setLoading] = useState(true);
+
+  const [userResponse, , fetchUser] = useFetchApi<UserT>('/auth');
+  console.log(loading);
 
   function renderElement(
     isAllowed: boolean,
@@ -27,10 +33,30 @@ function App() {
     return isAllowed ? <Component /> : <Navigate to={redirectPath} replace />;
   }
 
+  //TODO fix reloading page issue and add logs to database
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  useEffect(() => {
+    setLoading(false);
+    if (userResponse.success && userResponse.data) {
+      setUser({
+        loggedIn: true,
+        id: userResponse.data.id,
+        firstName: userResponse.data.firstName,
+        lastName: userResponse.data.lastName,
+        email: userResponse.data.email,
+        roles: userResponse.data.roles,
+      });
+    }
+  }, [userResponse, setUser]);
+
   const navItems: NavItem[] = [
     {
       icon: <FaUser />,
-      title: `${user.user.firstName} ${user.user.lastName}`,
+      title: `${user.firstName} ${user.lastName}`,
       route: '/user',
       show: user.loggedIn,
     },

@@ -15,7 +15,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// Route: GET /users/:id - Get a user by ID
+// Route: GET /users/:id - Get a user by id
 router.get('/:id', async (req: Request, res: Response) => {
   try {
     const user = await Users.findByPk(req.params.id);
@@ -50,7 +50,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// Route: PUT /users/:id - Update a user by ID
+// Route: PUT /users/:id - Update a user by id
 router.put('/:id', async (req: Request, res: Response) => {
   try {
     const user = await Users.findByPk(req.params.id);
@@ -65,7 +65,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// Route: DELETE /users/:id - Delete a user by ID
+// Route: DELETE /users/:id - Delete a user by id
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const user = await Users.findByPk(req.params.id);
