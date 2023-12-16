@@ -9,6 +9,7 @@ import { ProductCategories } from '../models/ProductCategories';
 import { ProductSubCategories } from '../models/ProductSubCategories';
 import { ProductImages } from '../models/ProductImages';
 import { ProductImageTypes } from '../models/ProductImageTypes';
+import { ProductInformation } from '../models/ProductInformation';
 
 export const router = express.Router();
 
@@ -35,6 +36,8 @@ router.get('/products', async (req: Request, res: Response) => {
     if (productId) {
       products = await Products.findOne({
         where: whereClause,
+        attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
+
         include: [
           {
             model: ProductImages,
@@ -48,11 +51,17 @@ router.get('/products', async (req: Request, res: Response) => {
               },
             ],
           },
+          {
+            model: ProductInformation,
+            as: 'ProductInformation',
+            attributes: ['description'],
+          },
         ],
       });
     } else {
       products = await Products.findAll({
         where: whereClause,
+        attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
         include: [
           {
             model: ProductImages,

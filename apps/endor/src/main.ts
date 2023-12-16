@@ -21,12 +21,11 @@ sequelize
   .sync({ alter: true })
   .then(() => {
     console.log('Database successfully connected');
+    defineAssociations();
   })
   .catch((err) => {
     console.log('Error', err);
   });
-
-defineAssociations();
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
