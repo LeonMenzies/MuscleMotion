@@ -6,6 +6,7 @@ import { apiRouter } from './routes/routes';
 import './cron/cron_runner';
 
 import cookieParser from 'cookie-parser';
+import { defineAssociations } from './models/assocations';
 const allowedOrigins = ['http://localhost:4000', 'http://localhost:5000'];
 const app = express();
 
@@ -24,6 +25,8 @@ sequelize
   .catch((err) => {
     console.log('Error', err);
   });
+
+defineAssociations();
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {

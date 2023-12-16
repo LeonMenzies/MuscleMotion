@@ -7,6 +7,8 @@ import { APIException } from '../helpers/Exceptions';
 import { ProductService } from '../services/product_service';
 import { ProductCategories } from '../models/ProductCategories';
 import { ProductSubCategories } from '../models/ProductSubCategories';
+import { ProductImages } from '../models/ProductImages';
+import { ProductImageTypes } from '../models/ProductImageTypes';
 
 export const router = express.Router();
 
@@ -15,12 +17,63 @@ router.get('/products', async (req: Request, res: Response) => {
     const helper = new RequestHelper(req);
     const categoryId = helper.getParam('categoryId');
     const subCategoryId = helper.getParam('subCategoryId');
+    const productId = helper.getParam('productId');
 
-    const products = await Products.findAll();
+    let products;
+
+    const whereClause = {};
+    if (productId) {
+      whereClause['id'] = productId;
+    }
+    if (categoryId) {
+      whereClause['categoryId'] = categoryId;
+    }
+    if (subCategoryId) {
+      whereClause['subCategoryId'] = subCategoryId;
+    }
+
+    if (productId) {
+      products = await Products.findOne({
+        where: whereClause,
+        include: [
+          {
+            model: ProductImages,
+            as: 'ProductImages',
+            attributes: ['imageUrl'],
+            include: [
+              {
+                model: ProductImageTypes,
+                as: 'ProductImageType',
+                attributes: ['imageType'],
+              },
+            ],
+          },
+        ],
+      });
+    } else {
+      products = await Products.findAll({
+        where: whereClause,
+        include: [
+          {
+            model: ProductImages,
+            as: 'ProductImages',
+            attributes: ['imageUrl'],
+            include: [
+              {
+                model: ProductImageTypes,
+                as: 'ProductImageType',
+                attributes: ['imageType'],
+              },
+            ],
+          },
+        ],
+      });
+    }
+
     if (products) {
       sendSuccessResponse(res, products);
     } else {
-      throw new APIException('Failed to add Product');
+      throw new APIException('No Products Found');
     }
   } catch (error) {
     errorHandler(error, req, res);

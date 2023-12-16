@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
-import { ProductImages } from './ProductImages';
 
 export const ProductImageTypes = sequelize.define('ProductImageTypes', {
   id: {
@@ -13,5 +12,3 @@ export const ProductImageTypes = sequelize.define('ProductImageTypes', {
     allowNull: false,
   },
 });
-
-ProductImageTypes.hasOne(ProductImages, { foreignKey: 'imageTypeId' });
