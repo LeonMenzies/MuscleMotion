@@ -10,13 +10,13 @@ router.post('/image', async (req: Request, res: Response) => {
   try {
     const helper = new RequestHelper(req);
     const image = helper.getRequiredParam('image');
-    const imageName = helper.getRequiredParam('imageName');
+    const imageType = helper.getRequiredParam('imageType');
     const productId = helper.getRequiredParam('productId');
 
     const productService = new ProductService();
     productService
-      .addImage(productId, image, imageName)
-      .then(() => sendSuccessResponse(res));
+      .addImage(productId, image, imageType)
+      .then((imageID) => sendSuccessResponse(res, imageID));
   } catch (error) {
     errorHandler(error, req, res);
   }

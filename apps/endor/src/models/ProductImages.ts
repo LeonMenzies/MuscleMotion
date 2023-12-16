@@ -15,12 +15,15 @@ export const ProductImages = sequelize.define('ProductImages', {
       key: 'id',
     },
   },
-  imageUrl: {
+  productImageTypeId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     references: {
-      model: 'Colors',
+      model: 'ProductImageTypes',
       key: 'id',
     },
+  },
+  imageUrl: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 });

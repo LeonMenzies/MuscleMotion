@@ -17,8 +17,8 @@ export class S3 {
     const filePath = path.join(folderPath, Key);
 
     // Create the directory if it doesn't exist
-    if (!fs.existsSync(folderPath)) {
-      fs.mkdirSync(folderPath, { recursive: true });
+    if (!fs.existsSync(filePath)) {
+      fs.mkdirSync(filePath, { recursive: true });
     }
 
     // Convert base64 string to a buffer

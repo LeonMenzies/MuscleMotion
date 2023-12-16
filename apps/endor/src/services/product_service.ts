@@ -1,6 +1,8 @@
 import S3 from '../aws/S3';
 import { APIException } from '../helpers/Exceptions';
 import { ProductCategories } from '../models/ProductCategories';
+import { ProductImageTypes } from '../models/ProductImageTypes';
+import { ProductImages } from '../models/ProductImages';
 import { ProductInformation } from '../models/ProductInformation';
 import { ProductSubCategories } from '../models/ProductSubCategories';
 import { Products } from '../models/Products';
@@ -59,7 +61,7 @@ export class ProductService {
     return { productId: product.dataValues.id };
   }
 
-  async addImage(productId: string, image: string, imageName: string) {
+  async addImage(productId: string, image: string, imageType: string) {
     const product = await Products.findByPk(productId);
 
     if (!product) {
@@ -77,13 +79,31 @@ export class ProductService {
       throw new APIException('Category or Subcategory not found');
     }
 
+    const imageTypeRecord = await ProductImageTypes.findOne({
+      where: {
+        imageType: imageType,
+      },
+    });
+
+    if (!imageTypeRecord) {
+      throw new APIException('Image type not found');
+    }
+
     const key = this.createKey(
       category.dataValues.name,
       subCategory.dataValues.name,
       product.dataValues.id
     );
 
-    this.s3.upload('product-images', key, image, imageName);
+    this.s3.upload('product-images', key, image, imageType);
+
+    const newImage = await ProductImages.create({
+      productId: productId,
+      imageUrl: `${key}/${imageType}.jpg`,
+      productImageTypeId: imageTypeRecord.dataValues.id,
+    });
+
+    return { imageId: newImage.dataValues.id };
   }
 
   private createKey(category: string, subCategory: string, productId: string) {
