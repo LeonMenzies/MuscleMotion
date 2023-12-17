@@ -99,7 +99,7 @@ export class ProductService {
 
     const newImage = await ProductImages.create({
       productId: productId,
-      imageUrl: `${key}/${imageType}.jpg`,
+      imageUrl: `${key}/${imageType}.jpeg`,
       productImageTypeId: imageTypeRecord.dataValues.id,
     });
 

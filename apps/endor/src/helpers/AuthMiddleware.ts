@@ -26,7 +26,7 @@ export const authenticateLogin = (user: any, password: string) => {
   }
 
   const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
-    expiresIn: '1h',
+    expiresIn: '5h',
   });
   if (!token) {
     throw new APIException('Invalid Login Details');

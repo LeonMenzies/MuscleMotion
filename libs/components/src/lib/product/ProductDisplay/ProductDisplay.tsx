@@ -1,3 +1,4 @@
+import { AWS_PRODUCT_IMAGES_BASE } from '@musclemotion/constants';
 import { ProductT } from '@musclemotion/types';
 import { useState } from 'react';
 import styled from 'styled-components';
