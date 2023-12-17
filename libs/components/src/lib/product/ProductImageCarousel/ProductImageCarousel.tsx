@@ -6,11 +6,11 @@ interface ProductImage {
   url: string;
   index: number;
 }
-interface ProductAddImageCarouselProps {
+interface ProductImageCarouselProps {
   images: ProductImage[];
 }
 
-export function ProductAddImageCarousel(props: ProductAddImageCarouselProps) {
+export function ProductImageCarousel(props: ProductImageCarouselProps) {
   const { images } = props;
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -60,7 +60,7 @@ export function ProductAddImageCarousel(props: ProductAddImageCarouselProps) {
   );
 }
 
-export default ProductAddImageCarousel;
+export default ProductImageCarousel;
 
 const StyledImageCarousel = styled.div`
   margin: auto;

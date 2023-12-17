@@ -1,10 +1,10 @@
 import { AWS_PRODUCT_IMAGES_BASE } from '@musclemotion/constants';
-import { ProductT } from '@musclemotion/types';
-import { useState } from 'react';
+import { ProductResponseT } from '@musclemotion/types';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 export interface ProductDisplayProps {
-  product: ProductT;
+  product: ProductResponseT;
   onClick: () => void;
 }
 
@@ -14,29 +14,28 @@ interface ImageProps {
 
 export function ProductDisplay(props: ProductDisplayProps) {
   const { product, onClick } = props;
-
   const [hovered, setHovered] = useState(false);
+  const [images, setImages] = useState({ primary: '', secondary: '' });
 
-  const displayPrimaryImage = product.ProductImages.find(
-    (image) => image.ProductImageType.imageType === 'displayPrimary'
-  );
-  const displaySecondaryImage = product.ProductImages.find(
-    (image) => image.ProductImageType.imageType === 'displaySecondary'
-  );
+  useEffect(() => {
+    if (!product.ProductImages) return;
 
-  // useEffect(() => {
-  //   const reader1 = new FileReader();
-  //   reader1.onload = () => {
-  //     setDisplayImage1Url(reader1.result as string);
-  //   };
-  //   reader1.readAsDataURL(product.displayImage1 ?? new Blob());
+    const images = product.ProductImages.reduce(
+      (acc, image) => {
+        if (image.ProductImageType.imageType === 'displayPrimary') {
+          console.log(image);
 
-  //   const reader2 = new FileReader();
-  //   reader2.onload = () => {
-  //     setDisplayImage2Url(reader2.result as string);
-  //   };
-  //   reader2.readAsDataURL(product.displayImage2 ?? new Blob());
-  // }, [product.displayImage1, product.displayImage2]);
+          acc.primary = AWS_PRODUCT_IMAGES_BASE + image.imageUrl;
+        } else if (image.ProductImageType.imageType === 'displaySecondary') {
+          acc.secondary = AWS_PRODUCT_IMAGES_BASE + image.imageUrl;
+        }
+        return acc;
+      },
+      { primary: '', secondary: '' }
+    );
+
+    setImages(images);
+  }, [product]);
 
   return (
     <StyledProductDisplay
@@ -45,12 +44,12 @@ export function ProductDisplay(props: ProductDisplayProps) {
       onMouseLeave={() => setHovered(false)}
     >
       <StyledImagePreview
-        src={AWS_PRODUCT_IMAGES_BASE + displayPrimaryImage?.imageUrl || ''}
+        src={images.primary}
         alt="Selected Image"
         hovered={hovered}
       />
       <HoveredImagePreview
-        src={AWS_PRODUCT_IMAGES_BASE + displaySecondaryImage?.imageUrl || ''}
+        src={images.secondary}
         alt="Selected Image"
         hovered={hovered}
       />

@@ -1,3 +1,5 @@
+import { ProductImageT, ProductInformationT } from './ObjectTypes';
+
 export interface ApiResponse<T> {
   success: boolean;
   errorMessage: string;
@@ -16,4 +18,28 @@ export type LoginResponseT = {
   email: string;
   roles: string;
   passwordHash: string;
+};
+
+export type ProductResponseT = {
+  id: number;
+  categoryId: number;
+  subCategoryId: number;
+  name: string;
+  price: string;
+  ProductImages: ProductImageT[];
+  ProductInformation?: ProductInformationT;
+};
+
+export type ProductCategoriesResponseT = {
+  id: number;
+  name: string;
+  displayName: string;
+  ProductSubCategories: ProductSubCategoriesResponseT[];
+};
+
+export type ProductSubCategoriesResponseT = {
+  id: number;
+  categoryId: number;
+  name: string;
+  displayName: string;
 };

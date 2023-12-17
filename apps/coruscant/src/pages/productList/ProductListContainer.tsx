@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 import { useFetchApi } from '@musclemotion/hooks';
-import { ProductT } from '@musclemotion/types';
+import { ProductResponseT, ProductT } from '@musclemotion/types';
 import { ProductListDisplay } from './ProductListDisplay';
 import { useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { Button } from '@musclemotion/components';
+import { useSetRecoilState } from 'recoil';
+import { defaultProduct, productAtom } from '../../recoil/Product';
 
 export interface ProductListContainerProps {}
 
 export function ProductListContainer(props: ProductListContainerProps) {
-  const [fetchProductsResponse, fetchProductsLoading, fetchProducts] =
-    useFetchApi<ProductT[]>('/product/products');
+  const [fetchProductsResponse, , fetchProducts] =
+    useFetchApi<ProductResponseT[]>('/product/products');
   const navigate = useNavigate();
+  const setProduct = useSetRecoilState<ProductT>(productAtom);
 
   useEffect(() => {
     fetchProducts();
@@ -21,7 +24,13 @@ export function ProductListContainer(props: ProductListContainerProps) {
   return (
     <StyledProductList>
       <div>
-        <Button text={'Add+'} onClick={() => navigate('/product-add')} />
+        <Button
+          text={'Add+'}
+          onClick={() => {
+            setProduct(defaultProduct);
+            navigate('/product-add');
+          }}
+        />
       </div>
 
       <ProductListDisplay productList={fetchProductsResponse.data} />

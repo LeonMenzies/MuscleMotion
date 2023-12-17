@@ -1,45 +1,21 @@
 import styled from 'styled-components';
-import { Text, DropDown, ProductDisplay } from '@musclemotion/components';
-import { useEffect, useState } from 'react';
-import { useFetchApi } from '@musclemotion/hooks';
+import { Text, DropDown, Button } from '@musclemotion/components';
 
-interface ProductAddInformationProps {}
+import {
+  ProductCategoriesResponseT,
+  ProductSubCategoriesResponseT,
+  ProductT,
+} from '@musclemotion/types';
+
+interface ProductAddInformationProps {
+  categories: ProductCategoriesResponseT[];
+  handleAdd: () => void;
+  product: ProductT;
+  setProduct: (product: ProductT) => void;
+}
 
 export function ProductInformation(props: ProductAddInformationProps) {
-  const [categoriesResponse, categoriesLoading, fetchCategories] =
-    useFetchApi<any>('/product/categories');
-  const [product, setProduct] = useState<any>({
-    name: '',
-    price: 0,
-    categoryId: 0,
-    subCategoryId: 0,
-  });
-
-  useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
-
-  useEffect(() => {
-    if (categoriesResponse.success && categoriesResponse.data) {
-      setCategories(categoriesResponse.data);
-    }
-  }, [categoriesResponse]);
-
-  const [categories, setCategories] = useState<any>([
-    {
-      id: 0,
-      name: '',
-      displayName: 'Select a category',
-      ProductSubCategories: [
-        {
-          id: 0,
-          categoryId: 0,
-          name: '',
-          displayName: 'Select a sub category',
-        },
-      ],
-    },
-  ]);
+  const { categories, handleAdd, product, setProduct } = props;
 
   const handleFieldChange = (
     fieldName: keyof typeof product,
@@ -51,38 +27,33 @@ export function ProductInformation(props: ProductAddInformationProps) {
     });
   };
 
-  const mappedCategories = categories.map((category: any) => ({
-    label: category.displayName,
-    id: category.id,
-  }));
+  const mappedCategories = categories.map(
+    (category: ProductCategoriesResponseT) => ({
+      label: category.displayName,
+      id: category.id,
+    })
+  );
 
-  const findParentCategory = (id: string) => {
+  const findParentCategory = (id: number) => {
     const parentCategory = categories.find(
-      (category: any) => category.id == id
+      (category: ProductCategoriesResponseT) => category.id === Number(id)
     );
-    console.log(categories);
-    console.log(parentCategory);
 
     if (parentCategory) {
-      return parentCategory.ProductSubCategories.map((subCategory: any) => ({
-        label: subCategory.displayName,
-        id: subCategory.id,
-      }));
+      return parentCategory.ProductSubCategories.map(
+        (subCategory: ProductSubCategoriesResponseT) => ({
+          label: subCategory.displayName,
+          id: subCategory.id,
+        })
+      );
     } else {
-      return [
-        {
-          id: 0,
-          categoryId: 0,
-          name: '',
-          displayName: 'Select a sub category',
-        },
-      ];
+      return [];
     }
   };
 
   return (
     <StyledProductAddInformation>
-      {/* <Button text={'Add'} onClick={() => handleAdd()} /> */}
+      <Button text={'Add'} onClick={handleAdd} />
 
       <Text
         title={'name'}
@@ -113,7 +84,7 @@ export function ProductInformation(props: ProductAddInformationProps) {
         options={findParentCategory(product.categoryId)}
       />
 
-      <ProductDisplay onClick={() => {}} product={product} />
+      {/* <ProductDisplay onClick={() => {}} product={product} /> */}
     </StyledProductAddInformation>
   );
 }

@@ -1,9 +1,11 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import { usePostApi } from '@musclemotion/hooks';
-import ProductAddImageCarousel from './ProductAddImageCarousel';
+import { useEffect, useState } from 'react';
+import { useFetchApi, usePostApi } from '@musclemotion/hooks';
 import ProductAddInformation from './ProductAddInformation';
 import ProductAddImages from './ProductAddImages';
+import { ProductCategoriesResponseT, ProductT } from '@musclemotion/types';
+import { useRecoilState } from 'recoil';
+import { productAtom } from '../../recoil/Product';
 
 export interface ProductAddContainerProps {}
 
@@ -13,42 +15,63 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
     any
   >('/product');
 
-  const [productImages, setProductImages] = useState<any>([]);
+  const [categoriesResponse, , fetchCategories] = useFetchApi<
+    ProductCategoriesResponseT[]
+  >('/product/categories');
+
+  const [product, setProduct] = useRecoilState<ProductT>(productAtom);
+
+  // const [productImages, setProductImages] = useState<any>([]);
+  const [categories, setCategories] = useState<ProductCategoriesResponseT[]>([
+    {
+      id: 0,
+      name: '',
+      displayName: 'Select a category',
+      ProductSubCategories: [],
+    },
+  ]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  useEffect(() => {
+    if (categoriesResponse.success && categoriesResponse.data) {
+      setCategories(categoriesResponse.data);
+    }
+  }, [categoriesResponse]);
 
   // const handleAdd = async () => {
   //   postProducts(product);
   // };
 
-  const handleImageChange = (file: Blob) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const imageObject = {
-        file: file,
-        url: reader.result as string,
-      };
-      setProductImages([...productImages, imageObject]);
-    };
-    reader.readAsDataURL(file);
+  // const handleImageChange = (file: Blob) => {
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     const imageObject = {
+  //       file: file,
+  //       url: reader.result as string,
+  //     };
+  //     setProductImages([...productImages, imageObject]);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
+
+  const handleAdd = () => {
+    console.log('product', product);
+
+    postProducts(product);
   };
 
   return (
     <StyledProductList>
       <ProductAddImages />
-      <ProductAddInformation />
-      {/* <ProductAddImageCarousel images={productImages} /> */}
-      {/* <Image
-        onImageChange={handleImageChange}
-        buttonText="Choose Image carousel"
+      <ProductAddInformation
+        categories={categories}
+        handleAdd={handleAdd}
+        product={product}
+        setProduct={setProduct}
       />
-
-      <Image
-        onImageChange={(file) => handleFieldChange('displayImage1', file)}
-        buttonText="Choose Image 1"
-      />
-      <Image
-        onImageChange={(file) => handleFieldChange('displayImage2', file)}
-        buttonText="Choose Image 2"
-      /> */}
     </StyledProductList>
   );
 }

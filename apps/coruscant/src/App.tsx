@@ -15,32 +15,31 @@ import LoginContainer from './pages/login/LoginContainer';
 import { defaultUser, userAtom } from './recoil/User';
 import UserContainer from './pages/user/UserContainer';
 import { useFetchApi } from '@musclemotion/hooks';
-import { useEffect, useState } from 'react';
+import { ElementType, useEffect, useState } from 'react';
 
 function App() {
   const [nav, setNav] = useRecoilState(navAtom);
   const [user, setUser] = useRecoilState(userAtom);
-  const [loading, setLoading] = useState(true);
-
+  const [authLoading, setAuthLoading] = useState(true);
   const [userResponse, , fetchUser] = useFetchApi<UserT>('/auth');
-  console.log(loading);
 
   function renderElement(
     isAllowed: boolean,
-    Component: React.ElementType,
+    Component: ElementType,
     redirectPath: string
   ) {
-    return isAllowed ? <Component /> : <Navigate to={redirectPath} replace />;
+    return isAllowed || authLoading ? (
+      <Component />
+    ) : (
+      <Navigate to={redirectPath} replace />
+    );
   }
-
-  //TODO fix reloading page issue and add logs to database
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
 
   useEffect(() => {
-    setLoading(false);
     if (userResponse.success && userResponse.data) {
       setUser({
         loggedIn: true,
@@ -52,6 +51,12 @@ function App() {
       });
     }
   }, [userResponse, setUser]);
+
+  useEffect(() => {
+    if (user.loggedIn) {
+      setAuthLoading(false);
+    }
+  }, [user.loggedIn]);
 
   const navItems: NavItem[] = [
     {

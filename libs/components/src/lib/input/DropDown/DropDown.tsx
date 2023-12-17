@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 import { ChangeEventHandler } from 'react';
-import { log } from 'console';
 
 export interface DropDownProps {
   options: {
     label: string;
-    id: string;
+    id: string | number;
   }[];
   onChange: ChangeEventHandler<HTMLSelectElement>;
-  value: string;
+  value: string | number;
 }
 
 export function DropDown(props: DropDownProps) {

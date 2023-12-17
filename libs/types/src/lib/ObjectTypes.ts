@@ -7,20 +7,12 @@ export type UserT = {
   roles: string;
 };
 
-export type ProductCategoriesT = {
-  id: number;
-  name: string;
-  displayName: string;
-};
-
 export type ProductT = {
-  id: number;
-  categoryId: number;
-  subCategoryId: number;
+  id?: number;
   name: string;
   price: string;
-  ProductImages: ProductImageT[];
-  ProductInformation?: ProductInformationT;
+  categoryId: number;
+  subCategoryId: number;
 };
 
 export type ProductImageT = {
