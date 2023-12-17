@@ -106,6 +106,58 @@ export class ProductService {
     return { imageId: newImage.dataValues.id };
   }
 
+  async updateProduct(id, name, price, categoryId, subCategoryId, description) {
+    let product;
+
+    // Start a transaction
+    await sequelize.transaction(async (t) => {
+      // Fetch the existing Product record
+      product = await Products.findByPk(id, { transaction: t });
+
+      if (!product) {
+        throw new APIException('Product does not exist');
+      }
+
+      // Check if categoryId exists in ProductCategories table
+      const categoryExists = await ProductCategories.findByPk(categoryId, {
+        transaction: t,
+      });
+      const subCategoryExists = await ProductSubCategories.findByPk(
+        subCategoryId,
+        { transaction: t }
+      );
+
+      if (!categoryExists) {
+        throw new APIException('Category does not exist');
+      }
+
+      if (!subCategoryExists) {
+        throw new APIException('Sub category does not exist');
+      }
+
+      console.log(product.productInformationId);
+
+      // Update ProductInformation record
+      const productInformation = (await ProductInformation.findByPk(
+        product.productInformationId,
+        { transaction: t }
+      )) as any;
+
+      if (productInformation) {
+        productInformation.description = description;
+
+        await productInformation.save({ transaction: t });
+      }
+
+      // Update Product record
+      product.categoryId = categoryId;
+      product.subCategoryId = subCategoryId;
+      product.name = name;
+      product.price = price;
+      await product.save({ transaction: t });
+    });
+  }
+
   private createKey(category: string, subCategory: string, productId: string) {
     return `/${category}/${subCategory}/${productId}`;
   }

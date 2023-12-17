@@ -97,7 +97,7 @@ function App() {
         nav={nav}
         setNav={setNav}
         navItems={navItems}
-        hide={!user.loggedIn}
+        hide={!user.loggedIn && !authLoading}
         logOut={() => setUser(defaultUser)}
       />
       <div className={'container'}>

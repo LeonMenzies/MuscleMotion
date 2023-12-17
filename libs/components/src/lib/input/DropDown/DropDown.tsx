@@ -16,8 +16,8 @@ export function DropDown(props: DropDownProps) {
   return (
     <StyledDropDown value={value} onChange={onChange}>
       <option value="">Select an option</option>
-      {options.map((option) => (
-        <option key={option.label} value={option.id}>
+      {options.map((option, index) => (
+        <option key={option.label + index} value={option.id}>
           {option.label}
         </option>
       ))}

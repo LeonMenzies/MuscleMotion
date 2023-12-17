@@ -99,7 +99,7 @@ router.post('/create', async (req: Request, res: Response) => {
     const description = helper.getParam('description');
 
     const productService = new ProductService();
-    const productId = await productService.createProduct(
+    const productIdResponse = await productService.createProduct(
       name,
       price,
       categoryId,
@@ -107,7 +107,33 @@ router.post('/create', async (req: Request, res: Response) => {
       description
     );
 
-    sendSuccessResponse(res, productId);
+    sendSuccessResponse(res, productIdResponse);
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
+});
+
+router.post('/update', async (req: Request, res: Response) => {
+  try {
+    const helper = new RequestHelper(req);
+    const name = helper.getRequiredParam('name');
+    const price = helper.getRequiredParam('price');
+    const categoryId = helper.getRequiredParam('categoryId');
+    const subCategoryId = helper.getRequiredParam('subCategoryId');
+    const id = helper.getRequiredParam('id');
+    const description = helper.getParam('description');
+
+    const productService = new ProductService();
+    const productIdResponse = await productService.updateProduct(
+      id,
+      name,
+      price,
+      categoryId,
+      subCategoryId,
+      description
+    );
+
+    sendSuccessResponse(res, productIdResponse);
   } catch (error) {
     errorHandler(error, req, res);
   }

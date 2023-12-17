@@ -6,7 +6,7 @@ import { Products } from './Products';
 export function defineAssociations() {
   Products.hasOne(ProductInformation, { foreignKey: 'id' });
   ProductInformation.belongsTo(Products, {
-    foreignKey: 'productInformationId',
+    foreignKey: 'id',
   });
 
   ProductImages.belongsTo(Products, { foreignKey: 'productId' });

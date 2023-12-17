@@ -15,6 +15,11 @@ export type ProductT = {
   subCategoryId: number;
 };
 
+export type ProductInformationT = {
+  id?: number;
+  description: string;
+};
+
 export type ProductImageT = {
   imageUrl: string;
   ProductImageType: ProductImageTypeT;
@@ -22,8 +27,4 @@ export type ProductImageT = {
 
 export type ProductImageTypeT = {
   imageType: string;
-};
-
-export type ProductInformationT = {
-  description: string;
 };

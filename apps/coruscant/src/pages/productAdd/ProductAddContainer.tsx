@@ -10,10 +10,10 @@ import { productAtom } from '../../recoil/Product';
 export interface ProductAddContainerProps {}
 
 export function ProductAddContainer(props: ProductAddContainerProps) {
-  const [postProductsResponse, postProductsLoading, postProducts] = usePostApi<
-    any,
-    any
-  >('/product');
+  const [postProductAddResponse, postProductAddLoading, postProductAdd] =
+    usePostApi<any, any>('/product/create');
+  const [postProductEditResponse, postProductEditLoading, postProductEdit] =
+    usePostApi<any, any>('/product/update');
 
   const [categoriesResponse, , fetchCategories] = useFetchApi<
     ProductCategoriesResponseT[]
@@ -41,26 +41,12 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
     }
   }, [categoriesResponse]);
 
-  // const handleAdd = async () => {
-  //   postProducts(product);
-  // };
-
-  // const handleImageChange = (file: Blob) => {
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     const imageObject = {
-  //       file: file,
-  //       url: reader.result as string,
-  //     };
-  //     setProductImages([...productImages, imageObject]);
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
-
   const handleAdd = () => {
-    console.log('product', product);
-
-    postProducts(product);
+    if (product.id) {
+      postProductEdit(product);
+    } else {
+      postProductAdd(product);
+    }
   };
 
   return (

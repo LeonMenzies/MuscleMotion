@@ -53,7 +53,7 @@ export function ProductInformation(props: ProductAddInformationProps) {
 
   return (
     <StyledProductAddInformation>
-      <Button text={'Add'} onClick={handleAdd} />
+      <Button text={product.id ? 'Edit' : 'Add'} onClick={handleAdd} />
 
       <Text
         title={'name'}

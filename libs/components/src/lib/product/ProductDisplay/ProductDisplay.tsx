@@ -23,8 +23,6 @@ export function ProductDisplay(props: ProductDisplayProps) {
     const images = product.ProductImages.reduce(
       (acc, image) => {
         if (image.ProductImageType.imageType === 'displayPrimary') {
-          console.log(image);
-
           acc.primary = AWS_PRODUCT_IMAGES_BASE + image.imageUrl;
         } else if (image.ProductImageType.imageType === 'displaySecondary') {
           acc.secondary = AWS_PRODUCT_IMAGES_BASE + image.imageUrl;
