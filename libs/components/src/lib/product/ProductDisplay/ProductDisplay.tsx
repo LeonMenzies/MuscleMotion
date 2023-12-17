@@ -1,5 +1,5 @@
 import { ProductT } from '@musclemotion/types';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 export interface ProductDisplayProps {
@@ -13,9 +13,15 @@ interface ImageProps {
 
 export function ProductDisplay(props: ProductDisplayProps) {
   const { product, onClick } = props;
-  const [displayImage1Url, setDisplayImage1Url] = useState<string | null>(null);
-  const [displayImage2Url, setDisplayImage2Url] = useState<string | null>(null);
+
   const [hovered, setHovered] = useState(false);
+
+  const displayPrimaryImage = product.ProductImages.find(
+    (image) => image.ProductImageType.imageType === 'displayPrimary'
+  );
+  const displaySecondaryImage = product.ProductImages.find(
+    (image) => image.ProductImageType.imageType === 'displaySecondary'
+  );
 
   // useEffect(() => {
   //   const reader1 = new FileReader();
@@ -38,12 +44,12 @@ export function ProductDisplay(props: ProductDisplayProps) {
       onMouseLeave={() => setHovered(false)}
     >
       <StyledImagePreview
-        src={displayImage1Url || ''}
+        src={AWS_PRODUCT_IMAGES_BASE + displayPrimaryImage?.imageUrl || ''}
         alt="Selected Image"
         hovered={hovered}
       />
       <HoveredImagePreview
-        src={displayImage2Url || ''}
+        src={AWS_PRODUCT_IMAGES_BASE + displaySecondaryImage?.imageUrl || ''}
         alt="Selected Image"
         hovered={hovered}
       />

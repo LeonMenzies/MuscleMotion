@@ -1,0 +1,57 @@
+{
+  "name": "S3",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/S3/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/S3",
+        "main": "apps/S3/src/main.ts",
+        "tsConfig": "apps/S3/tsconfig.app.json",
+        "assets": ["apps/S3/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/S3/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "S3:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "S3:build:development"
+        },
+        "production": {
+          "buildTarget": "S3:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/S3/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/S3/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

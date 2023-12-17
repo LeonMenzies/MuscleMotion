@@ -97,6 +97,8 @@ function App() {
       />
       <div className={'container'}>
         <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
           <Route path="login" index element={<LoginContainer />} />
 
           <Route

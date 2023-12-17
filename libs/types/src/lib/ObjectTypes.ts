@@ -15,12 +15,23 @@ export type ProductCategoriesT = {
 
 export type ProductT = {
   id: number;
-  productInformationId: number;
   categoryId: number;
   subCategoryId: number;
   name: string;
-  price: number;
-  thumbnail1: string;
-  thumbnail2: string;
-  carouselImages: string[];
+  price: string;
+  ProductImages: ProductImageT[];
+  ProductInformation?: ProductInformationT;
+};
+
+export type ProductImageT = {
+  imageUrl: string;
+  ProductImageType: ProductImageTypeT;
+};
+
+export type ProductImageTypeT = {
+  imageType: string;
+};
+
+export type ProductInformationT = {
+  description: string;
 };
