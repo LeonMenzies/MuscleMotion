@@ -6,3 +6,9 @@ export type NavItem = {
   route: string;
   show: boolean;
 };
+
+export type ProductStagesItem = {
+  component: ReactNode;
+  name: string;
+  displayName: string;
+};

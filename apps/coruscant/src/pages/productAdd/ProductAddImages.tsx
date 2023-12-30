@@ -9,6 +9,6 @@ export function ProductAddImages(props: ProductAddImagesProps) {
 export default ProductAddImages;
 
 const StyledProductAddImages = styled.div`
-  background-color: green;
-  width: 50%;
+  background-color: blue;
+  width: 100%;
 `;

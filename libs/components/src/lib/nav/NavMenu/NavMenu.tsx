@@ -66,6 +66,11 @@ const StyledNavItem = styled.div`
   align-items: center;
   width: 150px;
   margin-bottom: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
   .title-container {
     color: white;
     font-weight: 100;

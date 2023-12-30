@@ -147,7 +147,9 @@ const StyledApp = styled.div`
   display: flex;
 
   .container {
+    padding: 10px;
     margin-left: 50px;
     width: 100%;
+    height: calc(100vh - 20px);
   }
 `;
