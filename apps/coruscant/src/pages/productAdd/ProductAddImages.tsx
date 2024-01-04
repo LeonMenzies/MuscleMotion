@@ -1,9 +1,26 @@
 import styled from 'styled-components';
+import { Image } from '@musclemotion/components';
 
-interface ProductAddImagesProps {}
+interface ProductAddImagesProps {
+  handleImageFieldChange: (imageType: string, value: Blob | null) => void;
+}
 
 export function ProductAddImages(props: ProductAddImagesProps) {
-  return <StyledProductAddImages>Test</StyledProductAddImages>;
+  const { handleImageFieldChange } = props;
+  return (
+    <StyledProductAddImages>
+      <Image
+        onImageChange={(file) => handleImageFieldChange('displayPrimary', file)}
+        buttonText={'Display Primary'}
+      />
+      <Image
+        onImageChange={(file) =>
+          handleImageFieldChange('displaySecondary', file)
+        }
+        buttonText={'Display Secondary'}
+      />
+    </StyledProductAddImages>
+  );
 }
 
 export default ProductAddImages;

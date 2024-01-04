@@ -26,23 +26,14 @@ export const ProgressComponent: React.FC<ProgressComponentProps> = ({
   return (
     <ProgressContainer>
       {stages.map((stage, index) => (
-        <Fragment key={stage.name}>
-          <InnerContainer>
-            <Circle
-              active={index === stage.index}
-              completed={false}
-              onClick={() => navigateTo(index)}
-            >
-              <InnerCircle active={index === stage.index}>
-                {/* {stages.findIndex((s) => s.name === page) > index && (
-                  <FaCheck color="d3d3d3" />
-                )} */}
-              </InnerCircle>
-            </Circle>
-            {/* <StageName>{stage.displayName}</StageName> */}
-          </InnerContainer>
-          {index < stages.length - 1 && <Line />}
-        </Fragment>
+        <InnerContainer>
+          <Circle
+            active={index === stage.index}
+            completed={false}
+            onClick={() => navigateTo(index)}
+          />
+          <StageName>{stage.displayName}</StageName>
+        </InnerContainer>
       ))}
     </ProgressContainer>
   );
@@ -56,50 +47,33 @@ const ProgressContainer = styled.div`
   background-color: lightgrey;
   padding: 5px;
   border-radius: 50px;
+  justify-content: space-between;
 `;
 
 const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; // Align items in the center along the cross axis
+  align-items: center;
 `;
 
-// const StageName = styled.div`
-//   margin-top: 10px; // Add a top margin to push the stage name down
-//   text-align: center; // Center the text
-// `;
+const StageName = styled.div`
+  margin-top: 10px;
+  text-align: center;
+  position: absolute;
+  top: 35px;
+`;
 
 const Circle = styled.div<{ active?: boolean; completed?: boolean }>`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 3px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: '#000';
-  background: transparent;
-  z-index: 1;
-`;
-
-const InnerCircle = styled.div<{ active?: boolean; completed?: boolean }>`
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 3px solid;
-  border-color: ${(props) => (props.active ? '#d3d3d3' : 'transparent')};
+  border: 2px solid;
+  border-color: ${(props) =>
+    props.active ? 'black' : props.completed ? 'green' : 'lightgrey'};
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   z-index: 1;
-`;
-
-const Line = styled.div`
-  flex-grow: 1;
-  height: 4px;
-  background: #000;
-  margin: 0 -2px; // Adjust the margin to make the line touch the edge of the circle
-  z-index: 0;
 `;

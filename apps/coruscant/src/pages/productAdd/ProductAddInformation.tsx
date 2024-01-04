@@ -1,27 +1,30 @@
 import styled from 'styled-components';
 import { Text } from '@musclemotion/components';
 
-import { ProductT } from '@musclemotion/types';
+import { ProductInformationT } from '@musclemotion/types';
 
 interface ProductAddInformationProps {
-  handleFieldChange: (fieldName: keyof ProductT, value: string | Blob) => void;
-  product: ProductT;
+  handleFieldChange: (
+    fieldName: keyof ProductInformationT,
+    value: string | Blob
+  ) => void;
+  productInformation: ProductInformationT;
 }
 
 export function ProductAddInformation(props: ProductAddInformationProps) {
-  const { handleFieldChange, product } = props;
+  const { handleFieldChange, productInformation } = props;
 
   return (
     <StyledProductAddInformation>
       <Text
-        title={'name'}
-        id={'product-name'}
+        title={'description'}
+        id={'product-description'}
         type={'text'}
-        value={product.name}
-        onChange={(event) => handleFieldChange('name', event.target.value)}
+        value={productInformation.description}
+        onChange={(event) =>
+          handleFieldChange('description', event.target.value)
+        }
       />
-
-      {/* <ProductDisplay onClick={() => {}} product={product} /> */}
     </StyledProductAddInformation>
   );
 }

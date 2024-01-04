@@ -5,20 +5,25 @@ import ProductAddInformation from './ProductAddInformation';
 import ProductAddImages from './ProductAddImages';
 import {
   ProductCategoriesResponseT,
+  ProductInformationT,
   ProductStagesItem,
   ProductT,
+  ProductImagesT,
 } from '@musclemotion/types';
 import { useRecoilState } from 'recoil';
 import { productAtom } from '../../recoil/Product';
 import ProductAdd from './ProductAdd';
 import { ProgressComponent } from './ProductAddProgress';
 import { Button } from '@musclemotion/components';
+import ProductAddPreview from './ProductAddPreview';
 
 export interface ProductAddContainerProps {}
 
 export function ProductAddContainer(props: ProductAddContainerProps) {
   const [postProductAddResponse, postProductAddLoading, postProductAdd] =
     usePostApi<any, any>('/product/create');
+  const [postProductImageResponse, postProductImageLoading, postProductImage] =
+    usePostApi<any, any>('/file/image');
   const [postProductEditResponse, postProductEditLoading, postProductEdit] =
     usePostApi<any, any>('/product/update');
   const [categoriesResponse, , fetchCategories] = useFetchApi<
@@ -26,9 +31,14 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
   >('/product/categories');
 
   const [product, setProduct] = useRecoilState<ProductT>(productAtom);
-  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [productInformation, setProductInformation] =
+    useState<ProductInformationT>({
+      description: '',
+    });
 
-  // const [productImages, setProductImages] = useState<any>([]);
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [productImages, setProductImages] = useState<ProductImagesT>({});
+
   const [categories, setCategories] = useState<ProductCategoriesResponseT[]>([
     {
       id: 0,
@@ -48,6 +58,25 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
     }
   }, [categoriesResponse]);
 
+  useEffect(() => {
+    if (postProductAddResponse.success && postProductAddResponse.data) {
+      Object.entries(productImages).forEach(([imageType, blob]) => {
+        if (blob !== null) {
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            const base64data = reader.result;
+            postProductImage({
+              productId: postProductAddResponse.data.productId,
+              imageType: imageType,
+              image: base64data,
+            });
+          };
+          reader.readAsDataURL(blob);
+        }
+      });
+    }
+  }, [postProductAddResponse, postProductImage, productImages]);
+
   const handleAdd = () => {
     if (product.id) {
       postProductEdit(product);
@@ -66,6 +95,29 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
     });
   };
 
+  const handleInformationFieldChange = (
+    fieldName: keyof typeof productInformation,
+    value: string | Blob
+  ) => {
+    setProductInformation({
+      ...productInformation,
+      [fieldName]: value,
+    });
+  };
+
+  const handleImageFieldChange = (imageType: string, value: Blob | null) => {
+    setProductImages((prevImages) => {
+      if (value instanceof Blob) {
+        // Add or update the image
+        return { ...prevImages, [imageType]: value };
+      } else {
+        // Remove the image
+        const { [imageType]: _, ...newImages } = prevImages;
+        return newImages;
+      }
+    });
+  };
+
   const productAddStages: ProductStagesItem[] = [
     {
       component: (
@@ -79,22 +131,30 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
       displayName: 'Add',
     },
     {
-      component: <ProductAddImages />,
+      component: (
+        <ProductAddImages handleImageFieldChange={handleImageFieldChange} />
+      ),
       name: 'images',
       displayName: 'Images',
     },
     {
       component: (
         <ProductAddInformation
-          handleFieldChange={handleFieldChange}
-          product={product}
+          handleFieldChange={handleInformationFieldChange}
+          productInformation={productInformation}
         />
       ),
       name: 'information',
       displayName: 'Information',
     },
     {
-      component: <div>Preview</div>,
+      component: (
+        <ProductAddPreview
+          productImages={productImages}
+          product={product}
+          productInformation={productInformation}
+        />
+      ),
       name: 'preview',
       displayName: 'Preview',
     },

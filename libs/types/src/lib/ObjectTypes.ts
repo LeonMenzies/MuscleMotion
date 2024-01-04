@@ -20,6 +20,10 @@ export type ProductInformationT = {
   description: string;
 };
 
+export type ProductImagesT = {
+  [imageType: string]: Blob | null;
+};
+
 export type ProductImageT = {
   imageUrl: string;
   ProductImageType: ProductImageTypeT;
