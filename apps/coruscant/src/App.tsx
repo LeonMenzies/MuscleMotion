@@ -49,9 +49,9 @@ function App() {
         email: userResponse.data.email,
         roles: userResponse.data.roles,
       });
-    } else if (userResponse.success === false) {
+    } else if (!userResponse.success) {
       setUser(defaultUser);
-      setAuthLoading(false);
+      // setAuthLoading(false);
     }
   }, [userResponse, setUser]);
 

@@ -52,35 +52,39 @@ export function ProductDisplay(props: ProductDisplayProps) {
         hovered={hovered}
       />
 
-      <h1>{product.name}</h1>
-      <h2>${product.price}</h2>
+      <TextContainer>
+        <h3>{product.name}</h3>
+        <h5>${product.price}</h5>
+      </TextContainer>
     </StyledProductDisplay>
   );
 }
 export default ProductDisplay;
 
+const TextContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute; // Position text absolutely
+  bottom: -10px; // Position at the bottom
+  margin: 10px;
+`;
+
 const StyledProductDisplay = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between; // Add space between items
   align-items: center;
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  max-width: 300px;
+  width: 200px;
+  height: 300px;
   margin: 20px;
   overflow: hidden;
-
-  h1 {
-    margin-top: 10px;
-  }
-
-  h2 {
-    font-size: 0.8em;
-    margin-top: 5px;
-  }
 `;
 
 const StyledImagePreview = styled.img<ImageProps>`
