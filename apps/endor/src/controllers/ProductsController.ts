@@ -10,6 +10,7 @@ import { ProductSubCategories } from '../models/ProductSubCategories';
 import { ProductImages } from '../models/ProductImages';
 import { ProductImageTypes } from '../models/ProductImageTypes';
 import { ProductInformation } from '../models/ProductInformation';
+// import { ProductInventory } from '../models/ProductInventory';
 
 export const router = express.Router();
 
@@ -124,7 +125,7 @@ router.post('/update', async (req: Request, res: Response) => {
     const description = helper.getParam('description');
 
     const productService = new ProductService();
-    const productIdResponse = await productService.updateProduct(
+    await productService.updateProduct(
       id,
       name,
       price,
@@ -133,7 +134,7 @@ router.post('/update', async (req: Request, res: Response) => {
       description
     );
 
-    sendSuccessResponse(res, productIdResponse);
+    sendSuccessResponse(res, { productId: id });
   } catch (error) {
     errorHandler(error, req, res);
   }
@@ -156,3 +157,33 @@ router.get('/categories', async (req: Request, res: Response) => {
     errorHandler(error, req, res);
   }
 });
+
+// router.get('/inventory', async (req: Request, res: Response) => {
+//   try {
+//     const helper = new RequestHelper(req);
+//     const categoryId = helper.getParam('categoryId');
+
+//     const inventory = await ProductInventory.findAll({
+//       where: whereClause,
+//       attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
+//       include: [
+//         {
+//           model: ProductImages,
+//           as: 'ProductImages',
+//           attributes: ['imageUrl'],
+//           include: [
+//             {
+//               model: ProductImageTypes,
+//               as: 'ProductImageType',
+//               attributes: ['imageType'],
+//             },
+//           ],
+//         },
+//       ],
+//     });
+
+//     sendSuccessResponse(res, categoriesWithSubcategories);
+//   } catch (error) {
+//     errorHandler(error, req, res);
+//   }
+// });

@@ -20,7 +20,6 @@ app.use('/api', apiRouter);
 sequelize
   .sync({ alter: true })
   .then(() => {
-    console.log('Database successfully connected');
     defineAssociations();
   })
   .catch((err) => {

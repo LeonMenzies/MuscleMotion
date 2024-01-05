@@ -7,7 +7,15 @@ export const Colors = sequelize.define('Colors', {
     primaryKey: true,
     autoIncrement: true,
   },
-  colorName: {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  displayName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  colorHex: {
     type: DataTypes.STRING,
     allowNull: false,
   },

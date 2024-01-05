@@ -24,9 +24,9 @@ export function Image(props: ImageProps) {
     if (selectedFile) {
       const reader = new FileReader();
       reader.onload = () => {
-        console.log(selectedFile.type);
-
-        const imageBlob = new File([selectedFile], selectedFile.name, { type: selectedFile.type });
+        const imageBlob = new File([selectedFile], selectedFile.name, {
+          type: selectedFile.type,
+        });
 
         onImageChange(imageBlob);
         setImagePreview(reader.result as string);

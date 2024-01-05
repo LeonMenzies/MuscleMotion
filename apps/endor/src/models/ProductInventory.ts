@@ -19,6 +19,14 @@ export const ProductInventory = sequelize.define('ProductInventory', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  sizeId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  colorId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   count: {
     type: DataTypes.INTEGER,
     allowNull: false,

@@ -7,7 +7,11 @@ export const Sizes = sequelize.define('Sizes', {
     primaryKey: true,
     autoIncrement: true,
   },
-  sizeName: {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  displayName: {
     type: DataTypes.STRING,
     allowNull: false,
   },

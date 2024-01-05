@@ -49,6 +49,9 @@ function App() {
         email: userResponse.data.email,
         roles: userResponse.data.roles,
       });
+    } else if (userResponse.success === false) {
+      setUser(defaultUser);
+      setAuthLoading(false);
     }
   }, [userResponse, setUser]);
 

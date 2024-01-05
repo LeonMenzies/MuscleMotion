@@ -20,12 +20,15 @@ import ProductAddPreview from './ProductAddPreview';
 export interface ProductAddContainerProps {}
 
 export function ProductAddContainer(props: ProductAddContainerProps) {
-  const [postProductAddResponse, postProductAddLoading, postProductAdd] =
-    usePostApi<any, any>('/product/create');
-  const [postProductImageResponse, postProductImageLoading, postProductImage] =
-    usePostApi<any, any>('/file/image');
-  const [postProductEditResponse, postProductEditLoading, postProductEdit] =
-    usePostApi<any, any>('/product/update');
+  const [postProductAddResponse, , postProductAdd] = usePostApi<any, any>(
+    '/product/create'
+  );
+  const [postProductImageResponse, , postProductImage] = usePostApi<any, any>(
+    '/file/image'
+  );
+  const [postProductEditResponse, , postProductEdit] = usePostApi<any, any>(
+    '/product/update'
+  );
   const [categoriesResponse, , fetchCategories] = useFetchApi<
     ProductCategoriesResponseT[]
   >('/product/categories');
@@ -76,6 +79,25 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
       });
     }
   }, [postProductAddResponse, postProductImage, productImages]);
+
+  useEffect(() => {
+    if (postProductEditResponse.success && postProductEditResponse.data) {
+      Object.entries(productImages).forEach(([imageType, blob]) => {
+        if (blob !== null) {
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            const base64data = reader.result;
+            postProductImage({
+              productId: postProductEditResponse.data.productId,
+              imageType: imageType,
+              image: base64data,
+            });
+          };
+          reader.readAsDataURL(blob);
+        }
+      });
+    }
+  }, [postProductEditResponse, postProductImage, productImages]);
 
   const handleAdd = () => {
     if (product.id) {

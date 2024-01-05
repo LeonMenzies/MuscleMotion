@@ -43,3 +43,16 @@ export type ProductSubCategoriesResponseT = {
   name: string;
   displayName: string;
 };
+
+export type SizesResponseT = {
+  id: number;
+  name: string;
+  displayName: string;
+};
+
+export type ColorsResponseT = {
+  id: number;
+  name: string;
+  displayName: string;
+  colorHex: string;
+};
