@@ -39,6 +39,8 @@ function App() {
     fetchUser();
   }, [fetchUser]);
 
+  console.log(authLoading);
+
   useEffect(() => {
     if (userResponse.success && userResponse.data) {
       setUser({

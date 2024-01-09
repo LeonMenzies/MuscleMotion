@@ -1,11 +1,14 @@
 import S3 from '../aws/S3';
 import { APIException } from '../helpers/Exceptions';
+import { Colors } from '../models/Colors';
 import { ProductCategories } from '../models/ProductCategories';
 import { ProductImageTypes } from '../models/ProductImageTypes';
 import { ProductImages } from '../models/ProductImages';
 import { ProductInformation } from '../models/ProductInformation';
+import { ProductInventory } from '../models/ProductInventory';
 import { ProductSubCategories } from '../models/ProductSubCategories';
 import { Products } from '../models/Products';
+import { Sizes } from '../models/Sizes';
 import { sequelize } from './sequelize';
 
 export class ProductService {
@@ -16,7 +19,15 @@ export class ProductService {
     this.s3 = new S3('accessKeyId', 'secretAccessKey', 'region');
   }
 
-  async createProduct(name, price, categoryId, subCategoryId, description) {
+  async createProduct(
+    name,
+    price,
+    categoryId,
+    subCategoryId,
+    sizes,
+    colors,
+    description
+  ) {
     let product;
 
     // Start a transaction
@@ -56,6 +67,39 @@ export class ProductService {
         },
         { transaction: t }
       );
+
+      // Iterate over each color
+      for (const colorId of colors) {
+        // Check if color exists in Colors table
+        const colorExists = await Colors.findByPk(colorId, { transaction: t });
+
+        if (!colorExists) {
+          throw new APIException('Color does not exist');
+        }
+
+        // Iterate over each size
+        for (const sizeId of sizes) {
+          // Check if size exists in Sizes table
+          const sizeExists = await Sizes.findByPk(sizeId, { transaction: t });
+
+          if (!sizeExists) {
+            throw new APIException('Size does not exist');
+          }
+
+          // Create ProductInventory record
+          await ProductInventory.create(
+            {
+              productId: product.dataValues.id,
+              categoryId,
+              subCategoryId,
+              sizeId,
+              colorId,
+              count: 0, // Set initial count to 0
+            },
+            { transaction: t }
+          );
+        }
+      }
     });
 
     return { productId: product.dataValues.id };

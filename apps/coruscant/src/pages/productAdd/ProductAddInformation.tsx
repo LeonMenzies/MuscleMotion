@@ -18,20 +18,20 @@ import {
 } from 'react-icons/fa';
 
 interface ProductAddInformationProps {
-  handleFieldChange: (
+  handleInformationFieldChange: (
     fieldName: keyof ProductInformationT,
-    value: string | Blob
+    value: string | Blob | number[]
   ) => void;
   productInformation: ProductInformationT;
 }
 
 type OptionType = {
-  value: string;
+  value: number;
   label: string;
 };
 
 export function ProductAddInformation(props: ProductAddInformationProps) {
-  const { handleFieldChange, productInformation } = props;
+  const { handleInformationFieldChange, productInformation } = props;
 
   const [sizesResponse, , fetchSizes] =
     useFetchApi<SizesResponseT[]>('/size/sizes');
@@ -39,10 +39,7 @@ export function ProductAddInformation(props: ProductAddInformationProps) {
   const [colorsResponse, , fetchColors] =
     useFetchApi<ColorsResponseT[]>('/color/colors');
 
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [sizeOptions, setSizeOptions] = useState<OptionType[]>([]);
-
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [colorOptions, setColorOptions] = useState<OptionType[]>([]);
 
   useEffect(() => {
@@ -53,7 +50,7 @@ export function ProductAddInformation(props: ProductAddInformationProps) {
   useEffect(() => {
     if (sizesResponse.success && sizesResponse.data) {
       const options = sizesResponse.data.map((item) => ({
-        value: item.name,
+        value: item.id,
         label: item.displayName,
       }));
 
@@ -64,8 +61,7 @@ export function ProductAddInformation(props: ProductAddInformationProps) {
   useEffect(() => {
     if (colorsResponse.success && colorsResponse.data) {
       const options = colorsResponse.data.map((item) => ({
-        title: <div style={{ color: item.colorHex }}>TEST</div>,
-        value: item.name,
+        value: item.id,
         label: item.displayName,
       }));
 
@@ -88,21 +84,21 @@ export function ProductAddInformation(props: ProductAddInformationProps) {
         type={'text'}
         value={productInformation.description}
         onChange={(event) =>
-          handleFieldChange('description', event.target.value)
+          handleInformationFieldChange('description', event.target.value)
         }
       />
       <DualListBox
         canFilter
         options={sizeOptions}
-        selected={selectedSizes}
-        onChange={(sizes) => setSelectedSizes(sizes)}
+        selected={productInformation.sizes}
+        onChange={(sizes) => handleInformationFieldChange('sizes', sizes)}
         icons={icons}
       />
       <DualListBox
         canFilter
         options={colorOptions}
-        selected={selectedColors}
-        onChange={(colors) => setSelectedColors(colors)}
+        selected={productInformation.colors}
+        onChange={(colors) => handleInformationFieldChange('colors', colors)}
         icons={icons}
       />
     </StyledProductAddInformation>

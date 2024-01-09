@@ -23,9 +23,7 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
   const [postProductAddResponse, , postProductAdd] = usePostApi<any, any>(
     '/product/create'
   );
-  const [postProductImageResponse, , postProductImage] = usePostApi<any, any>(
-    '/file/image'
-  );
+  const [, , postProductImage] = usePostApi<any, any>('/file/image');
   const [postProductEditResponse, , postProductEdit] = usePostApi<any, any>(
     '/product/update'
   );
@@ -34,9 +32,12 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
   >('/product/categories');
 
   const [product, setProduct] = useRecoilState<ProductT>(productAtom);
+
   const [productInformation, setProductInformation] =
     useState<ProductInformationT>({
       description: '',
+      sizes: [],
+      colors: [],
     });
 
   const [pageIndex, setPageIndex] = useState<number>(0);
@@ -101,9 +102,9 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
 
   const handleAdd = () => {
     if (product.id) {
-      postProductEdit(product);
+      postProductEdit({ ...product, ...productInformation });
     } else {
-      postProductAdd(product);
+      postProductAdd({ ...product, ...productInformation });
     }
   };
 
@@ -119,7 +120,7 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
 
   const handleInformationFieldChange = (
     fieldName: keyof typeof productInformation,
-    value: string | Blob
+    value: string | Blob | number[]
   ) => {
     setProductInformation({
       ...productInformation,
@@ -162,7 +163,7 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
     {
       component: (
         <ProductAddInformation
-          handleFieldChange={handleInformationFieldChange}
+          handleInformationFieldChange={handleInformationFieldChange}
           productInformation={productInformation}
         />
       ),

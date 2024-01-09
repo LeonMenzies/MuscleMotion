@@ -18,6 +18,8 @@ export type ProductT = {
 export type ProductInformationT = {
   id?: number;
   description: string;
+  sizes: number[];
+  colors: number[];
 };
 
 export type ProductImagesT = {

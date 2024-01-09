@@ -97,6 +97,8 @@ router.post('/create', async (req: Request, res: Response) => {
     const price = helper.getRequiredParam('price');
     const categoryId = helper.getRequiredParam('categoryId');
     const subCategoryId = helper.getRequiredParam('subCategoryId');
+    const sizes = helper.getRequiredParam('sizes');
+    const colors = helper.getRequiredParam('colors');
     const description = helper.getParam('description');
 
     const productService = new ProductService();
@@ -105,6 +107,8 @@ router.post('/create', async (req: Request, res: Response) => {
       price,
       categoryId,
       subCategoryId,
+      sizes,
+      colors,
       description
     );
 
