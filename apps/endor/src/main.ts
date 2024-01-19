@@ -6,7 +6,7 @@ import { apiRouter } from './routes/routes';
 import './cron/cron_runner';
 
 import cookieParser from 'cookie-parser';
-import { defineAssociations } from './models/assocations';
+import { defineAssociations } from './models/associations';
 const allowedOrigins = ['http://localhost:4000', 'http://localhost:5000'];
 const app = express();
 

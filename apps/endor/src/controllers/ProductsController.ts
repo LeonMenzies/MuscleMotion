@@ -10,6 +10,9 @@ import { ProductSubCategories } from '../models/ProductSubCategories';
 import { ProductImages } from '../models/ProductImages';
 import { ProductImageTypes } from '../models/ProductImageTypes';
 import { ProductInformation } from '../models/ProductInformation';
+import { ProductInventory } from '../models/ProductInventory';
+import { Colors } from '../models/Colors';
+import { Sizes } from '../models/Sizes';
 // import { ProductInventory } from '../models/ProductInventory';
 
 export const router = express.Router();
@@ -121,11 +124,13 @@ router.post('/create', async (req: Request, res: Response) => {
 router.post('/update', async (req: Request, res: Response) => {
   try {
     const helper = new RequestHelper(req);
+    const id = helper.getRequiredParam('id');
     const name = helper.getRequiredParam('name');
     const price = helper.getRequiredParam('price');
     const categoryId = helper.getRequiredParam('categoryId');
     const subCategoryId = helper.getRequiredParam('subCategoryId');
-    const id = helper.getRequiredParam('id');
+    const sizes = helper.getRequiredParam('sizes');
+    const colors = helper.getRequiredParam('colors');
     const description = helper.getParam('description');
 
     const productService = new ProductService();
@@ -135,6 +140,8 @@ router.post('/update', async (req: Request, res: Response) => {
       price,
       categoryId,
       subCategoryId,
+      sizes,
+      colors,
       description
     );
 
@@ -162,32 +169,162 @@ router.get('/categories', async (req: Request, res: Response) => {
   }
 });
 
-// router.get('/inventory', async (req: Request, res: Response) => {
-//   try {
-//     const helper = new RequestHelper(req);
-//     const categoryId = helper.getParam('categoryId');
+router.get('/inventory', async (req: Request, res: Response) => {
+  try {
+    const helper = new RequestHelper(req);
+    const categoryId = helper.getParam('categoryId');
+    const subCategoryId = helper.getParam('subCategoryId');
+    const productId = helper.getParam('productId');
+    const inventoryId = helper.getParam('inventoryId');
 
-//     const inventory = await ProductInventory.findAll({
-//       where: whereClause,
-//       attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
-//       include: [
-//         {
-//           model: ProductImages,
-//           as: 'ProductImages',
-//           attributes: ['imageUrl'],
-//           include: [
-//             {
-//               model: ProductImageTypes,
-//               as: 'ProductImageType',
-//               attributes: ['imageType'],
-//             },
-//           ],
-//         },
-//       ],
-//     });
+    const inventoryFilter = {};
+    if (inventoryId) {
+      inventoryFilter['id'] = inventoryId;
+    }
 
-//     sendSuccessResponse(res, categoriesWithSubcategories);
-//   } catch (error) {
-//     errorHandler(error, req, res);
-//   }
-// });
+    const productFilter = {};
+    if (productId) {
+      productFilter['id'] = productId;
+    }
+    if (categoryId) {
+      productFilter['categoryId'] = categoryId;
+    }
+    if (subCategoryId) {
+      productFilter['subCategoryId'] = subCategoryId;
+    }
+
+    const inventory = await ProductInventory.findAll({
+      where: inventoryFilter,
+      attributes: ['id', 'count'],
+      include: [
+        {
+          model: Products,
+          where: productFilter,
+          as: 'Product',
+          attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
+          include: [
+            {
+              model: ProductImages,
+              where: { productImageTypeId: 1 },
+              as: 'ProductImages',
+              attributes: ['imageUrl'],
+            },
+          ],
+        },
+        {
+          model: Sizes,
+          as: 'Size',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Colors,
+          as: 'Color',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+
+    sendSuccessResponse(res, inventory);
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
+});
+
+router.get('/inventory/overview', async (req: Request, res: Response) => {
+  try {
+    const helper = new RequestHelper(req);
+    const categoryId = helper.getParam('categoryId');
+    const subCategoryId = helper.getParam('subCategoryId');
+    const productId = helper.getParam('productId');
+    const inventoryId = helper.getParam('inventoryId');
+
+    const inventoryFilter = {};
+    if (inventoryId) {
+      inventoryFilter['id'] = inventoryId;
+    }
+
+    const productFilter = {};
+    if (productId) {
+      productFilter['id'] = productId;
+    }
+    if (categoryId) {
+      productFilter['categoryId'] = categoryId;
+    }
+    if (subCategoryId) {
+      productFilter['subCategoryId'] = subCategoryId;
+    }
+
+    const inventory = await ProductInventory.findAll({
+      where: inventoryFilter,
+      attributes: ['id', 'count'],
+      include: [
+        {
+          model: Products,
+          where: productFilter,
+          as: 'Product',
+          attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
+          include: [
+            {
+              model: ProductImages,
+              where: { productImageTypeId: 1 },
+              as: 'ProductImages',
+              attributes: ['imageUrl'],
+            },
+          ],
+        },
+        {
+          model: Sizes,
+          as: 'Size',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Colors,
+          as: 'Color',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+
+    // Group the inventory items by product
+    const groups = inventory.reduce((acc, item) => {
+      const productId = (item as any).Product.id;
+
+      if (!acc[productId]) {
+        acc[productId] = [];
+      }
+
+      acc[productId].push(item);
+
+      return acc;
+    }, {});
+
+    // Create a matrix for each group
+    const matrices = Object.values(groups).map((items: any) => {
+      const matrix = {
+        product: null,
+        inventory: {},
+      };
+
+      for (const item of items) {
+        const sizeName = (item as any).Size.name;
+        const colorName = (item as any).Color.name;
+
+        if (!matrix.inventory[sizeName]) {
+          matrix.inventory[sizeName] = {};
+        }
+
+        matrix.inventory[sizeName][colorName] = (item as any).count;
+
+        if (!matrix.product) {
+          matrix.product = (item as any).Product;
+        }
+      }
+
+      return matrix;
+    });
+
+    sendSuccessResponse(res, matrices);
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
+});

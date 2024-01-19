@@ -11,14 +11,6 @@ export const ProductInventory = sequelize.define('ProductInventory', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  categoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  subCategoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   sizeId: {
     type: DataTypes.INTEGER,
     allowNull: false,

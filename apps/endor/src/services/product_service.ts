@@ -149,8 +149,16 @@ export class ProductService {
 
     return { imageId: newImage.dataValues.id };
   }
-
-  async updateProduct(id, name, price, categoryId, subCategoryId, description) {
+  async updateProduct(
+    id,
+    name,
+    price,
+    categoryId,
+    subCategoryId,
+    sizes,
+    colors,
+    description
+  ) {
     let product;
 
     // Start a transaction
@@ -179,8 +187,6 @@ export class ProductService {
         throw new APIException('Sub category does not exist');
       }
 
-      console.log(product.productInformationId);
-
       // Update ProductInformation record
       const productInformation = (await ProductInformation.findByPk(
         product.productInformationId,
@@ -199,6 +205,45 @@ export class ProductService {
       product.name = name;
       product.price = price;
       await product.save({ transaction: t });
+
+      // Delete all existing ProductInventory records for the product
+      await ProductInventory.destroy({
+        where: { productId: id },
+        transaction: t,
+      });
+
+      // Iterate over each color
+      for (const colorId of colors) {
+        // Check if color exists in Colors table
+        const colorExists = await Colors.findByPk(colorId, { transaction: t });
+
+        if (!colorExists) {
+          throw new APIException('Color does not exist');
+        }
+
+        // Iterate over each size
+        for (const sizeId of sizes) {
+          // Check if size exists in Sizes table
+          const sizeExists = await Sizes.findByPk(sizeId, { transaction: t });
+
+          if (!sizeExists) {
+            throw new APIException('Size does not exist');
+          }
+
+          // Create ProductInventory record
+          await ProductInventory.create(
+            {
+              productId: id,
+              categoryId,
+              subCategoryId,
+              sizeId,
+              colorId,
+              count: 0, // Set initial count to 0
+            },
+            { transaction: t }
+          );
+        }
+      }
     });
   }
 
