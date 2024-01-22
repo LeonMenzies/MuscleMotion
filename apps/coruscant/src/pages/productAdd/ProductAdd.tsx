@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Text, DropDown, Button } from '@musclemotion/components';
+import { Text, DropDown } from '@musclemotion/components';
 
 import {
   ProductCategoriesResponseT,

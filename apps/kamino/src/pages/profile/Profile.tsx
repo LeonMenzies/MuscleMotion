@@ -6,10 +6,9 @@ const Profile = () => {
   return (
     <div>
       <div>{user.loggedIn}</div>
-      <div>{user.user.Roles}</div>
-      <div>{user.user.Email}</div>
-      <div>{user.user.FirstName}</div>
-      <div>{user.user.LastName}</div>
+      <div>{user.id}</div>
+      <div>{user.firstName}</div>
+      <div>{user.lastName}</div>
     </div>
   );
 };

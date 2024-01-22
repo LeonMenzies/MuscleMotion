@@ -1,79 +1,69 @@
 import { useEffect, useState } from 'react';
-import { Text } from '@musclemotion/components';
-import { useApi } from '../../api/Api';
-import { useRecoilState } from 'recoil';
+import styled from 'styled-components';
+import LoginForm from './LoginForm';
+import { usePostApi } from '@musclemotion/hooks';
+import { LoginRequestT, LoginResponseT } from '@musclemotion/types';
+import { useSetRecoilState } from 'recoil';
 import { userAtom } from '../../recoil/User';
-import { LoginRequest, LoginResponse } from '@musclemotion/types';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const [user, serUser] = useRecoilState(userAtom);
+export interface LoginContainerProps {}
 
-  const {
-    data,
-    loading,
-    error,
-    postData: submitLoginDetails,
-  } = useApi<LoginResponse>();
-  const url = 'http://localhost:3000/login';
-  const [loginDetails, setLoginDetails] = useState<LoginRequest>({
-    Email: 'leon.menzies@hotmail.com',
-    Password: 'Testing123',
+export function LoginContainer(props: LoginContainerProps) {
+  const setUserAtom = useSetRecoilState(userAtom);
+  const navigate = useNavigate();
+  const [postLoginResponse, postLoginLoading, postLogin] = usePostApi<
+    LoginRequestT,
+    LoginResponseT
+  >('/login');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [user, setUser] = useState<LoginRequestT>({
+    email: 'leon.menzies@mm.com',
+    password: 'Testing123!',
   });
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setLoginDetails((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    submitLoginDetails(url, loginDetails);
-  };
-
   useEffect(() => {
-    if (data?.success) {
-      serUser({
+    if (postLoginResponse.success && postLoginResponse.data) {
+      setUserAtom({
         loggedIn: true,
-        user: data.data.user,
-        jwt: data.data.jwt,
+        id: postLoginResponse.data.id,
+        firstName: postLoginResponse.data.firstName,
+        lastName: postLoginResponse.data.lastName,
+        email: postLoginResponse.data.email,
+        roles: postLoginResponse.data.roles,
       });
+      navigate('/dashboard');
+    } else {
+      setErrorMessage(postLoginResponse.errorMessage);
     }
-  }, [data]);
+  }, [postLoginResponse, setUserAtom, navigate]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handleFieldChange = (fieldName: keyof typeof user, value: string) => {
+    setUser({
+      ...user,
+      [fieldName]: value,
+    });
+  };
+
+  const handleLogin = async () => {
+    postLogin(user);
+  };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <Text
-          title={'Email'}
-          type={'email'}
-          placeholder={'Enter email address'}
-          value={loginDetails.Email}
-          id={'email'}
-          required={true}
-          onChange={handleInputChange}
-        />
-
-        <Text
-          title={'Password'}
-          type={'password'}
-          placeholder={'Enter password'}
-          value={loginDetails.Password}
-          id={'password'}
-          required={true}
-          onChange={(e) =>
-            setLoginDetails({ ...loginDetails, Password: e.target.value })
-          }
-        />
-        {error && <div className="error">{error.message}</div>}
-
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <StyledLoginContainer>
+      <LoginForm
+        user={user}
+        handleFieldChange={handleFieldChange}
+        handleLogin={handleLogin}
+        loading={postLoginLoading}
+        errorMessage={errorMessage}
+      />
+    </StyledLoginContainer>
   );
-};
+}
 
-export default Login;
+export default LoginContainer;
+
+const StyledLoginContainer = styled.div`
+  margin-right: 50px;
+`;

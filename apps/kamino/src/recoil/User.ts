@@ -1,23 +1,16 @@
 import { atom } from 'recoil';
-import { User } from '@musclemotion/types';
+import { UserT } from '@musclemotion/types';
 
-type TUserAtom = {
-  loggedIn: boolean;
-  user: User;
-  jwt: string;
+export const defaultUser = {
+  loggedIn: false,
+  id: 0,
+  firstName: '',
+  lastName: '',
+  email: '',
+  roles: '',
 };
 
-export const userAtom = atom<TUserAtom>({
+export const userAtom = atom<UserT>({
   key: 'user',
-  default: {
-    loggedIn: false,
-    user: {
-      id: 0,
-      firstName: '',
-      lastName: '',
-      email: '',
-      roles: '',
-    },
-    jwt: '',
-  },
+  default: defaultUser,
 });
