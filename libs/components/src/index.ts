@@ -14,5 +14,4 @@ export * from './lib/nav/TopNavItem/TopNavItem';
 
 export * from './lib/product/ProductDisplay/ProductDisplay';
 
-export * from './lib/utils/ProtectedRoute/ProtectedRoute';
 export * from './lib/utils/PageNotFound/PageNotFound';

@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { ProtectedRoute } from '@musclemotion/components';
 import { PageNotFound } from '@musclemotion/components';
 import { useRecoilState } from 'recoil';
 import { userAtom } from './recoil/User';
@@ -63,7 +62,10 @@ function App() {
           <Route path="login" index element={<Auth />} />
 
           <Route index element={<Home />} />
-          <Route path="products/:name" element={<ProductsListContainer />} />
+          <Route
+            path="products/:categoryId/:subCategoryId"
+            element={<ProductsListContainer />}
+          />
 
           <Route path="*" element={<PageNotFound />} />
         </Routes>

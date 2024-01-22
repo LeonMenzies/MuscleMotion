@@ -13,25 +13,27 @@ export interface TopNavProps {
 
 export function TopNav(props: TopNavProps) {
   const { logo, categories } = props;
-  const [hoveredCategory, setHoveredCategory] = useState<string>('');
+  const [hoveredCategory, setHoveredCategory] = useState<number | undefined>(
+    undefined
+  );
 
   const hoverComponent = () => (
     <StyledHoverComponent
       key={hoveredCategory}
-      isVisible={hoveredCategory !== ''}
-      onMouseLeave={() => setHoveredCategory('')}
+      isVisible={hoveredCategory !== undefined}
+      onMouseLeave={() => setHoveredCategory(undefined)}
     >
       {hoveredCategory &&
         categories
           .find(
             (category: ProductCategoriesResponseT) =>
-              category.name === hoveredCategory
+              category.id === hoveredCategory
           )
           ?.ProductSubCategories.map((subCategory: any) => (
             <div className={'hovered-component-container'}>
               <TopNavItem
                 key={subCategory.id}
-                to={`/subcategory/${subCategory.name}`}
+                to={`/products/${hoveredCategory}/${subCategory.id}`}
                 title={subCategory.displayName}
               />
             </div>
@@ -54,10 +56,10 @@ export function TopNav(props: TopNavProps) {
 
         <div className={'right-nav'}>
           {categories.map((category: ProductCategoriesResponseT) => (
-            <div onMouseEnter={() => setHoveredCategory(category.name)}>
+            <div onMouseEnter={() => setHoveredCategory(category.id)}>
               <TopNavItem
                 key={category.id}
-                to={`/category/${category.name}`}
+                to={`/products/${category.id}/0`}
                 title={category.displayName}
               />
             </div>
