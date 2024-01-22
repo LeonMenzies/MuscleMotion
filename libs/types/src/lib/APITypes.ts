@@ -56,3 +56,23 @@ export type ColorsResponseT = {
   displayName: string;
   colorHex: string;
 };
+
+export type ProductInventoryResponseT = {
+  product: {
+    id: number;
+    categoryId: number;
+    subCategoryId: number;
+    name: string;
+    price: string;
+    ProductImages: ProductImageT[];
+  };
+  inventory: SizeInventoryT;
+};
+
+export type ColorInventoryT = {
+  [color: string]: number;
+};
+
+export type SizeInventoryT = {
+  [size: string]: ColorInventoryT;
+};

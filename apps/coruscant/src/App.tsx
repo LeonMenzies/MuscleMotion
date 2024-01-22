@@ -10,7 +10,7 @@ import { FaUser, FaListUl, FaRegPlusSquare } from 'react-icons/fa';
 
 import ProductListContainer from './pages/productList/ProductListContainer';
 import ProductAddContainer from './pages/productAdd/ProductAddContainer';
-import Inventory from './pages/Inventory/Inventory';
+import InventoryContainer from './pages/Inventory/InventoryContainer';
 import LoginContainer from './pages/login/LoginContainer';
 import { defaultUser, userAtom } from './recoil/User';
 import UserContainer from './pages/user/UserContainer';
@@ -121,7 +121,7 @@ function App() {
           />
           <Route
             path="inventory"
-            element={renderElement(user.loggedIn, Inventory, '/login')}
+            element={renderElement(user.loggedIn, InventoryContainer, '/login')}
           />
           <Route
             path="product-list"
