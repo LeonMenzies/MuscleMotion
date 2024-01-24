@@ -31,7 +31,6 @@ export function ProductsListContainer(props: ProductsListContainerProps) {
 
   return (
     <StyledProductsListContainer>
-      {' '}
       <ProductListDisplay productList={fetchProductsResponse.data} />
     </StyledProductsListContainer>
   );

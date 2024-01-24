@@ -20,35 +20,9 @@ export function TopNav(props: TopNavProps) {
     undefined
   );
 
-  const hoverComponent = () => (
-    <StyledHoverComponent
-      key={hoveredCategory}
-      isVisible={hoveredCategory !== undefined}
-      onMouseLeave={() => setHoveredCategory(undefined)}
-    >
-      {hoveredCategory &&
-        categories
-          .find(
-            (category: ProductCategoriesResponseT) =>
-              category.id === hoveredCategory
-          )
-          ?.ProductSubCategories.map(
-            (subCategory: ProductSubCategoriesResponseT, index: number) => (
-              <div className={'hovered-component-container'} key={index}>
-                <TopNavItem
-                  key={subCategory.id}
-                  to={`/products/${hoveredCategory}/${subCategory.id}`}
-                  title={subCategory.displayName}
-                />
-              </div>
-            )
-          )}
-    </StyledHoverComponent>
-  );
-
   return (
-    <StyledNav>
-      <div className={'container'}>
+    <StyledNav isVisible={hoveredCategory !== undefined}>
+      <div className={'header'}>
         <NavLink to={'/'}>
           <img
             className={'navLogo'}
@@ -71,32 +45,48 @@ export function TopNav(props: TopNavProps) {
           ))}
         </div>
       </div>
-      {hoverComponent()}
+      <div
+        className={'hover-nav'}
+        onMouseLeave={() => setHoveredCategory(undefined)}
+      >
+        {hoveredCategory &&
+          categories
+            .find(
+              (category: ProductCategoriesResponseT) =>
+                category.id === hoveredCategory
+            )
+            ?.ProductSubCategories.map(
+              (subCategory: ProductSubCategoriesResponseT, index: number) => (
+                <div className={'hovered-component-container'} key={index}>
+                  <TopNavItem
+                    key={subCategory.id}
+                    to={`/products/${hoveredCategory}/${subCategory.id}`}
+                    title={subCategory.displayName}
+                  />
+                </div>
+              )
+            )}
+      </div>
     </StyledNav>
   );
 }
-const StyledHoverComponent = styled.div<{ isVisible: boolean }>`
-  background-color: aquamarine;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
 
-  height: ${({ isVisible }) => (isVisible ? 'auto' : '0')};
+export default TopNav;
+
+const StyledNav = styled.div<{ isVisible: boolean }>`
+  height: ${({ isVisible }) => (isVisible ? '200px' : '50px')};
   transition: 0.4s;
 
-  .hovered-component-container {
-    padding: 10px;
-  }
-`;
-
-const StyledNav = styled.div`
-  .container {
+  .header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: red;
+    height: 50px;
+    padding: 0 10px;
   }
+
+  background-color: red;
 
   .navLogo {
     object-fit: cover;
@@ -106,5 +96,15 @@ const StyledNav = styled.div`
     display: flex;
     align-items: center;
     padding: 0 0.5rem;
+  }
+
+  .hover-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+
+    .hovered-component-container {
+      padding: 10px;
+    }
   }
 `;
