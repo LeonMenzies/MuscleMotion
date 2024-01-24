@@ -1,26 +1,17 @@
-import { createLogger, format, transports } from 'winston';
+import { Logs } from '../models/logs';
 
-export const logger = createLogger({
-  level: 'info',
-  format: format.combine(
-    format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
-    }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json()
-  ),
-  defaultMeta: { service: 'muscle-motion' },
-  transports: [
-    new transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new transports.File({ filename: 'logs/combined.log' }),
-  ],
-});
+export async function createLog(
+  level: string,
+  endpoint: string,
+  request: object,
+  response: object
+) {
+  const logRecord = await Logs.create({
+    level,
+    endpoint,
+    request,
+    response,
+  });
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
-    })
-  );
+  return logRecord;
 }

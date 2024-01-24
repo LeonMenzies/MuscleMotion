@@ -1,10 +1,10 @@
-import { Colors } from './Colors';
-import { ProductImageTypes } from './ProductImageTypes';
-import { ProductImages } from './ProductImages';
-import { ProductInformation } from './ProductInformation';
-import { ProductInventory } from './ProductInventory';
-import { Products } from './Products';
-import { Sizes } from './Sizes';
+import { Colors } from './colors';
+import { ProductImageTypes } from './product_image_types';
+import { ProductImages } from './product_images';
+import { ProductInformation } from './product_information';
+import { ProductInventory } from './product_inventory';
+import { Products } from './products';
+import { Sizes } from './sizes';
 
 export function defineAssociations() {
   // ProductInformation associations

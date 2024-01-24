@@ -1,18 +1,18 @@
 import express, { Request, Response } from 'express';
-import { Products } from '../models/Products';
+import { Products } from '../models/products';
 import { sendSuccessResponse } from '../helpers/ResponseHandler';
 import { RequestHelper } from '../helpers/RequestHelper';
 import { errorHandler } from '../helpers/ErrorHandler';
 import { APIException } from '../helpers/Exceptions';
 import { ProductService } from '../services/product_service';
-import { ProductCategories } from '../models/ProductCategories';
-import { ProductSubCategories } from '../models/ProductSubCategories';
-import { ProductImages } from '../models/ProductImages';
-import { ProductImageTypes } from '../models/ProductImageTypes';
-import { ProductInformation } from '../models/ProductInformation';
-import { ProductInventory } from '../models/ProductInventory';
-import { Colors } from '../models/Colors';
-import { Sizes } from '../models/Sizes';
+import { ProductCategories } from '../models/product_categories';
+import { ProductSubCategories } from '../models/product_sub_categories';
+import { ProductImages } from '../models/product_images';
+import { ProductImageTypes } from '../models/product_image_types';
+import { ProductInformation } from '../models/product_information';
+import { ProductInventory } from '../models/product_inventory';
+import { Colors } from '../models/colors';
+import { Sizes } from '../models/sizes';
 // import { ProductInventory } from '../models/ProductInventory';
 
 export const router = express.Router();

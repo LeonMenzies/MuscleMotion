@@ -1,4 +1,4 @@
-import { ProductCategories } from '../models/ProductCategories';
+import { ProductCategories } from '../models/product_categories';
 
 export async function addProductCategory() {
   try {

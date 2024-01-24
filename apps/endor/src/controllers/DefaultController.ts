@@ -1,4 +1,4 @@
-import { Users } from '../models/Users';
+import { Users } from '../models/users';
 import { authenticateLogin, hashPassword } from '../helpers/AuthMiddleware';
 import { sendSuccessResponse } from '../helpers/ResponseHandler';
 import express, { Request, Response } from 'express';

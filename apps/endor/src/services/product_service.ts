@@ -1,14 +1,14 @@
 import S3 from '../aws/S3';
 import { APIException } from '../helpers/Exceptions';
-import { Colors } from '../models/Colors';
-import { ProductCategories } from '../models/ProductCategories';
-import { ProductImageTypes } from '../models/ProductImageTypes';
-import { ProductImages } from '../models/ProductImages';
-import { ProductInformation } from '../models/ProductInformation';
-import { ProductInventory } from '../models/ProductInventory';
-import { ProductSubCategories } from '../models/ProductSubCategories';
-import { Products } from '../models/Products';
-import { Sizes } from '../models/Sizes';
+import { Colors } from '../models/colors';
+import { ProductCategories } from '../models/product_categories';
+import { ProductImageTypes } from '../models/product_image_types';
+import { ProductImages } from '../models/product_images';
+import { ProductInformation } from '../models/product_information';
+import { ProductInventory } from '../models/product_inventory';
+import { ProductSubCategories } from '../models/product_sub_categories';
+import { Products } from '../models/products';
+import { Sizes } from '../models/sizes';
 import { sequelize } from './sequelize';
 
 export class ProductService {

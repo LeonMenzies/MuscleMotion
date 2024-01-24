@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Users } from '../models/Users';
+import { Users } from '../models/users';
 import { authenticateLogin, hashPassword } from '../helpers/AuthMiddleware';
 import { errorHandler } from '../helpers/ErrorHandler';
 

@@ -1,11 +1,11 @@
 import { Response } from 'express';
-import { logger } from '../helpers/Logger';
+import { createLog } from '../helpers/Logger';
 
-export const sendSuccessResponse = (res: Response, data?: any) => {
+export const sendSuccessResponse = (res: Response, data?: unknown) => {
   const responseData: {
     success: boolean;
     errorMessage: string;
-    data?: any;
+    data?: unknown;
   } = {
     success: true,
     errorMessage: '',
@@ -13,8 +13,7 @@ export const sendSuccessResponse = (res: Response, data?: any) => {
   if (data) {
     responseData.data = data;
   }
-  logger.info('success');
-
+  createLog('success', res.req?.originalUrl, res.req?.body, responseData);
   return res.status(200).json(responseData);
 };
 
@@ -27,7 +26,7 @@ export const sendErrorResponse = (
     success: false,
     errorMessage: errorMessage,
   };
-  logger.error(errorMessage);
+  createLog('error', res.req?.originalUrl, res.req?.body, responseData);
 
   return res.status(status).json(responseData);
 };

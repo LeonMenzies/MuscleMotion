@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Colors } from '../models/Colors';
+import { Colors } from '../models/colors';
 import { sendSuccessResponse } from '../helpers/ResponseHandler';
 import { errorHandler } from '../helpers/ErrorHandler';
 

@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Sizes } from '../models/Sizes'; // Replace with the actual path
+import { Sizes } from '../models/sizes'; // Replace with the actual path
 import { sendSuccessResponse } from '../helpers/ResponseHandler';
 import { errorHandler } from '../helpers/ErrorHandler';
 
