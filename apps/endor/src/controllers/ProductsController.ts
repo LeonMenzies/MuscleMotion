@@ -17,7 +17,7 @@ import { Sizes } from '../models/Sizes';
 
 export const router = express.Router();
 
-router.post('/products', async (req: Request, res: Response) => {
+router.get('/products', async (req: Request, res: Response) => {
   try {
     const helper = new RequestHelper(req);
     const categoryId = helper.getParam('categoryId');

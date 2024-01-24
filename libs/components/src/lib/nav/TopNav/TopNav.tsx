@@ -2,7 +2,10 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { TopNavItem } from '../TopNavItem/TopNavItem';
-import { ProductCategoriesResponseT } from '@musclemotion/types';
+import {
+  ProductCategoriesResponseT,
+  ProductSubCategoriesResponseT,
+} from '@musclemotion/types';
 import { useState } from 'react';
 
 /* eslint-disable-next-line */
@@ -29,15 +32,17 @@ export function TopNav(props: TopNavProps) {
             (category: ProductCategoriesResponseT) =>
               category.id === hoveredCategory
           )
-          ?.ProductSubCategories.map((subCategory: any) => (
-            <div className={'hovered-component-container'}>
-              <TopNavItem
-                key={subCategory.id}
-                to={`/products/${hoveredCategory}/${subCategory.id}`}
-                title={subCategory.displayName}
-              />
-            </div>
-          ))}
+          ?.ProductSubCategories.map(
+            (subCategory: ProductSubCategoriesResponseT, index: number) => (
+              <div className={'hovered-component-container'} key={index}>
+                <TopNavItem
+                  key={subCategory.id}
+                  to={`/products/${hoveredCategory}/${subCategory.id}`}
+                  title={subCategory.displayName}
+                />
+              </div>
+            )
+          )}
     </StyledHoverComponent>
   );
 

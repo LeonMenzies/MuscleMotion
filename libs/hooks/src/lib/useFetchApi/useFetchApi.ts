@@ -22,18 +22,10 @@ export const useFetchApi = <T>(
       try {
         setLoading(true);
 
-        const urlEncodedParams = new URLSearchParams();
-        for (const key in params) {
-          urlEncodedParams.append(key, params[key] as string);
-        }
-
         const response = await axios.request<ApiResponse<T>>({
-          method: 'POST',
+          method: 'GET',
           url: URL_BASE + endpoint,
-          data: urlEncodedParams.toString(),
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+          params,
           withCredentials: true,
         });
 

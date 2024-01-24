@@ -26,7 +26,9 @@ export class RequestHelper {
   }
 
   getParam(paramName: string): string | undefined {
-    return this.validateParam(paramName, this.request.body[paramName]);
+    const paramValue =
+      this.request.body[paramName] || this.request.query[paramName];
+    return this.validateParam(paramName, paramValue);
   }
 
   getRequiredParam(paramName: string): string | undefined {
