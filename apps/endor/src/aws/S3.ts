@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIException } from '../helpers/Exceptions';
+import { APIException } from '../helpers/exceptions';
 
 export class S3 {
   private accessKeyId: string;

@@ -4,7 +4,4 @@ import cron from 'node-cron';
 cron.schedule('* * * * * *', () => {});
 
 // Execute task 10 every two minutes
-cron.schedule('* 10 * * * *', () => {
-  // addProductSubCategory();
-  // addProductCategory();
-});
+cron.schedule('* 10 * * * *', () => {});

@@ -1,4 +1,4 @@
-import { ValidationException } from './Exceptions';
+import { ValidationException } from './exceptions';
 
 export const validateString = (
   param: string,

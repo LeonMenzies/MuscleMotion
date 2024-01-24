@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { createLog } from '../helpers/Logger';
+import { createLog } from './logger_helper';
 
 export const sendSuccessResponse = (res: Response, data?: unknown) => {
   const responseData: {

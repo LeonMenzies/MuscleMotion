@@ -1,5 +1,5 @@
-import S3 from '../aws/S3';
-import { APIException } from '../helpers/Exceptions';
+import S3 from '../aws/s3';
+import { APIException } from '../helpers/exceptions';
 import { Colors } from '../models/colors';
 import { ProductCategories } from '../models/product_categories';
 import { ProductImageTypes } from '../models/product_image_types';

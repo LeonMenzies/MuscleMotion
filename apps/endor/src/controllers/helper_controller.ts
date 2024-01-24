@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { addProductCategory } from '../cron/add_product_category';
-import { sendSuccessResponse } from '../helpers/ResponseHandler';
-import { errorHandler } from '../helpers/ErrorHandler';
+import { sendSuccessResponse } from '../helpers/response_handler';
+import { errorHandler } from '../helpers/error_handler';
 
 export const router = express.Router();
 

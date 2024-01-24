@@ -1,10 +1,10 @@
 import express from 'express';
-import { router as userRouter } from '../controllers/UserController';
-import { router as colorRouter } from '../controllers/ColorsController';
-import { router as sizesRouter } from '../controllers/SizesController';
-import { router as productsRouter } from '../controllers/ProductsController';
-import { router as fileRouter } from '../controllers/FileController';
-import { router as defaultRouter } from '../controllers/DefaultController';
+import { router as userRouter } from '../controllers/user_controller';
+import { router as colorRouter } from '../controllers/colors_controller';
+import { router as sizesRouter } from '../controllers/sizes_controller';
+import { router as productsRouter } from '../controllers/products_controller';
+import { router as fileRouter } from '../controllers/file_controller';
+import { router as defaultRouter } from '../controllers/default_controller';
 
 const apiRouter = express.Router();
 

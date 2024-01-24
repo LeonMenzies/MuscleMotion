@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import { Products } from '../models/products';
-import { sendSuccessResponse } from '../helpers/ResponseHandler';
-import { RequestHelper } from '../helpers/RequestHelper';
-import { errorHandler } from '../helpers/ErrorHandler';
-import { APIException } from '../helpers/Exceptions';
+import { sendSuccessResponse } from '../helpers/response_handler';
+import { RequestHelper } from '../helpers/request_helper';
+import { errorHandler } from '../helpers/error_handler';
+import { APIException } from '../helpers/exceptions';
 import { ProductService } from '../services/product_service';
 import { ProductCategories } from '../models/product_categories';
 import { ProductSubCategories } from '../models/product_sub_categories';
@@ -13,7 +13,6 @@ import { ProductInformation } from '../models/product_information';
 import { ProductInventory } from '../models/product_inventory';
 import { Colors } from '../models/colors';
 import { Sizes } from '../models/sizes';
-// import { ProductInventory } from '../models/ProductInventory';
 
 export const router = express.Router();
 

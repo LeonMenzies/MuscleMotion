@@ -1,14 +1,13 @@
 import { Users } from '../models/users';
-import { authenticateLogin, hashPassword } from '../helpers/AuthMiddleware';
-import { sendSuccessResponse } from '../helpers/ResponseHandler';
+import { authenticateLogin, hashPassword } from '../helpers/auth_middleware';
+import { sendSuccessResponse } from '../helpers/response_handler';
 import express, { Request, Response } from 'express';
-import { RequestHelper } from '../helpers/RequestHelper';
-import { errorHandler } from '../helpers/ErrorHandler';
-import { APIException } from '../helpers/Exceptions';
+import { RequestHelper } from '../helpers/request_helper';
+import { errorHandler } from '../helpers/error_handler';
+import { APIException } from '../helpers/exceptions';
 
 export const router = express.Router();
 
-// Route: POST /signup - Create a new user
 router.post('/signup', async (req: Request, res: Response) => {
   try {
     const helper = new RequestHelper(req);
@@ -41,7 +40,6 @@ router.post('/signup', async (req: Request, res: Response) => {
   }
 });
 
-// Route: POST /users/login - Login user
 router.post('/login', async (req: Request, res: Response) => {
   try {
     const helper = new RequestHelper(req, true);

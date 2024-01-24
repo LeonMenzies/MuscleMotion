@@ -1,12 +1,11 @@
-import { authenticateRequest } from './AuthMiddleware';
+import { authenticateRequest } from './auth_middleware';
 import { Request } from 'express';
-import { APIException } from './Exceptions';
-import { validateString } from './Validators';
+import { APIException } from './exceptions';
+import { validateString } from './validators';
 
 export class RequestHelper {
   private request: Request;
   private userEmail: string;
-  private userId: number;
 
   constructor(request: Request, skipAuth = false) {
     this.request = request;
@@ -18,7 +17,6 @@ export class RequestHelper {
   private validateJwt() {
     const decodedToken = authenticateRequest(this.request);
     this.userEmail = decodedToken.email;
-    this.userId = decodedToken.id;
   }
 
   getUserEmail(): string {

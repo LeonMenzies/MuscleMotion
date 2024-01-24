@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Request } from 'express';
-import { APIException } from './Exceptions';
+import { APIException } from './exceptions';
 
 const SECRET_KEY = 'yourSecretKey';
 const SALT_ROUNDS = 10;

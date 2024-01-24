@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { sendSuccessResponse } from '../helpers/ResponseHandler';
-import { errorHandler } from '../helpers/ErrorHandler';
-import { RequestHelper } from '../helpers/RequestHelper';
+import { sendSuccessResponse } from '../helpers/response_handler';
+import { errorHandler } from '../helpers/error_handler';
+import { RequestHelper } from '../helpers/request_helper';
 import { ProductService } from '../services/product_service';
 
 export const router = express.Router();
