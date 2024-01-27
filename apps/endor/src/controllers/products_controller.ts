@@ -18,7 +18,7 @@ export const router = express.Router();
 
 router.get('/products', async (req: Request, res: Response) => {
   try {
-    const helper = new RequestHelper(req);
+    const helper = new RequestHelper(req, true);
     const categoryId = helper.getParam('categoryId');
     const subCategoryId = helper.getParam('subCategoryId');
     const productId = helper.getParam('productId');
@@ -152,6 +152,8 @@ router.post('/update', async (req: Request, res: Response) => {
 
 router.get('/categories', async (req: Request, res: Response) => {
   try {
+    new RequestHelper(req, true);
+
     const categoriesWithSubcategories = await ProductCategories.findAll({
       attributes: ['id', 'name', 'displayName'],
       include: [

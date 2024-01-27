@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { defaultUser, userAtom } from '../../recoil/User';
+import { defaultUser, userAtom } from '../../recoil/user';
 
 const Logout = () => {
   const navigate = useNavigate();

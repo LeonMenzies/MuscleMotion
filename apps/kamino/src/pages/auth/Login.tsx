@@ -4,7 +4,7 @@ import LoginForm from './LoginForm';
 import { usePostApi } from '@musclemotion/hooks';
 import { LoginRequestT, LoginResponseT } from '@musclemotion/types';
 import { useSetRecoilState } from 'recoil';
-import { userAtom } from '../../recoil/User';
+import { userAtom } from '../../recoil/user';
 import { useNavigate } from 'react-router-dom';
 
 export interface LoginContainerProps {}

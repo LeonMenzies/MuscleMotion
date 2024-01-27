@@ -73,7 +73,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
 router.get('/auth', async (req: Request, res: Response) => {
   try {
-    const helper = new RequestHelper(req);
+    const helper = new RequestHelper(req, true);
     const email = helper.getUserEmail();
 
     const user = await Users.findOne({

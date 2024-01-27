@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { userAtom } from '../../recoil/User';
+import { userAtom } from '../../recoil/user';
 
 const Profile = () => {
   const [user, setUser] = useRecoilState(userAtom);

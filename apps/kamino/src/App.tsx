@@ -1,13 +1,13 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { PageNotFound } from '@musclemotion/components';
 import { useRecoilState } from 'recoil';
-import { userAtom } from './recoil/User';
+import { userAtom } from './recoil/user';
 import { TopNav } from '@musclemotion/components';
 
-import Home from './pages/home/Home';
+import Home from './pages/home/home';
 
 import Auth from './pages/auth/Auth';
-import Profile from './pages/profile/Profile';
+import Profile from './pages/profile/profile';
 
 import MuscleMotionAltLogo from './assets/images/muscle-motion.jpg';
 import styled from 'styled-components';

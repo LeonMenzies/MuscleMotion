@@ -9,7 +9,7 @@ export class RequestHelper {
 
   constructor(request: Request, skipAuth = false) {
     this.request = request;
-    if (!skipAuth) {
+    if (skipAuth) {
       this.validateJwt();
     }
   }

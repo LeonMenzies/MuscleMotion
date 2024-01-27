@@ -41,16 +41,18 @@ export function ProductDisplay(props: ProductDisplayProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <StyledImagePreview
-        src={images.primary}
-        alt="Selected Image"
-        hovered={hovered}
-      />
-      <HoveredImagePreview
-        src={images.secondary}
-        alt="Selected Image"
-        hovered={hovered}
-      />
+      <div style={{ height: '80%' }}>
+        <StyledImagePreview
+          src={images.primary}
+          alt="Selected Image"
+          hovered={hovered}
+        />
+        <HoveredImagePreview
+          src={images.secondary}
+          alt="Selected Image"
+          hovered={hovered}
+        />
+      </div>
 
       <TextContainer>
         <h3>{product.name}</h3>
@@ -62,19 +64,21 @@ export function ProductDisplay(props: ProductDisplayProps) {
 export default ProductDisplay;
 
 const TextContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  position: absolute; // Position text absolutely
-  bottom: -10px; // Position at the bottom
-  margin: 10px;
+  width: 90%;
+  position: absolute;
+  height: 15%;
+  bottom: 0;
+  align-items: center;
 `;
 
 const StyledProductDisplay = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; // Add space between items
+  justify-content: space-between;
   align-items: center;
   border: 1px solid #ccc;
   padding: 20px;
@@ -89,7 +93,7 @@ const StyledProductDisplay = styled.div`
 
 const StyledImagePreview = styled.img<ImageProps>`
   width: 100%;
-  height: auto;
+  height: 85%;
   position: absolute;
   top: 0;
   left: 0;
@@ -100,7 +104,7 @@ const StyledImagePreview = styled.img<ImageProps>`
 
 const HoveredImagePreview = styled.img<ImageProps>`
   width: 100%;
-  height: auto;
+  height: 85%;
   position: absolute;
   top: 0;
   left: 0;
