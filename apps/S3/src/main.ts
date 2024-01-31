@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 const app = express();
-const port = 6000;
+const port = 3001;
 
 app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));

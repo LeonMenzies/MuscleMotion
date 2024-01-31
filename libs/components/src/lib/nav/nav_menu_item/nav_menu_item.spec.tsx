@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Text from './text';
+import { NavMenuItem } from './nav_menu_item';
 
-describe('Text', () => {
+describe('NavMenuItem', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Text />);
+    const { baseElement } = render(<NavMenuItem />);
     expect(baseElement).toBeTruthy();
   });
 });

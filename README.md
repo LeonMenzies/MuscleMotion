@@ -13,7 +13,7 @@ Internal-Frontend: http://localhost:4000/
 API: http://localhost:3000/api
 `npx nx run endor:serve --configuration=development`
 
-S3 Bucket: http://localhost:6000/
+S3 Bucket: http://localhost:3001/
 `npx nx run S3:serve --configuration=development `
 
 ## Ready to deploy?

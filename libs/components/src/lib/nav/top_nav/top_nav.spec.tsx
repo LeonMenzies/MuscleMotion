@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Text from './text';
+import TopNav from './top_nav';
 
-describe('Text', () => {
+describe('TopNav', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Text />);
+    const { baseElement } = render(<TopNav />);
     expect(baseElement).toBeTruthy();
   });
 });

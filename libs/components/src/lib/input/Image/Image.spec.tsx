@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import Image from './Image';
+import Image from './image';
 
 describe('Button', () => {
   it('should render successfully', () => {

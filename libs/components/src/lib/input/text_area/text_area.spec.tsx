@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Text from './text';
+import TextArea from './text_area';
 
-describe('Text', () => {
+describe('TextArea', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Text />);
+    const { baseElement } = render(<TextArea />);
     expect(baseElement).toBeTruthy();
   });
 });

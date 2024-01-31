@@ -1,19 +1,19 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavMenu, PageNotFound } from '@musclemotion/components';
 import { useRecoilState } from 'recoil';
-import Dashboard from './pages/dashboard/Dashboard';
-import { navAtom } from './recoil/Nav';
+import Dashboard from './pages/dashboard/dashboard';
+import { navAtom } from './recoil/nav';
 import { NavItem, UserT } from '@musclemotion/types';
 import styled from 'styled-components';
 import { MdDashboard, MdInventory } from 'react-icons/md';
 import { FaUser, FaListUl, FaRegPlusSquare } from 'react-icons/fa';
 
-import ProductListContainer from './pages/productList/ProductListContainer';
-import ProductAddContainer from './pages/productAdd/ProductAddContainer';
-import InventoryContainer from './pages/Inventory/InventoryContainer';
-import LoginContainer from './pages/login/LoginContainer';
-import { defaultUser, userAtom } from './recoil/User';
-import UserContainer from './pages/user/UserContainer';
+import ProductListContainer from './pages/productList/product_list_container';
+import ProductAddContainer from './pages/productAdd/product_add_container';
+import InventoryContainer from './pages/Inventory/inventory_container';
+import LoginContainer from './pages/login/login_container';
+import { defaultUser, userAtom } from './recoil/user';
+import UserContainer from './pages/user/user_container';
 import { useFetchApi } from '@musclemotion/hooks';
 import { ElementType, useEffect, useState } from 'react';
 

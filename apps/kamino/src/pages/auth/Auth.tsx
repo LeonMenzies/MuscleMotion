@@ -1,5 +1,5 @@
-import Login from '../../pages/auth/Login';
-import Signup from '../../pages/auth/Signup';
+import Login from './login';
+import Signup from './signup';
 import { useState } from 'react';
 import styled from 'styled-components';
 import MuscleMotionAltLogo from '../../assets/images/muscle-motion.jpg';
