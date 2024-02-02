@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import { Text, DropDown } from '@musclemotion/components';
 
 import {
-  ProductCategoriesResponseT,
+  ProductCategoryResponseT,
   ProductSubCategoriesResponseT,
   ProductT,
 } from '@musclemotion/types';
 
 interface ProductAddProps {
-  categories: ProductCategoriesResponseT[];
+  categories: ProductCategoryResponseT[];
   product: ProductT;
   handleFieldChange: (fieldName: keyof ProductT, value: string | Blob) => void;
 }
@@ -17,7 +17,7 @@ export function ProductAdd(props: ProductAddProps) {
   const { categories, product, handleFieldChange } = props;
 
   const mappedCategories = categories.map(
-    (category: ProductCategoriesResponseT) => ({
+    (category: ProductCategoryResponseT) => ({
       label: category.displayName,
       id: category.id,
     })
@@ -25,7 +25,7 @@ export function ProductAdd(props: ProductAddProps) {
 
   const findParentCategory = (id: number) => {
     const parentCategory = categories.find(
-      (category: ProductCategoriesResponseT) => category.id === Number(id)
+      (category: ProductCategoryResponseT) => category.id === Number(id)
     );
 
     if (parentCategory) {

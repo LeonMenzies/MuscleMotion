@@ -1,4 +1,4 @@
-import { Users } from '../models/users';
+import { User } from '../models/user';
 import { authenticateLogin, hashPassword } from '../helpers/auth_middleware';
 import { sendSuccessResponse } from '../helpers/response_handler';
 import express, { Request, Response } from 'express';
@@ -10,14 +10,14 @@ export const router = express.Router();
 
 router.post('/signup', async (req: Request, res: Response) => {
   try {
-    const helper = new RequestHelper(req);
+    const helper = new RequestHelper(req, true);
     const firstName = helper.getRequiredParam('firstName');
     const lastName = helper.getRequiredParam('lastName');
     const email = helper.getRequiredParam('email');
     const password = helper.getRequiredParam('password');
 
     // Check if the email is already registered
-    const existingUser = await Users.findOne({
+    const existingUser = await User.findOne({
       where: { email },
     });
 
@@ -26,7 +26,7 @@ router.post('/signup', async (req: Request, res: Response) => {
     }
 
     // Create a new user
-    const user = await Users.create({
+    const user = await User.create({
       firstName,
       lastName,
       email,
@@ -46,7 +46,7 @@ router.post('/login', async (req: Request, res: Response) => {
     const email = helper.getRequiredParam('email');
     const password = helper.getRequiredParam('password');
 
-    const user = await Users.findOne({
+    const user = await User.findOne({
       where: { email },
       attributes: [
         'id',
@@ -76,7 +76,7 @@ router.get('/auth', async (req: Request, res: Response) => {
     const helper = new RequestHelper(req, true);
     const email = helper.getUserEmail();
 
-    const user = await Users.findOne({
+    const user = await User.findOne({
       where: { email },
       attributes: [
         'id',

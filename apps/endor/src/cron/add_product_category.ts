@@ -1,9 +1,9 @@
-import { ProductCategories } from '../models/product_categories';
+import { ProductCategory } from '../models/product_category';
 
 export async function addProductCategory() {
   try {
     // Fetch existing records from the database
-    const existingDBRecords: any = await ProductCategories.findAll({
+    const existingDBRecords: any = await ProductCategory.findAll({
       raw: true,
     });
 
@@ -13,7 +13,7 @@ export async function addProductCategory() {
 
     // Insert new records into the database
     if (filteredItems.length > 0) {
-      await ProductCategories.bulkCreate(filteredItems);
+      await ProductCategory.bulkCreate(filteredItems);
       console.log('New records synced with the database:', filteredItems);
     } else {
       console.log('No new records to sync.');

@@ -1,37 +1,44 @@
-import { Colors } from './colors';
-import { ProductImageTypes } from './product_image_types';
-import { ProductImages } from './product_images';
+import { Color } from './color';
+import { ProductCategory } from './product_category';
+import { ProductImageType } from './product_image_type';
+import { ProductImage } from './product_image';
 import { ProductInformation } from './product_information';
 import { ProductInventory } from './product_inventory';
-import { Products } from './products';
-import { Sizes } from './sizes';
+import { ProductSubCategory } from './product_sub_category';
+import { Product } from './product';
+import { Size } from './size';
 
 export function defineAssociations() {
-  // ProductInformation associations
-  Products.hasOne(ProductInformation, { foreignKey: 'id' });
-  ProductInformation.belongsTo(Products, {
+  // Product associations
+  Product.hasOne(ProductInformation, { foreignKey: 'id' });
+  ProductInformation.belongsTo(Product, {
     foreignKey: 'id',
   });
-
-  // Products associations
-  Products.hasMany(ProductImages, { foreignKey: 'productId' });
-  ProductImages.belongsTo(Products, { foreignKey: 'productId' });
+  Product.hasOne(ProductCategory, { foreignKey: 'id' });
+  ProductCategory.belongsTo(Product, {
+    foreignKey: 'id',
+  });
+  Product.hasOne(ProductSubCategory, { foreignKey: 'id' });
+  ProductSubCategory.belongsTo(Product, {
+    foreignKey: 'id',
+  });
+  Product.hasMany(ProductInventory, { foreignKey: 'productId' });
+  ProductInventory.belongsTo(Product, { foreignKey: 'productId' });
 
   // ProductImages associations
-  ProductImages.belongsTo(ProductImageTypes, {
+  Product.hasMany(ProductImage, { foreignKey: 'productId' });
+  ProductImage.belongsTo(Product, { foreignKey: 'productId' });
+  ProductImageType.hasOne(ProductImage, {
     foreignKey: 'productImageTypeId',
   });
-  ProductImageTypes.hasMany(ProductImages, {
+  ProductImage.belongsTo(ProductImageType, {
     foreignKey: 'productImageTypeId',
   });
 
   // ProductInventory associations
-  ProductInventory.belongsTo(Products, { foreignKey: 'productId' });
-  Products.hasMany(ProductInventory, { foreignKey: 'productId' });
+  Size.hasOne(ProductInventory, { foreignKey: 'id' });
+  ProductInventory.belongsTo(Size, { foreignKey: 'id' });
 
-  ProductInventory.belongsTo(Sizes, { foreignKey: 'sizeId' });
-  Sizes.hasMany(ProductInventory, { foreignKey: 'sizeId' });
-
-  ProductInventory.belongsTo(Colors, { foreignKey: 'colorId' });
-  Colors.hasMany(ProductInventory, { foreignKey: 'colorId' });
+  Color.hasOne(ProductInventory, { foreignKey: 'id' });
+  ProductInventory.belongsTo(Color, { foreignKey: 'id' });
 }

@@ -1,27 +1,22 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
 
-export const Products = sequelize.define('Products', {
+export const Color = sequelize.define('Color', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  productInformationId: {
-    type: DataTypes.INTEGER,
-  },
-  categoryId: {
-    type: DataTypes.INTEGER,
-  },
-  subCategoryId: {
-    type: DataTypes.INTEGER,
-  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  price: {
-    type: DataTypes.DECIMAL(10, 2),
+  displayName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  colorHex: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });

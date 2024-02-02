@@ -1,18 +1,18 @@
 import express, { Request, Response } from 'express';
-import { Products } from '../models/products';
+import { Product } from '../models/product';
 import { sendSuccessResponse } from '../helpers/response_handler';
 import { RequestHelper } from '../helpers/request_helper';
 import { errorHandler } from '../helpers/error_handler';
 import { APIException } from '../helpers/exceptions';
 import { ProductService } from '../services/product_service';
-import { ProductCategories } from '../models/product_categories';
-import { ProductSubCategories } from '../models/product_sub_categories';
-import { ProductImages } from '../models/product_images';
-import { ProductImageTypes } from '../models/product_image_types';
+import { ProductCategory } from '../models/product_category';
+import { ProductSubCategory } from '../models/product_sub_category';
+import { ProductImage } from '../models/product_image';
+import { ProductImageType } from '../models/product_image_type';
 import { ProductInformation } from '../models/product_information';
 import { ProductInventory } from '../models/product_inventory';
-import { Colors } from '../models/colors';
-import { Sizes } from '../models/sizes';
+import { Color } from '../models/color';
+import { Size } from '../models/size';
 
 export const router = express.Router();
 
@@ -37,18 +37,18 @@ router.get('/products', async (req: Request, res: Response) => {
     }
 
     if (productId) {
-      products = await Products.findOne({
+      products = await Product.findOne({
         where: whereClause,
         attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
 
         include: [
           {
-            model: ProductImages,
+            model: ProductImage,
             as: 'ProductImages',
             attributes: ['imageUrl'],
             include: [
               {
-                model: ProductImageTypes,
+                model: ProductImageType,
                 as: 'ProductImageType',
                 attributes: ['imageType'],
               },
@@ -62,17 +62,17 @@ router.get('/products', async (req: Request, res: Response) => {
         ],
       });
     } else {
-      products = await Products.findAll({
+      products = await Product.findAll({
         where: whereClause,
         attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
         include: [
           {
-            model: ProductImages,
+            model: ProductImage,
             as: 'ProductImages',
             attributes: ['imageUrl'],
             include: [
               {
-                model: ProductImageTypes,
+                model: ProductImageType,
                 as: 'ProductImageType',
                 attributes: ['imageType'],
               },
@@ -154,11 +154,11 @@ router.get('/categories', async (req: Request, res: Response) => {
   try {
     new RequestHelper(req, true);
 
-    const categoriesWithSubcategories = await ProductCategories.findAll({
+    const categoriesWithSubcategories = await ProductCategory.findAll({
       attributes: ['id', 'name', 'displayName'],
       include: [
         {
-          model: ProductSubCategories,
+          model: ProductSubCategory,
           attributes: ['id', 'categoryId', 'name', 'displayName'],
         },
       ],
@@ -199,13 +199,13 @@ router.get('/inventory', async (req: Request, res: Response) => {
       attributes: ['id', 'count'],
       include: [
         {
-          model: Products,
+          model: Product,
           where: productFilter,
           as: 'Product',
           attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
           include: [
             {
-              model: ProductImages,
+              model: ProductImage,
               where: { productImageTypeId: 1 },
               as: 'ProductImages',
               attributes: ['imageUrl'],
@@ -213,12 +213,12 @@ router.get('/inventory', async (req: Request, res: Response) => {
           ],
         },
         {
-          model: Sizes,
+          model: Size,
           as: 'Size',
           attributes: ['id', 'name'],
         },
         {
-          model: Colors,
+          model: Color,
           as: 'Color',
           attributes: ['id', 'name'],
         },
@@ -260,13 +260,13 @@ router.get('/inventory/overview', async (req: Request, res: Response) => {
       attributes: ['id', 'count'],
       include: [
         {
-          model: Products,
+          model: Product,
           where: productFilter,
           as: 'Product',
           attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
           include: [
             {
-              model: ProductImages,
+              model: ProductImage,
               where: { productImageTypeId: 1 },
               as: 'ProductImages',
               attributes: ['imageUrl'],
@@ -274,12 +274,12 @@ router.get('/inventory/overview', async (req: Request, res: Response) => {
           ],
         },
         {
-          model: Sizes,
+          model: Size,
           as: 'Size',
           attributes: ['id', 'name'],
         },
         {
-          model: Colors,
+          model: Color,
           as: 'Color',
           attributes: ['id', 'name'],
         },

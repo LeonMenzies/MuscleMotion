@@ -4,7 +4,7 @@ import { useFetchApi, usePostApi } from '@musclemotion/hooks';
 import ProductAddInformation from './product_add_information';
 import ProductAddImages from './product_add_images';
 import {
-  ProductCategoriesResponseT,
+  ProductCategoryResponseT,
   ProductInformationT,
   ProductStagesItem,
   ProductT,
@@ -28,7 +28,7 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
     '/product/update'
   );
   const [categoriesResponse, , fetchCategories] = useFetchApi<
-    ProductCategoriesResponseT[]
+    ProductCategoryResponseT[]
   >('/product/categories');
 
   const [product, setProduct] = useRecoilState<ProductT>(productAtom);
@@ -43,7 +43,7 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [productImages, setProductImages] = useState<ProductImagesT>({});
 
-  const [categories, setCategories] = useState<ProductCategoriesResponseT[]>([
+  const [categories, setCategories] = useState<ProductCategoryResponseT[]>([
     {
       id: 0,
       name: '',

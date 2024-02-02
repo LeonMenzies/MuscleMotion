@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Colors } from '../models/colors';
+import { Color } from '../models/color';
 import { sendSuccessResponse } from '../helpers/response_handler';
 import { errorHandler } from '../helpers/error_handler';
 import { RequestHelper } from '../helpers/request_helper';
@@ -10,7 +10,7 @@ router.get('/colors', async (req: Request, res: Response) => {
   try {
     new RequestHelper(req);
 
-    const colors = await Colors.findAll({
+    const colors = await Color.findAll({
       attributes: ['id', 'name', 'displayName', 'colorHex'],
     });
 

@@ -19,6 +19,7 @@ app.use('/api', apiRouter);
 
 sequelize
   .sync({ alter: true })
+  // .sync({ force: true })
   .then(() => {
     defineAssociations();
   })

@@ -30,7 +30,7 @@ export type ProductResponseT = {
   ProductInformation?: ProductInformationT;
 };
 
-export type ProductCategoriesResponseT = {
+export type ProductCategoryResponseT = {
   id: number;
   name: string;
   displayName: string;

@@ -1,4 +1,4 @@
-import { Logs } from '../models/logs';
+import { ApiLog } from '../models/api_log';
 
 export async function createLog(
   level: string,
@@ -6,7 +6,7 @@ export async function createLog(
   request: object,
   response: object
 ) {
-  const logRecord = await Logs.create({
+  const logRecord = await ApiLog.create({
     level,
     endpoint,
     request,

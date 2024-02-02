@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Users } from '../models/users';
+import { User } from '../models/user';
 import { errorHandler } from '../helpers/error_handler';
 import { sendSuccessResponse } from '../helpers/response_handler';
 import { RequestHelper } from '../helpers/request_helper';
@@ -18,11 +18,11 @@ router.get('/users', async (req: Request, res: Response) => {
     }
 
     if (userId) {
-      users = await Users.findByPk(userId, {
+      users = await User.findByPk(userId, {
         attributes: ['id', 'firstName', 'lastName', 'email'],
       });
     } else {
-      users = await Users.findAll({
+      users = await User.findAll({
         attributes: ['id', 'firstName', 'lastName', 'email'],
       });
     }

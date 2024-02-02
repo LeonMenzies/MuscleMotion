@@ -1,14 +1,14 @@
 import S3 from '../aws/s3';
 import { APIException } from '../helpers/exceptions';
-import { Colors } from '../models/colors';
-import { ProductCategories } from '../models/product_categories';
-import { ProductImageTypes } from '../models/product_image_types';
-import { ProductImages } from '../models/product_images';
+import { Color } from '../models/color';
+import { ProductCategory } from '../models/product_category';
+import { ProductImageType } from '../models/product_image_type';
+import { ProductImage } from '../models/product_image';
 import { ProductInformation } from '../models/product_information';
 import { ProductInventory } from '../models/product_inventory';
-import { ProductSubCategories } from '../models/product_sub_categories';
-import { Products } from '../models/products';
-import { Sizes } from '../models/sizes';
+import { ProductSubCategory } from '../models/product_sub_category';
+import { Product } from '../models/product';
+import { Size } from '../models/size';
 import { sequelize } from './sequelize';
 
 export class ProductService {
@@ -34,11 +34,11 @@ export class ProductService {
     await sequelize.transaction(async (t) => {
       // Create ProductInformation record
 
-      // Check if categoryId exists in ProductCategories table
-      const categoryExists = await ProductCategories.findByPk(categoryId, {
+      // Check if categoryId exists in ProductCategory table
+      const categoryExists = await ProductCategory.findByPk(categoryId, {
         transaction: t,
       });
-      const subCategoryExists = await ProductSubCategories.findByPk(
+      const subCategoryExists = await ProductSubCategory.findByPk(
         subCategoryId,
         { transaction: t }
       );
@@ -57,7 +57,7 @@ export class ProductService {
       );
 
       // Create Product record using the obtained productInformationId
-      product = await Products.create(
+      product = await Product.create(
         {
           productInformationId: productInformation.dataValues.id,
           categoryId,
@@ -71,7 +71,7 @@ export class ProductService {
       // Iterate over each color
       for (const colorId of colors) {
         // Check if color exists in Colors table
-        const colorExists = await Colors.findByPk(colorId, { transaction: t });
+        const colorExists = await Color.findByPk(colorId, { transaction: t });
 
         if (!colorExists) {
           throw new APIException('Color does not exist');
@@ -80,7 +80,7 @@ export class ProductService {
         // Iterate over each size
         for (const sizeId of sizes) {
           // Check if size exists in Sizes table
-          const sizeExists = await Sizes.findByPk(sizeId, { transaction: t });
+          const sizeExists = await Size.findByPk(sizeId, { transaction: t });
 
           if (!sizeExists) {
             throw new APIException('Size does not exist');
@@ -106,16 +106,16 @@ export class ProductService {
   }
 
   async addImage(productId: string, image: string, imageType: string) {
-    const product = await Products.findByPk(productId);
+    const product = await Product.findByPk(productId);
 
     if (!product) {
       throw new APIException('Product not found');
     }
 
-    const category = await ProductCategories.findByPk(
+    const category = await ProductCategory.findByPk(
       product.dataValues.categoryId
     );
-    const subCategory = await ProductSubCategories.findByPk(
+    const subCategory = await ProductSubCategory.findByPk(
       product.dataValues.subCategoryId
     );
 
@@ -123,7 +123,7 @@ export class ProductService {
       throw new APIException('Category or Subcategory not found');
     }
 
-    const imageTypeRecord = await ProductImageTypes.findOne({
+    const imageTypeRecord = await ProductImageType.findOne({
       where: {
         imageType: imageType,
       },
@@ -141,7 +141,7 @@ export class ProductService {
 
     this.s3.upload('product-images', key, image, imageType);
 
-    const newImage = await ProductImages.create({
+    const newImage = await ProductImage.create({
       productId: productId,
       imageUrl: `${key}/${imageType}.jpeg`,
       productImageTypeId: imageTypeRecord.dataValues.id,
@@ -164,17 +164,17 @@ export class ProductService {
     // Start a transaction
     await sequelize.transaction(async (t) => {
       // Fetch the existing Product record
-      product = await Products.findByPk(id, { transaction: t });
+      product = await Product.findByPk(id, { transaction: t });
 
       if (!product) {
         throw new APIException('Product does not exist');
       }
 
-      // Check if categoryId exists in ProductCategories table
-      const categoryExists = await ProductCategories.findByPk(categoryId, {
+      // Check if categoryId exists in ProductCategory table
+      const categoryExists = await ProductCategory.findByPk(categoryId, {
         transaction: t,
       });
-      const subCategoryExists = await ProductSubCategories.findByPk(
+      const subCategoryExists = await ProductSubCategory.findByPk(
         subCategoryId,
         { transaction: t }
       );
@@ -215,7 +215,7 @@ export class ProductService {
       // Iterate over each color
       for (const colorId of colors) {
         // Check if color exists in Colors table
-        const colorExists = await Colors.findByPk(colorId, { transaction: t });
+        const colorExists = await Color.findByPk(colorId, { transaction: t });
 
         if (!colorExists) {
           throw new APIException('Color does not exist');
@@ -224,7 +224,7 @@ export class ProductService {
         // Iterate over each size
         for (const sizeId of sizes) {
           // Check if size exists in Sizes table
-          const sizeExists = await Sizes.findByPk(sizeId, { transaction: t });
+          const sizeExists = await Size.findByPk(sizeId, { transaction: t });
 
           if (!sizeExists) {
             throw new APIException('Size does not exist');

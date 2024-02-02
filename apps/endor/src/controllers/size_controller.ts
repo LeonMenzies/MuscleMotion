@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { Sizes } from '../models/sizes'; // Replace with the actual path
+import { Size } from '../models/size'; // Replace with the actual path
 import { sendSuccessResponse } from '../helpers/response_handler';
 import { errorHandler } from '../helpers/error_handler';
 import { RequestHelper } from '../helpers/request_helper';
@@ -10,7 +10,7 @@ router.get('/sizes', async (req: Request, res: Response) => {
   try {
     new RequestHelper(req);
 
-    const sizes = await Sizes.findAll({
+    const sizes = await Size.findAll({
       attributes: ['id', 'name', 'displayName'],
     });
 

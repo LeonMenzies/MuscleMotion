@@ -12,7 +12,7 @@ import Profile from './pages/profile/profile';
 import MuscleMotionAltLogo from './assets/images/muscle-motion.jpg';
 import styled from 'styled-components';
 import { useFetchApi } from '@musclemotion/hooks';
-import { ProductCategoriesResponseT } from '@musclemotion/types';
+import { ProductCategoryResponseT } from '@musclemotion/types';
 import { ElementType, useEffect, useState } from 'react';
 import ProductsListContainer from './pages/products_list/products_list_container';
 
@@ -20,10 +20,10 @@ function App() {
   const [user, setUser] = useRecoilState(userAtom);
 
   const [categoriesResponse, , fetchCategories] = useFetchApi<
-    ProductCategoriesResponseT[]
+    ProductCategoryResponseT[]
   >('/product/categories');
 
-  const [categories, setCategories] = useState<ProductCategoriesResponseT[]>([
+  const [categories, setCategories] = useState<ProductCategoryResponseT[]>([
     {
       id: 0,
       name: '',

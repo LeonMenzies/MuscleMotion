@@ -1,26 +1,21 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
 
-export const Logs = sequelize.define('Logs', {
+export const ProductImage = sequelize.define('ProductImage', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  level: {
-    type: DataTypes.STRING,
+  productId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  endpoint: {
+  productImageTypeId: {
+    type: DataTypes.INTEGER,
+  },
+  imageUrl: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  request: {
-    type: DataTypes.JSON,
-    allowNull: true,
-  },
-  response: {
-    type: DataTypes.JSON,
-    allowNull: true,
   },
 });

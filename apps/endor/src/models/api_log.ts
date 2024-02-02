@@ -1,22 +1,26 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
 
-export const ProductSubCategories = sequelize.define('ProductSubCategories', {
+export const ApiLog = sequelize.define('ApiLog', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  categoryId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  name: {
+  level: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  displayName: {
+  endpoint: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  request: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+  response: {
+    type: DataTypes.JSON,
+    allowNull: true,
   },
 });

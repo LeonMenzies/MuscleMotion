@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { TopNavItem } from '../top_nav_item/top_nav_item';
 import {
-  ProductCategoriesResponseT,
+  ProductCategoryResponseT,
   ProductSubCategoriesResponseT,
 } from '@musclemotion/types';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ import { useState } from 'react';
 /* eslint-disable-next-line */
 export interface TopNavProps {
   logo: string;
-  categories: ProductCategoriesResponseT[];
+  categories: ProductCategoryResponseT[];
 }
 
 export function TopNav(props: TopNavProps) {
@@ -34,7 +34,7 @@ export function TopNav(props: TopNavProps) {
         </NavLink>
 
         <div className={'right-nav'}>
-          {categories.map((category: ProductCategoriesResponseT) => (
+          {categories.map((category: ProductCategoryResponseT) => (
             <div onMouseEnter={() => setHoveredCategory(category.id)}>
               <TopNavItem
                 key={category.id}
@@ -52,7 +52,7 @@ export function TopNav(props: TopNavProps) {
         {hoveredCategory &&
           categories
             .find(
-              (category: ProductCategoriesResponseT) =>
+              (category: ProductCategoryResponseT) =>
                 category.id === hoveredCategory
             )
             ?.ProductSubCategories.map(
