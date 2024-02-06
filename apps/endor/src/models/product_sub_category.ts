@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
+import { Product } from './product';
+import { ProductCategory } from './product_category';
 
 export const ProductSubCategory = sequelize.define('ProductSubCategory', {
   id: {
@@ -20,3 +22,12 @@ export const ProductSubCategory = sequelize.define('ProductSubCategory', {
     allowNull: false,
   },
 });
+
+export const associateProductSubCategory = () => {
+  ProductSubCategory.hasOne(Product, {
+    foreignKey: 'subCategoryId',
+  });
+  ProductSubCategory.belongsTo(ProductCategory, {
+    foreignKey: 'categoryId',
+  });
+};

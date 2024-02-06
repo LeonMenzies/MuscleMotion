@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
+import { ProductInventory } from './product_inventory';
 
 export const Color = sequelize.define('Color', {
   id: {
@@ -20,3 +21,9 @@ export const Color = sequelize.define('Color', {
     allowNull: false,
   },
 });
+
+export const associateColor = () => {
+  Color.belongsTo(ProductInventory, {
+    foreignKey: 'colorId',
+  });
+};

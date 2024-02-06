@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../services/sequelize';
+import { Product } from './product';
 
 export const ProductInformation = sequelize.define('ProductInformation', {
   id: {
@@ -11,3 +12,9 @@ export const ProductInformation = sequelize.define('ProductInformation', {
     type: DataTypes.STRING,
   },
 });
+
+export const associateProductInformation = () => {
+  ProductInformation.hasOne(Product, {
+    foreignKey: 'productInformationId',
+  });
+};
