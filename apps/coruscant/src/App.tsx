@@ -53,7 +53,7 @@ function App() {
       });
     } else if (!userResponse.success) {
       setUser(defaultUser);
-      // setAuthLoading(false);
+      setAuthLoading(false);
     }
   }, [userResponse, setUser]);
 

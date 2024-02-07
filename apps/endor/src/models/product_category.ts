@@ -23,7 +23,7 @@ export const associateProductCategory = () => {
   ProductCategory.hasOne(Product, {
     foreignKey: 'categoryId',
   });
-  ProductCategory.hasOne(ProductSubCategory, {
+  ProductCategory.hasMany(ProductSubCategory, {
     foreignKey: 'categoryId',
   });
 };

@@ -16,6 +16,7 @@ export interface TopNavProps {
 
 export function TopNav(props: TopNavProps) {
   const { logo, categories } = props;
+
   const [hoveredCategory, setHoveredCategory] = useState<number | undefined>(
     undefined
   );
@@ -86,7 +87,7 @@ const StyledNav = styled.div<{ isVisible: boolean }>`
     padding: 0 10px;
   }
 
-  background-color: red;
+  background-color: #909090;
 
   .navLogo {
     object-fit: cover;
