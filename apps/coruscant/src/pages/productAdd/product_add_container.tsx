@@ -11,7 +11,7 @@ import {
   ProductImagesT,
 } from '@musclemotion/types';
 import { useRecoilState } from 'recoil';
-import { productAtom } from '../../recoil/product';
+import { defaultProduct, productAtom } from '../../recoil/product';
 import ProductAdd from './product_add';
 import { ProgressComponent } from './product_add_progress';
 import { Button } from '@musclemotion/components';
@@ -32,6 +32,10 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
   >('/product/categories');
 
   const [product, setProduct] = useRecoilState<ProductT>(productAtom);
+  const [response, setResponse] = useState({
+    success: false,
+    errorMessage: '',
+  });
 
   const [productInformation, setProductInformation] =
     useState<ProductInformationT>({
@@ -63,6 +67,7 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
   }, [categoriesResponse]);
 
   useEffect(() => {
+    setResponse(postProductAddResponse);
     if (postProductAddResponse.success && postProductAddResponse.data) {
       Object.entries(productImages).forEach(([imageType, blob]) => {
         if (blob !== null) {
@@ -204,6 +209,12 @@ export function ProductAddContainer(props: ProductAddContainerProps) {
           text={'Previous'}
           onClick={() => setPageIndex(pageIndex > 1 ? pageIndex - 1 : 0)}
         />
+
+        {response.success ? (
+          <div>Added Successfully</div>
+        ) : (
+          <div>{response.errorMessage}</div>
+        )}
 
         {pageIndex === productAddStages.length - 1 ? (
           <Button text={product.id ? 'Edit' : 'Add'} onClick={handleAdd} />

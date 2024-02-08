@@ -51,7 +51,7 @@ export class RequestHelper {
 
     switch (param) {
       case 'name':
-        validateString(param, value, 3, 30);
+        validateString(param, value, 3, 50);
         break;
       case 'description':
         break;
