@@ -34,6 +34,7 @@ export function InventoryTable(props: InventoryTableProps) {
             <StyledInventoryInnerTable>
               <thead>
                 <StyledTableRow>
+                  <StyledTableHeader />
                   {Object.keys(
                     item.inventory[Object.keys(item.inventory)[0]]
                   ).map((color) => (

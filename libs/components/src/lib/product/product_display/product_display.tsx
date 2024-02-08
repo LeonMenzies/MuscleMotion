@@ -55,7 +55,7 @@ export function ProductDisplay(props: ProductDisplayProps) {
       </div>
 
       <TextContainer>
-        <h3>{product.name}</h3>
+        <h5>{product.name}</h5>
         <h5>${product.price}</h5>
       </TextContainer>
     </StyledProductDisplay>
