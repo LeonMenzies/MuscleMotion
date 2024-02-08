@@ -31,10 +31,10 @@ export const associateProductInventory = () => {
   ProductInventory.belongsTo(Product, {
     foreignKey: 'productId',
   });
-  ProductInventory.hasOne(Size, {
+  ProductInventory.belongsTo(Size, {
     foreignKey: 'sizeId',
   });
-  ProductInventory.hasOne(Color, {
+  ProductInventory.belongsTo(Color, {
     foreignKey: 'colorId',
   });
 };

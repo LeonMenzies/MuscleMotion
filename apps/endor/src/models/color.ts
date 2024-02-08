@@ -23,7 +23,7 @@ export const Color = sequelize.define('Color', {
 });
 
 export const associateColor = () => {
-  Color.belongsTo(ProductInventory, {
+  Color.hasOne(ProductInventory, {
     foreignKey: 'colorId',
   });
 };

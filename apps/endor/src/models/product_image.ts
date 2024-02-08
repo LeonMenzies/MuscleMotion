@@ -26,7 +26,7 @@ export const associateProductImage = () => {
   ProductImage.belongsTo(Product, {
     foreignKey: 'productId',
   });
-  ProductImage.hasOne(ProductImageType, {
+  ProductImage.belongsTo(ProductImageType, {
     foreignKey: 'productImageTypeId',
   });
 };

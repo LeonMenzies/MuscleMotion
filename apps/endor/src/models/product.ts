@@ -33,7 +33,7 @@ export const Product = sequelize.define('Product', {
 
 export const associateProduct = () => {
   Product.belongsTo(ProductCategory, {
-    foreignKey: 'productId',
+    foreignKey: 'categoryId',
   });
 
   Product.belongsTo(ProductSubCategory, {

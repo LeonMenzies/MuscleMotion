@@ -44,19 +44,16 @@ router.get('/products', async (req: Request, res: Response) => {
         include: [
           {
             model: ProductImage,
-            as: 'ProductImages',
             attributes: ['imageUrl'],
             include: [
               {
                 model: ProductImageType,
-                as: 'ProductImageType',
                 attributes: ['imageType'],
               },
             ],
           },
           {
             model: ProductInformation,
-            as: 'ProductInformation',
             attributes: ['description'],
           },
         ],
@@ -68,12 +65,10 @@ router.get('/products', async (req: Request, res: Response) => {
         include: [
           {
             model: ProductImage,
-            as: 'ProductImages',
             attributes: ['imageUrl'],
             include: [
               {
                 model: ProductImageType,
-                as: 'ProductImageType',
                 attributes: ['imageType'],
               },
             ],
@@ -201,25 +196,21 @@ router.get('/inventory', async (req: Request, res: Response) => {
         {
           model: Product,
           where: productFilter,
-          as: 'Product',
           attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
           include: [
             {
               model: ProductImage,
               where: { productImageTypeId: 1 },
-              as: 'ProductImages',
               attributes: ['imageUrl'],
             },
           ],
         },
         {
           model: Size,
-          as: 'Size',
           attributes: ['id', 'name'],
         },
         {
           model: Color,
-          as: 'Color',
           attributes: ['id', 'name'],
         },
       ],
@@ -262,25 +253,21 @@ router.get('/inventory/overview', async (req: Request, res: Response) => {
         {
           model: Product,
           where: productFilter,
-          as: 'Product',
           attributes: ['id', 'categoryId', 'subCategoryId', 'name', 'price'],
           include: [
             {
               model: ProductImage,
               where: { productImageTypeId: 1 },
-              as: 'ProductImages',
               attributes: ['imageUrl'],
             },
           ],
         },
         {
           model: Size,
-          as: 'Size',
           attributes: ['id', 'name'],
         },
         {
           model: Color,
-          as: 'Color',
           attributes: ['id', 'name'],
         },
       ],

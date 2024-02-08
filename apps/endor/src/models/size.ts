@@ -19,7 +19,7 @@ export const Size = sequelize.define('Size', {
 });
 
 export const associateSize = () => {
-  Size.belongsTo(ProductInventory, {
+  Size.hasOne(ProductInventory, {
     foreignKey: 'sizeId',
   });
 };

@@ -15,7 +15,7 @@ export const ProductImageType = sequelize.define('ProductImageType', {
 });
 
 export const associateProductImageType = () => {
-  ProductImageType.belongsTo(ProductImage, {
+  ProductImageType.hasOne(ProductImage, {
     foreignKey: 'productImageTypeId',
   });
 };
